@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+<div class="row">
+    {% include 'facilitysidemenu.html' %}
+    
+    <div class="col-lg-9">
+
+<div class="container-fluid mt-4">
+    <h1>GATE PASS</h1>
+    <div class="table-responsive">
+        <table id="GatepassTable" data-toggle="table" data-sortable="true" data-pagination="true" class="table table-striped">
+            <thead>
+                <tr>
+                   
+                    <th data-field="ChecklistID" data-sortable="true">GATEPASS REF NO</th>
+                    <th data-field="Equipment" data-sortable="true">STATION</th>
+                    <th data-field="Equipment" data-sortable="true">ISSUED DATE</th>
+                    <th data-field="User" data-sortable="true">ISSUED BY</th>
+                    <th data-field="User" data-sortable="true">COMPANY NAME</th>
+                    <th data-field="User" data-sortable="true">RETURNABLE/NON RETURNABLE</th>
+                    <th data-field="View_Checklist" data-sortable="true">View Details</th>
+                    
+                   
+                    <!-- Add more table headers for each field in your model -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in form %}
+                <tr>
+                   
+                    <td>{{ item.id }}</td>                                                                                                                                                                                              
+                    <td>{{ item.station_name }}</td>
+                    <td>{{ item.Issue_Date }}</td> <!-- Access fields of your model -->
+                    <td>{{ item.user }}</td>
+                    <td>{{ item.Company_Name }}</td>
+                    <td>
+                        {% if item.Return_status == '1' and item.Return_date %}
+                            {{item.Return_date}}
+                        {% elif item.Return_status == '1'  %}
+                            Returnable
+                        {% else %}
+                            Non Returnable
+                        {% endif %}</td> <!-- Replace field_name_1 with actual field name -->
+                    <td><a href="{% url 'polls:DetailViewGatepass' item.id %}" class="btn btn-primary">View </a></td>
+                    <!-- Add more table cells for each field in your model -->
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+</div>
+
+
+<script>
+    $(document).ready(function() {
+        $('#GatepassTable').DataTable({
+            "scrollY": "70vh",
+            "scrollCollapse": true,
+
+
+
+        });
+      
+        
+    });
+</script>
+
+{% endblock content%}

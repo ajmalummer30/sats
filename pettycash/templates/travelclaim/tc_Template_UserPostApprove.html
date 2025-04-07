@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<br>
+<br>
+
+Dear {{ instance.user.first_name }} {{ instance.user.last_name }}
+<br>
+
+    <h1>Your Travel Claim request {{instance.id}} has been approved.</h1>
+   
+    <table class="table"  border="1">
+        <thead>
+          <tr>
+            <th scope="col">Request No</th>
+            <th scope="col">Employee ID</th>
+            <th scope="col">Employee Name</th>
+            <th scope="col">Total Amount</th>
+            <th scope="col">Approval Date</th>
+            <th scope="col">Approval Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">{{ instance.id}}</th>
+            <td>{{ instance.user}}</td>
+            <td>{{ instance.user.first_name }} {{ instance.user.last_name }}</td>
+            <td>{{ instance.Total_Amount}}</td>
+            <td>{% if instance.status == True %}
+                {{instance.approved_date}}
+              {% else %}
+                pending
+              {% endif %}</td>
+              <td>{% if instance.status == True %}
+                approved
+              {% else %}
+               Pending
+              {% endif %}</td>
+          </tr>     
+          
+        </tbody>
+      </table>
+
+
+      <br>
+      <br>
+      
+    
+    <p>Regards<br>
+        SATS SAUDI Arabia<br>
+        
+      </p>
+      </body>
+      </html>
+      

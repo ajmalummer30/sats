@@ -1,0 +1,31 @@
+<!-- Left Side Menu -->
+        
+<div class="col-sm-12 col-md-9 col-lg-2 prod_filter_sidemenu" >  
+   
+    <div class="card sticky"> 
+        <div class="card-header" style="text-align:center;">
+            <label> IT DEPT</label>
+        </div>
+          
+        
+      
+        <ul class="list-group list-group-flush">
+            
+             <li class="list-group-item">
+                <button class="btn dropdown-toggle" type="button"  data-toggle="collapse" data-target="#collapsepc" aria-expanded="false" aria-controls="collapsepc"  >
+                   Maintanence Requests
+                </button>
+                <div class="collapse" id="collapsepc">   
+                    <div class="card-body">
+                       
+                        <a class="dropdown-item" href="{% url 'itassets:create_main_request' %}">Create MR</a>
+                        <a class="dropdown-item" href="{% url 'itassets:create_main_request' %}">View MR</a>
+                        
+        
+                    </div>  
+                </div>  
+            </li>
+        </ul>
+        
+    </div>
+</div>

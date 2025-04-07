@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+<form action="" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <h4>Select & Upload File</h4> 
+  <input type="file" required name="files"> 
+  <button type="submit">Submit</button> 
+</form>
+
+{% if data_to_display %}
+<div>
+  <h2>Uploaded Data</h2>
+  {{ data_to_display | safe }} 
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,19 @@
+{% load crispy_forms_filters %}
+
+
+<h2>Please fill the below :</h2>
+ {{ Subform|crispy}} 
+
+ <input type="submit" class="btn btn-dark btn-block" value="SUBMIT" />
+
+
+ {% comment %} {% for question in Subform %}
+   
+   <li name="{{question.id}}">{{ question.text }}</li>
+    <li>
+        <label><input type="radio" name="answer2_{{ question.id }}" value="1"> Yes</label>
+        <label><input type="radio" name="answer2_{{ question.id }}" value="2"> No</label>
+    </li> 
+{% endfor %}  
+
+ {% endcomment %}

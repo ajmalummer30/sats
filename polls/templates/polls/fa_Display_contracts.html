@@ -1,0 +1,114 @@
+
+
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row">
+    {% include 'facilitysidemenu.html' %}
+
+    <div class="col-lg-9">
+<div class="card">
+    <div class="card-header text-center">VIEW CONTRACTS</div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table" id='contractsTable'>
+                <thead>
+                    <tr>
+                    <th> SL No</th>
+                    <th>Reference Number</th>
+                   
+                    <th>Station</th>
+                    <th>Category</th>
+                    <th>Subcategory</th>
+                    <th>Vendor</th>
+                    <th >Start date</th>
+                    <th>End date</th>
+                    <th>Status</th>
+                    <th>View Details</th>
+                    </tr>
+                
+                </thead>
+                <tbody>
+                    {% for obj in contracts_obj %}
+                    <tr class="{% if obj.status == 1 %}active-row{% else %}table-danger{% endif %}">
+                        <td>{{ obj.id}}</td>
+                        <td>{{ obj.contract_reference_number}}</td>
+                        
+                        <td>{{ obj.station_name}}</td>
+                        <td>{{ obj.category}}</td>
+                        <td>
+                            <ul>
+                                {% for subcategory in obj.subcategory.all %}
+                                    <li>{{ subcategory.name }}</li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                        <td>{{ obj.contractor}}</td>
+                        <td style="white-space: nowrap;overflow: hidden;text-overflow:ellipsis;">{{ obj.start_date|date:"d-M-Y" }}</td>
+                        <td style="white-space: nowrap;overflow: hidden;text-overflow:ellipsis;"  class="endDate">{{ obj.end_date|date:"d-M-Y"}}</td>
+                        
+                        <td> 
+                            {% if obj.status == 1%}
+                                Active
+                            {% else %}
+                                Inactive
+                            {% endif %}
+                        </td>
+                        
+                        <td><a href="{% url 'polls:DetailContractsView' obj.id %}" class="btn btn-primary">View </a></td>
+                    
+        
+        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        
+        </div>
+ 
+        
+    </div>
+</div>
+
+
+
+</div>
+</div>
+<script>
+    $(document).ready(function() {
+
+        $('#contractsTable').DataTable({
+    //"scrollY": "100vh",
+   // "scrollCollapse": true,
+    // other DataTable options...
+        });
+
+
+        var today = new Date();
+        var twentyDaysLater = new Date();
+        twentyDaysLater.setDate(today.getDate() + 20); // Calculate the date 20 days from today
+    
+        // Normalize both dates to start of the day to avoid time-related issues
+        today.setHours(0, 0, 0, 0);
+        twentyDaysLater.setHours(0, 0, 0, 0);
+    
+        $('#contractsTable tr').each(function() {
+            var endDateStr = $(this).find('.endDate').text();
+            if (endDateStr) {
+                var endDate = new Date(endDateStr);
+                endDate.setHours(0, 0, 0, 0); // Normalize the end date to the start of the day
+    
+                // Check if the end date is from today up to the next 20 days
+                if (endDate >= today && endDate <= twentyDaysLater) {
+                    $(this).css({
+                        'background-color': '#F08080', // Apply light coral background
+                        'color': 'white' // Change text color to white
+                    });
+                }
+            }
+        });
+    });
+</script>
+
+{% endblock content%}

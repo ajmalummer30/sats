@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<br>
+<br>
+  <p>Dear {{ instance.employee.first_name }} {{ instance.employee.last_name }}</p>
+  <br>
+
+    <h4>Your Petty cash request no {{instance.id}} has been approved.</h4>
+   
+    <table class="table"  border="1">
+        <thead>
+          <tr>
+            <th scope="col">Request No</th>
+            <th scope="col">Employee ID</th>
+            <th scope="col">Employee Name</th>
+            <th scope="col">Total Amount</th>
+            <th scope="col">Approval Date</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">{{ instance.id}}</th>
+            <td>{{ instance.employee}}</td>
+            <td>{{ instance.employee.first_name }} {{ instance.employee.last_name }}</td>
+            <td>{{ instance.total_amount}}</td>
+            <td>{% if instance.approved_date %}
+                {{instance.approved_date}}
+              {% else %}
+                pending
+              {% endif %}</td>
+              
+          </tr>     
+          
+        </tbody>
+      </table>
+
+
+      <br>
+      <br>
+      
+      <p>Regards<br>
+        SATS SAUDI Arabia<br>
+
+      </p>
+      
+      </body>
+      </html>
+      
+ 

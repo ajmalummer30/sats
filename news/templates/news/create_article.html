@@ -1,0 +1,6 @@
+<h1>{{ article.title }}</h1>
+<p>By {{ article.author }} on {{ article.published_date }}</p>
+{% if article.image %}
+    <img src="{{ article.image.url }}" alt="{{ article.title }}">
+{% endif %}
+<div>{{ article.content }}</div>

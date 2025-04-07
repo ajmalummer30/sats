@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+
+{% include 'financesidemenu.html' %}
+
+<div class="col-md-9">
+    <form method="post" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        <div class="card">
+            <div class="card-header text-center">
+                <h5>Travel Claim Form</h5>
+            </div>
+            <div class="card-body">
+
+                {% if form.non_field_errors %}
+                  <div class="alert alert-danger" role="alert">
+                    <ul>
+                      {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                {% endif %}
+                <div class="row">
+                    <div class="col-lg-3">
+                      <div class="form-group">
+                        <label>{{ form.start_date.label }}</label>
+                        {{ form.start_date }}
+                        {% for error in form.start_date.errors %}
+                          <p style="color: red">{{ error }}</p>
+                        {% endfor %}
+                      </div>
+                    </div>
+                    <div class="col-lg-3">
+                      <div class="form-group">
+                        <label>{{ form.end_date.label }}</label>
+                        {{ form.end_date }}
+                        {% for error in form.end_date.errors %}
+                          <p style="color: red">{{ error }}</p>
+                        {% endfor %}
+                      </div>
+                    </div>
+                    <div class="col-lg-3">
+                      <div class="form-group">
+                        <label>{{ form.days.label }}</label>
+                        {{ form.days }}
+                        {% for error in form.end_date.errors %}
+                          <p style="color: red">{{ error }}</p>
+                        {% endfor %}
+                      </div>
+                    </div>
+                    <div class="col-3">
+                      <div class="form-group">
+                        <label>{{ form.upload_bill.label }}</label>
+                        {{ form.upload_bill }}
+                        {% for error in form.upload_bill.errors %}
+                          <p style="color: red">{{ error }}</p>
+                        {% endfor %}
+                      </div>
+                    </div>
+                    <!-- Add other fields with their respective column sizes and form-control class -->
+                  </div>
+
+
+            </div>
+        </div>
+    </form>
+</div>
+  
+
+
+
+{% endblock content%}
+

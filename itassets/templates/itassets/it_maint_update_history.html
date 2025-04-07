@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+
+
+{% block content %}
+
+<div class="row">
+  {% include 'Itsidemenu2.html' %}
+  <div class="col-12 col-sm-12 col-md-9">
+    <div class="card">
+        <div class="card-header">
+            <h5>Maintenance Request Update History</h5>
+        </div>
+        <div class="card-body">
+            
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Timestamp</th>
+            <th>Serial Number</th>
+            <th>Changes</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entry in history_entries %}
+        <tr>
+            <td>{{ entry.user }}</td>
+            <td>{{ entry.timestamp }}</td>
+            <td>{{ entry.Request_number.it_product }}</td>
+            <td>
+                {% if entry.parsed_changes %}
+                <ul>
+                    {% for key, value in entry.parsed_changes.items %}
+                    {% if key == 'status' %}
+                    <li>{{ key }}:
+                        <ul>
+                            <li>Old Value:
+                                {% if value.old_value == '1' %}
+                                Pending
+                                {% elif value.old_value == '2' %}
+                                Submitted to Vendor
+                                {% elif value.old_value == '3' %}
+                                Completed
+                                {% else %}
+                                {{ value.old_value }}
+                                {% endif %}
+                            </li>
+                            <li>New Value:
+                                {% if value.new_value == '1' %}
+                                Pending
+                                {% elif value.new_value == '2' %}
+                                Submitted to Vendor
+                                {% elif value.new_value == '3' %}
+                                Completed
+                                {% else %}
+                                {{ value.new_value }}
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </li>
+                    {% elif key == 'Payment_Mode' %}
+                    <li>{{ key }}:
+                        <ul>
+                            <li>Old Value:
+                                {% if value.old_value == '1' %}
+                                Pending
+                                {% elif value.old_value == '2' %}
+                                Submitted to Vendor
+                                {% elif value.old_value == '3' %}
+                                Completed
+                                {% else %}
+                                {{ value.old_value }}
+                                {% endif %}
+                            </li>
+                            <li>New Value:
+                                {% if value.new_value == '1' %}
+                                Pending
+                                {% elif value.new_value == '2' %}
+                                Submitted to Vendor
+                                {% elif value.new_value == '3' %}
+                                Completed
+                                {% else %}
+                                {{ value.new_value }}
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </li>
+                    {% elif key == 'is_under_warranty' %}
+                    <li>{{ key }}:
+                        <ul>
+                            <li>Old Value:
+                                {% if value.old_value == '1' %}
+                                Pending
+                                {% elif value.old_value == '2' %}
+                                Submitted to Vendor
+                                {% elif value.old_value == '3' %}
+                                Completed
+                                {% else %}
+                                {{ value.old_value }}
+                                {% endif %}
+                            </li>
+                            <li>New Value:
+                                {% if value.new_value == '1' %}
+                                Pending
+                                {% elif value.new_value == '2' %}
+                                Submitted to Vendor
+                                {% elif value.new_value == '3' %}
+                                Completed
+                                {% else %}
+                                {{ value.new_value }}
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </li>
+                    {% elif key == 'Warranty_type' %}
+                    <li>{{ key }}:
+                        <ul>
+                            <li>Old Value:
+                                {% if value.old_value == '1' %}
+                                Pending
+                                {% elif value.old_value == '2' %}
+                                Submitted to Vendor
+                                {% elif value.old_value == '3' %}
+                                Completed
+                                {% else %}
+                                {{ value.old_value }}
+                                {% endif %}
+                            </li>
+                            <li>New Value:
+                                {% if value.new_value == '1' %}
+                                Pending
+                                {% elif value.new_value == '2' %}
+                                Submitted to Vendor
+                                {% elif value.new_value == '3' %}
+                                Completed
+                                {% else %}
+                                {{ value.new_value }}
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </li>
+                    {% elif key == 'is_Device_Repalced' %}
+                    <li>{{ key }}:
+                        <ul>
+                            <li>Old Value:
+                                {% if value.old_value == '1' %}
+                                Pending
+                                {% elif value.old_value == '2' %}
+                                Submitted to Vendor
+                                {% elif value.old_value == '3' %}
+                                Completed
+                                {% else %}
+                                {{ value.old_value }}
+                                {% endif %}
+                            </li>
+                            <li>New Value:
+                                {% if value.new_value == '1' %}
+                                Pending
+                                {% elif value.new_value == '2' %}
+                                Submitted to Vendor
+                                {% elif value.new_value == '3' %}
+                                Completed
+                                {% else %}
+                                {{ value.new_value }}
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+                {% else %}
+                No changes
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+    
+    
+
+        </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+{% endblock content%}

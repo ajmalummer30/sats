@@ -1,0 +1,53 @@
+<!-- Left Side Menu -->
+        
+<div class="col-lg-2 prod_filter_sidemenu" >  
+   
+    <div class="card sticky"> 
+        <div class="card-header" style="text-align:center;">
+            <label> Finance</label>
+        </div>
+          
+        
+      
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <button class="btn dropdown-toggle" type="button"  data-toggle="collapse" data-target="#collapsetc" aria-expanded="false" aria-controls="collapsetc"  >
+                    Travel Claim
+                </button>
+                <div class="collapse" id="collapsetc">   
+                    <div class="card-body">
+                        <a class="dropdown-item" href="{% url 'pettycash:travelclaimrequest' %}">Apply Travel claim</a>
+                    <a class="dropdown-item" href="{% url 'pettycash:ViewUserTravelClaims' %}">My Claims</a>
+                    {% if request.user %}
+                    {% for group in request.user.groups.all %}
+                    {% if group.name == "Manager" %}
+                    <a class="dropdown-item" href="{% url 'pettycash:Tc_Manager_View' %}">Approve TravelClaim</a>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+        
+                    </div>  
+                </div> 
+             </li>
+             <li class="list-group-item">
+                <button class="btn dropdown-toggle" type="button"  data-toggle="collapse" data-target="#collapsepc" aria-expanded="false" aria-controls="collapsepc"  >
+                    Petty Cash
+                </button>
+                <div class="collapse" id="collapsepc">   
+                    <div class="card-body">
+                        <a class="dropdown-item" href="{% url 'pettycash:create_product' %}">Petty Cash Reimbursment</a>
+                    <a class="dropdown-item" href="{% url 'pettycash:ViewUserPettyCash' %}">my Pettycash</a>
+                    {% if request.user %}
+                    {% for group in request.user.groups.all %}
+                    {% if group.name == "Manager" %}
+                    <a class="dropdown-item" href="{% url 'pettycash:Pc_Manager_View' %}">Approve PettyCash</a>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                    </div>  
+                </div>  
+            </li>
+        </ul>
+        
+    </div>
+</div>

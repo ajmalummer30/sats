@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+
+    <div class="container">
+        <form action="{% url 'pettycash:list_products' %}" method="get" >
+            <div class="card-header card-header-secondary">
+                <h4 class="card-title">Filter Claim Requests</h4>
+                <div class="form-group row">
+                    <label for="startDate" class="col-form-label">Start Date:</label>
+                    <div class="col-3">
+                        <input type="date" name="Start_date" id="startDate" class="form-control"  required >
+                    </div>
+                    <label for="endDate" class="col-form-label">End Date:</label>
+                    <div class="col-3">
+                        <input type="date" name="End_date" id="endDate" class="form-control" required >
+                    </div>
+                    <label for="station_name" class="col-form-label">Station</label>
+                    <div class="col-3">
+                        
+                        <select name="station_name" class="form-control" id="station_name">
+    
+                            {% for choice in form.station_name %}
+                           
+                                <option value="{{ choice.value }}" {% if choice.selected %}selected{% endif %}>{{ choice }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="form_id" class="col-form-label">Claim Ref No</label>
+                    <div class="col-3">
+                        <input type="text" name="form_id" id="form_id" class="form-control">
+                    </div>
+                    
+                </div>
+                <div class="form-group row">
+
+                    <div class="col d-flex justify-content-end">
+                        
+                    <button type="submit" class="btn btn-primary btn-block col-1">Filter</button>
+                
+                    </div>
+                </div>
+            </div>
+        </form>
+        
+        </div>
+
+    <div class="container mt-4">
+        <table id="sortableTable" data-toggle="table" data-sortable="true" data-pagination="true" class="table table-striped">
+            <thead>
+                <tr>
+                    <th data-field="SL_No" data-sortable="true">Sl No</th>
+                    <th data-field="station_name" data-sortable="true">station_name</th>
+                    <th data-field="Claimant" data-sortable="true">Claimant</th>
+                    <th data-field="Date" data-sortable="true">Date</th>
+                    <th data-field="total_amount" data-sortable="true">Total Amount</th>
+                    <th data-field="description" data-sortable="true">Description</th>
+                    
+                    <!-- Add more table headers for each field in your model -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in products %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.station_name }}</td>
+                    <td>{{ item.claimant }}</td> <!-- Access fields of your model -->
+                    <td>{{ item.date }}</td>
+                    <td>{{ item.total_amount }} SAR</td>
+                    <td>{{ item.description }}</td>
+                    
+                </tr>
+                    <!-- <td><a href="{% url 'pettycash:update_product' item.id %}" class="btn btn-primary">EDIT</a></td> -->
+                    <!-- Add more table cells for each field in your model -->
+               
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+    </div>
+        <!-- <ul>
+            {% for product in products %}
+                <li class="card-body">{{ product.description }} | <a href="{% url 'pettycash:update_product' product.id %}">Edit</a></li>
+            {% endfor %}
+        </ul> -->
+    </div>
+{% endblock content %}

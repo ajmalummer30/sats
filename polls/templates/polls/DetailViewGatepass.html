@@ -1,0 +1,280 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% load static %}
+{% block content %}
+
+<style>
+   
+    
+.center-heading {
+text-align: center;
+
+}
+.bckclr{
+background-color:lightgrey;
+}
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+    }
+    th[colspan="2"] {
+        text-align: center;
+    }
+    .border{
+        border: 1px solid black !important  ;
+        padding:10px;
+        
+    }
+    .center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+   
+    
+</style>  
+
+
+<div class="row">
+  
+        {% include 'facilitysidemenu.html' %}
+        
+      
+
+ 
+<div class="col-lg-7">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-lg-6">
+                    {% if Gatepass_obj.Mode == 1 %}
+                    <h5 style="font-size: 40px;">GATE PASS (Exit) </h5>
+                    {% else %}
+                    <h5 style="font-size: 40px;">GATE PASS (Entry)</h5>   
+                    {% endif %}
+
+                </div>
+                <div class="col-lg-6">
+
+                    <div style="text-align: right;">
+                        <img src="{% static 'sats ksa.png' %}"  width="200px" height="auto" > 
+                            
+                    </div>   
+
+                </div>
+
+            </div>
+            
+            
+                
+        </div> 
+        
+        <div class="card-body">
+            <table>
+                <tr>
+                    <th class="center-heading bckclr" colspan="6"><h5>GATEPASS NO: {{Gatepass_obj.id}}</h5></th>
+                    
+                </tr>
+                <tr>
+                    <td colspan="2"><b>Issued Date & Time </b>:{{Gatepass_obj.Issue_Date}} {{Gatepass_obj.Created_time}}</td> 
+                    <td colspan="2"><b>Station </b>:{{Gatepass_obj.station_name}}</td>
+                    <td colspan="2"><b>Issued By</b> :{{Gatepass_obj.user}}</td>
+                </tr>
+                <tr>
+                    <td colspan="3">    
+                        {% if Gatepass_obj.Return_status == '1' %}
+                        <b>Item Return Status</b> : Returnable
+                        {% else %}
+                        <b>Item Return Status</b> : Non Returnable
+                        {% endif %}
+        
+                       
+                    </td>
+                    <td colspan="3">
+                    
+                        {% if Gatepass_obj.Return_status == '2' %}
+                        <b>Return Date</b>: N/A
+                        {% else %}
+                            {%if Gatepass_obj.Return_date %}
+                            <div id="returndate">
+                                <b>Return Date</b> : {{Gatepass_obj.Return_date}}
+                            </div>
+                               
+                            {%else%}
+                            <div id="returndate">
+                                <b>Return Date</b> : Item with Vendor     <a href="" class="btn btn-primary update-return-date"  data-gatepass-id="{{ Gatepass_obj.id }}">Update Return Date</a>
+                            </div>
+                               
+                               
+                            {% endif %}
+
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                   <td colspan="6" style="height: 10px;"> </td>
+                </tr>
+                <tr>
+                    <td colspan="6" class="center-heading bckclr"><b>Vendor Details</b></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><b>Company Name</b> : {{Gatepass_obj.Company_Name}}</td>
+                    <td colspan="2"><b>Driver Name</b> : {{Gatepass_obj.Driver_name}}</td>
+                    <td><b>Iqama Number</b> : {{Gatepass_obj.Iqama_Number}} </td>
+                    <td><b>Contact Details</b> : {{Gatepass_obj.Contact_Details}}</td>
+                </tr>
+                <tr>
+                    <td colspan="6" style="height: 10px;"> </td>
+                 </tr>
+                 <tr>
+                    <td colspan="6" class="center-heading bckclr"><b>Item Description</b></td>
+                </tr>
+                <tr>
+                    <td colspan="6" style="height:130px;">
+                        <b>Description</b> :  {{Gatepass_obj.Item_Description}}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6" style="height: 10px;"> </td>
+                 </tr>
+                 <tr>
+                    <td colspan="6" class="center-heading bckclr"><b>Reason</b></td>
+                </tr>
+                <tr>
+                    <td colspan="6" style="height:130px;">
+                        {{Gatepass_obj.Reason}}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6" style="height: 10px;"> </td>
+                 </tr>
+                 <tr>
+                    <td colspan="2" class="center-heading bckclr"><b>Approved By Facility/Admin</b></td>
+                    <td colspan="2" class="center-heading bckclr"><b>Noted By Security</b></td>
+                    <td colspan="2" class="center-heading bckclr"><b>Acknowledged By Vendor</b></td>
+                </tr>
+                <tr>
+                    <td colspan="2">Date :</td>
+                    <td colspan="2">Date :</td>
+                    <td colspan="2">Date :</td>
+           
+                   
+                    </tr>
+                 <tr>
+                    <td colspan="2">Name :</td>
+                    <td colspan="2">Name :</td>
+                    <td colspan="2">Name :</td>
+                   
+                    </tr>
+                    <tr>
+                        <td style="height:100px;" colspan="2">Signature :</td>
+                        <td colspan="2">Signature :</td>
+                        <td colspan="2">Signature :</td>
+                       
+                        </tr>
+                 
+                <!-- Add more rows as needed -->
+            </table>
+            <br>
+            <br>
+            <div class="center">
+                <a href="{% url 'polls:DetailViewGatepassPdf' Gatepass_obj.id %}" class="btn btn-primary">Print GatePass</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                
+              </div>
+
+            <br>
+            <br>
+            <div class="center-heading">** Two copies will be presented by the vendor out of which one copy for the Vendor and one for security.<br>
+                The vendor will present his copy while bringing the item back</div> 
+        </div>
+        
+    </div>
+</div>
+    <div class="col-lg-2">
+        <div class="card">
+            <div class="card-header text-center">Attachments</div>
+            <ul class="list-group">
+                <li class="list-group-item">{% if Gatepass_obj.image1 %}
+                    <a href="{{ Gatepass_obj.image1.url }}" target="_blank">Open Image</a>
+                    {% else %}
+                        No image uploaded.
+                    {% endif %} 
+                </li>
+               </ul>
+           </div>
+         
+    </div>
+          
+</div> 
+
+<!--Verically centered bootstrap modal form for updating return date-->
+<!-- Button trigger modal -->
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Modal content goes here.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Model end-->
+
+
+<script>
+    $(document).ready(function(){
+        $('.update-return-date').click(function(e){
+            e.preventDefault();
+            var gatepassId = $(this).data('gatepass-id'); // Get the gatepass ID from data attribute
+            
+            var today = new Date().toISOString().slice(0, 10); // Get today's date in YYYY-MM-DD format
+            $.ajax({
+                type: 'POST',
+                url: '{% url "polls:UpdateReturnDateAjax" %}', // URL to your update_return_date view
+                data: {
+                    'gatepass_id': gatepassId,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    
+                },
+                success: function(response){
+                    // Handle success response
+                    alert('Return date updated successfully for Gatepass number: ' + response.Gatepassno);
+                    $('.update-return-date').hide();
+                    $('#returndate').html(' <b>Return Date</b> :'+ response.Return_date);
+                    //$('#myModal').modal('show');
+                    
+                    
+
+                    // Optionally, you can update the UI here to reflect the changes
+                },
+                error: function(xhr, errmsg, err){
+                    // Handle error response
+                    alert('Error updating return date:', errmsg);
+                }
+            });
+            
+            
+        });
+    });
+    </script>
+  
+    {% endblock content%}

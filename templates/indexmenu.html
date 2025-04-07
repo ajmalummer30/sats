@@ -1,0 +1,106 @@
+{% load static %}
+<nav>
+    <div class="container-fluid p-0">
+        <nav class="navbar fixed-top navbar-expand-lg bg-light navbar-light ">
+            <a href="index.html" class="navbar-brand ml-lg-3">
+                <img src="{% static 'satsksa.png' %}" class="responsive-image" alt="Responsive image">
+            </a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between px-lg-3" id="navbarCollapse">
+                <div class="navbar-nav m-auto py-0">
+                    <a href="{% url 'accounts:home' %}" class="nav-item nav-link active">Home</a>
+                    <a href="{% url 'accounts:network' %}" class="nav-item nav-link active"> Our Network</a>
+                    <a href="{% url 'accounts:journey' %}" class="nav-item nav-link active">About Us</a>
+                    <a href="{% url 'news:get_post' %}" class="nav-item nav-link active">News & Media</a>
+                    
+                    
+                    <a href="{%url 'accounts:contact' %}" class="nav-item nav-link active">Contact Us</a>
+                </div>
+                <!-- <a href="{% url 'accounts:login' %}" class="btn btn-primary py-2 px-4 d-none d-lg-block">LOGIN</a> -->
+                <span class="badge badge-dark">{{ request.user.username}}</span>
+
+                <div class="flex flex-1 justify-end px-2">
+                    <div class="flex items-stretch">
+                      <a class="btn btn-ghost rounded-btn">Button</a>
+                      <div class="dropdown dropdown-end">
+                        <div tabindex="0" role="button" class="btn btn-ghost rounded-btn">Dropdown</div>
+                        <ul
+                          tabindex="0"
+                          class="menu dropdown-content bg-base-100 rounded-box z-[1] mt-4 w-52 p-2 shadow">
+                          <li><a>Item 1</a></li>
+                          <li><a>Item 2</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                <div class="dropdown dropdown-end">
+                    <label tabindex="0" class="btn btn-ghost rounded-btn">
+                        Menu
+                    </label>
+                    <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                        {% if request.user.is_authenticated %}
+                        <li><a href="{% url 'accounts:home' %}">HOME</a></li>
+                        <li><a href="{% url 'pettycash:home' %}">Service Menu</a></li>
+                        <div class="divider"></div>
+                        <li><a href="{% url 'accounts:logout' %}">LOG OUT</a></li>
+                        {% else %}
+                        <li><a href="{% url 'accounts:login' %}">LOG IN</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+
+          {% comment %} <ul class="navbar-nav mr-right">
+           
+            <li class="nav-item dropdown">
+                
+                
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="{% static 'satsgroupcmyk.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+                </a>
+    
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    {%if request.user.is_authenticated %}
+                  <a class="dropdown-item" href="{% url 'accounts:home' %}">HOME</a>
+                  <a class="dropdown-item" href="{% url 'pettycash:home' %}">Service Menu</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="{% url 'accounts:logout'%}">LOG OUT</a>
+    
+                  {%else%}
+                  <a class="dropdown-item" href="{% url 'accounts:login'%}">LOG IN</a>
+                  {%endif%}
+    
+                </div>
+              </li>
+          </ul> {% endcomment %}
+            </div>
+        </nav>
+    </div>
+</nav>
+<main>
+    <div style="margin-top:60px;">
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="alert {% if message.tags %} alert-{{ message.tags }}"{% endif %}>
+                    {{ message }}
+                </div>
+                
+            {% endfor %}
+        </div>
+    {% endif %}
+
+   {% comment %}        
+    {% if breadcrumbs %}
+ 
+    {% include "dynamic_breadcrumbs/breadcrumbs.html" with breadcrumbs=breadcrumbs%}
+
+
+
+{% endif %}  {% endcomment %}
+
+    </div>
+   
+    </main>

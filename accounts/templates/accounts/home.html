@@ -1,0 +1,299 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+
+{% include 'header.html' %}
+
+<body>
+<header>
+   
+ 
+    {% include 'indexmenu.html' %}   
+</header>
+
+<section>
+    <div class="card text-bg-dark" >
+        <video  class="" autoplay loop muted>
+            <source src="{% static 'videos/gateway.mp4' %}" type="video/mp4" />
+        </video>
+        <div class="card-img-overlay" id="homeslogan" style=''>
+        <h5 class="card-title" >FEED AND CONNECT </h5>
+        <h5 class="card-title" >COMMUNITIES</h5>
+        
+        </div>
+    </div>
+    <!---->
+    <div class="categories-area section-padding30">
+        <div class="container">
+            <div class="row" style="padding-top:70px;">
+                <div class="col-lg-12">
+                    <!-- Section Tittle -->
+                    <div class="section-tittle text-center mb-80">
+                        <h2>Why to Choose us</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div id="aboutus1" class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="single-cat text-center mb-50">
+                        <div class="cat-icon">
+                            <span class="flaticon-shipped"></span>
+                        </div>
+                        <div class="cat-cap">
+                            <div class="single_transport">
+                                <div class="icon">
+                                    <i class="fa fa-5x fa-plane animated-icon" aria-hidden="true"></i>
+                                </div>
+                                <h5><a href="services.html">TRANSPORTATION</a></h5>
+                                <p>Esteem spirit temper too say adieus who direct esteem. It look estee luckily or picture
+                                    placing drawing.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="aboutus2" class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="single-cat text-center mb-50">
+                        <div class="cat-icon">
+                            <span class="flaticon-ship"></span>
+                        </div>
+                        <div class="cat-cap">
+                            <div class="icon">
+                                <i class="fa fa-5x fa-globe animated-icon" aria-hidden="true"></i>
+                            </div>
+                           
+                            <h5><a href="services.html">World Network</a></h5>
+                            <p>The sea freight service has grown conside rably in recent years. We spend timetting to know your processes to.</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="aboutus3" class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="single-cat text-center mb-50">
+                        <div class="cat-icon">
+                            <span class="flaticon-plane"></span>
+                        </div>
+                        <div class="cat-cap">
+                            <div class="icon">
+                                
+                                <i class="fa fa-3x fa-clock  fa-pulse animated-icon" aria-hidden="true"></i>
+                                <i class="fa fa-3x fa-phone" aria-hidden="true"></i>
+                            </div>
+                            <h5><a href="services.html">24/7 Availability</a></h5>
+                            <p>The sea freight service has grown conside rably in recent years. We spend timetting to know your processes to.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!---->
+    <div class="counter">
+        <div class="container">
+            <div class="row">
+               
+                <div class="col-12 col-lg-3">
+                    <div class="count-up">
+                        <p><i class="fa-solid  fa-5x fa-globe"></i></p>
+                        <p class="counter-count">27</p>
+                        <h3>COUNTRIES</h3>
+                    </div>
+                </div>
+    
+                <div class="col-12 col-lg-3">
+                    <div class="count-up">
+                        <p><i class="fa-solid fa-4x fa-map-location"></i></p>
+                        <p class="counter-count">210</p>
+                        <h3>LOCATIONS</h3>
+                    </div>
+                </div>
+    
+                <div class="col-12 col-lg-3">
+                    <div class="count-up">
+                        <p><i class="fa-solid fa-4x fa-users"></i></p>
+                        <p class="counter-count">45</p><span>K</span>
+                        <h3>EMPLOYEES</h3>
+                    </div>
+                </div>
+    
+                 <div class="col-12 col-lg-3">
+                   <div class="count-up">
+                        <p> <i class="fa-solid fa-4x fa-warehouse"></i></p>
+                        <p class="counter-count">180000</p><span>SQM</span>
+                        <h3>CAPACITY</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!---->
+    
+                        <div class="row" style="padding-top:80px;">
+                            <div class="col-lg-12">
+                                <!-- Section Tittle -->
+                                <div class="section-tittle text-center mb-80">
+                                    <span>OUR SERVICES</span>
+                                    <h3>WHAT WE CAN DO FOR YOU</h3>
+                                    
+                                </div>
+                            </div>
+                        </div>
+            
+              
+                        <div class="row">
+                            <div id="charterservice" class="col-lg-3 services">
+                            
+                                <div class="card-body text-center">
+                                    <img src="{% static 'images/charter1.png' %}" class="card-img" alt="..." style="width:100px;" >
+                                   <p> <a href="#" class="btn"><span>CHARTER SERVICE</span></a></p>
+                                </div>
+                        
+                            </div>
+                            <div id='warehouse' class="col-lg-3 services">
+                            
+                                <div class="card-body text-center">
+                                    <img src="{% static 'images/ground handling.png' %} " style="width:100px;"  >
+                                    <p> <a href="#" class="btn"><span>GROUND HANDLING</span></a></p>
+                                </div>
+                            
+                            </div>
+                            <div class="col-lg-3 services">
+                                
+                                    <div class="card-body text-center">
+                                        <img src="{% static 'images/bonded truck.png' %}" class="card-img" alt="..." style="width:100px;">
+                                        <p> <a href="#" class="btn"><span>BONDED TRUCK</span></a></p>
+                                    </div>
+                                
+                            </div>
+                            <div class="col-lg-3 services">
+                                
+                                    <div class="card-body text-center">
+                                        <img src="{% static 'images/multimodel.png' %}" class="card-img" alt="..." style="width:100px;">
+                                        <p> <a href="#" class="btn"><span>MULTIMODEL</span></a></p>
+                                    </div>
+                                
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                        <!---->
+                        <div class="container">
+                            <div class="row" style="padding-top:40px;">
+                                <div class="col-lg-12">
+                                    <!-- Section Tittle -->
+                                    <div class="section-tittle text-center mb-80">
+                                        <span>MEDIA & NEWS</span>
+                                          
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            <!---->
+                            <div id="satsmedia" class="row row-cols-1 row-cols-md-3">
+                            
+                                {%if news_obj %}
+                                {% for obj in news_obj %}
+                                <div class="col">
+                                    <div class="card media">
+                                        {%if obj.image.url  %}
+                                        <img src="{{ obj.image.url  }}" style="max-height:40vh;" class="card-img-top" alt="..." >
+                                        {% endif %}
+                                        <div class="card-body">
+                                          <h5 class="card-title">
+                                            
+                                            {{obj.title}}
+                                           
+                                          </h5>
+                                         
+                                          <a href="{% url 'news:get_post_id' obj.id%}" class="btn btn-primary">Read More</a>
+                                          <p> Published Date :  {{obj.published_date | date:"d-m-Y" }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+            
+
+                            <!---->
+                        </div>
+                      <!---->
+                    <div class="satslocation">
+                        <div class="container">
+                            <div class="row" style="padding-top:100px;">
+                                <div class="col-lg-12">
+                                    <!-- Section Tittle -->
+                                    <div class="section-tittle text-center mb-80">
+                                        <span>We Are Available Here</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body ">
+                                <div id='location' class="row">
+                                
+                                    <div class="col-lg-4">
+                                        <i class="fa-solid fa-2x fa-map-location-dot"></i>
+                                        <p>SATS AIR FREIGHT TERMINAL</p>
+                                        <p>CARGO VILLAGE<p>
+                                            <p>KING FAHAD INTL AIRPORT, DAMMAM</p>
+                                            <p>PO :32567</p>
+                                            <p><i class="fa-solid fa-phone"></i>+966 013 883 0282</p>
+                                            <p><i class="fa-solid fa-location-dot"></i> <a href="https://maps.app.goo.gl/BeKyUJRec5QLLs6v9">Click here for Location</a><p>
+                                            
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <i class="fa-solid fa-2x fa-map-location-dot"></i>
+                                        <p>SATS AIR FREIGHT TERMINAL</p>
+                                        <p>CARGO VILLAGE<p>
+                                            <p>KING KHALID INTL AIRPORT, RIYADH</p>
+                                            <p>PO :32567</p>
+                                            <p><i class="fa-solid fa-phone"></i> +966 11 283 6960</p>
+                                            <p><i class="fa-solid fa-location-dot"></i> <a href="https://maps.app.goo.gl/jBvtK2pDusqwAuxo6">Click here for Location</a><p>
+                                            
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <i class="fa-solid fa-2x fa-map-location-dot"></i>
+                                        <p>SATS AIR FREIGHT TERMINAL</p>
+                                        <p>CARGO VILLAGE<p>
+                                            <p>KING ABDULAZIZ INTL AIRPORT, JEDDAH</p>
+                                            <p>PO :32567</p>
+                                            <p><i class="fa-solid fa-phone"></i> +966 13 883 0129</p>
+                                            <p><i class="fa-solid fa-location-dot"></i> <a href="https://maps.app.goo.gl/x7Ur7n61Zr9JaBk78">Click here for Location</a><p>
+                                            
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                        
+                        
+                    </div>
+            
+                        <br>
+
+
+     
+   
+   
+    
+
+
+</section>
+<footer>
+    <div  class="card-header">
+        {% include 'footer.html' %}
+    </div>
+</footer>
+
+
+  
+</body>
+</html>
+
+
+    
+    
+  
+
+	
+

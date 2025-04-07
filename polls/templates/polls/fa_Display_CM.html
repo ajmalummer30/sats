@@ -1,0 +1,88 @@
+
+
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row">
+    {% include 'facilitysidemenu.html' %}
+
+    <div class="col-md-9">
+<div class="card">
+    <div class="card-header text-center">View CM Details</div>
+    <div class="card-body">
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <th>WO Ref Number</th>
+            <th>Contract</th>
+            <th>Contractor</th>
+            <th>Category</th>
+            <th>Subcategory</th>
+            <th>Purchase order</th>
+            <th>Amount</th>
+            <th>Station</th>
+            <th>Created By</th>
+            <th>Created on</th>
+            <th>Details</th>
+            <th>WO Ref Number</th>
+            <th>Work Permit</th>
+           
+        
+        </thead>
+        <tbody>
+            {% for obj in cm_obj %}
+            <tr>
+                <td>{{ obj.work_order.id}}</td> 
+                <td>{{ obj.contract}}</td>
+                <td>{{ obj.contractor}}</td>
+                <td>{{ obj.category}}</td>
+                <td>
+                    <ul>
+                        {% for subcategory in obj.subcategory.all %}
+                            <li>{{ subcategory.name }}</li>
+                            {% empty %}
+                         <li>None</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>{{ obj.purchase_order}}</td>
+                <td>{{ obj.amount}}</td>
+                <td>{{ obj.station_name}}</td>
+                <td>{{ obj.Created_By}}</td>
+                <td>{{ obj.uploaded_at|date:"d-M-Y"}}</td>
+                <td>{{ obj.Scope_of_Work}}</td>
+                <td> {% if obj.work_order%}
+                    {{ obj.work_order.id}}
+                    {% else %}
+                    <a class="btn btn-primary" href="{% url 'polls:CreatecmWorkOrder' obj.id %}">Issue WO</a>
+                    
+                    {% endif %}
+                </td>
+                <td>    
+                    {% if obj.work_order%}
+                    <a class="btn btn-primary" href="{% url 'polls:Create_WorkPermit_CM' obj.work_order.id %}">Issue WorkPermit</a>
+                    {% else %}
+                    <a class="btn btn-primary disabled" href="#" onclick="return false;">Issue WorkPermit</a>
+                    {% endif %}
+                </td> 
+               
+            
+           </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+   
+
+        
+    </div>
+</div>
+
+
+
+</div>
+</div>
+
+
+{% endblock content%}

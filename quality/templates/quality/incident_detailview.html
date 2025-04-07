@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{%load static %}
+{% block content %}
+
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header text-center"><h5>Incident Details</h5></div>
+    </div>
+    <table id="sortableTable" data-toggle="table" data-sortable="true" data-pagination="true" class="table  table-bordered">
+        
+        <tbody>
+            
+            <tr>
+                <td> <strong>REF NO</strong></td><td>{{ incident_obj.id }}</td>
+                <td><strong>Category</strong></td><td>{{ incident_obj.category }}
+                <td><strong>STATION NAME</strong></td><td>{{ incident_obj.station }}</td>
+                <td><strong>Location</strong></td><td>{{ incident_obj.Location }}</td>
+                <td><strong>Created DATE</strong></td><td>{{ incident_obj.created_date }}
+            </tr>
+            <tr>
+                <td> <strong>Whether Condition</strong></td><td>{{ incident_obj.whether_condition }}</td>
+                <td><strong>Visibility</strong></td><td>{{ incident_obj.visibility }}</td>
+                <td><strong>Surface Condition</strong></td><td>{{ incident_obj.surface_condition }}</td>
+                <td><strong>Reported Date</strong></td><td>{{ incident_obj.date_of_occurance }}</td>
+                <td><strong>Reported Time</strong></td><td>{{ incident_obj.time_of_occurance }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <table id="" data-toggle="table" data-sortable="true" data-pagination="true" class="table table-bordered">
+        <tr>Persons Involved</tr>
+        <thead>
+            <tr>
+                <th data-field="ChecklistID" data-sortable="true">Name</th>
+                <th data-field="ChecklistID" data-sortable="true">Iqama ID</th>
+                <th data-field="ChecklistID" data-sortable="true">Department</th>
+                <th data-field="ChecklistID" data-sortable="true">Designation</th>
+                <th data-field="ChecklistID" data-sortable="true">GACA ID</th>
+            </tr>
+        </thead> 
+        <tbody>
+            {% for employee in incident_obj.employees_name.all %}
+            <tr>
+                <td>{{employee.name}}</td>
+                <td>{{employee.iqama_id}}</td>
+                <td>{{employee.department}}</td>
+                <td>{{employee.designation}}</td>
+                <td>{{employee.gaca_id}}</td>
+                 
+             </tr>
+            {% endfor %}
+            
+        </tbody>
+    </table>
+
+    <table id="" data-toggle="table" data-sortable="true" data-pagination="true" class="table table-bordered">
+        <tr>Driver Involved</tr>
+        <thead>
+            <tr>
+                <th data-field="ChecklistID" data-sortable="true">Name</th>
+                <th data-field="ChecklistID" data-sortable="true">Iqama ID</th>
+                <th data-field="ChecklistID" data-sortable="true">Department</th>
+                <th data-field="ChecklistID" data-sortable="true">Driving Liscence No</th>
+                <th data-field="ChecklistID" data-sortable="true">GACA ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            {% for driver in incident_obj.driver_name.all %}
+            <tr>
+               <td>{{driver.name}}</td>
+               <td>{{driver.iqama_id}}</td>
+                
+            </tr>
+            {% endfor %}
+
+
+        </tbody>
+    </table>
+
+            <table id="" data-toggle="table" data-sortable="true" data-pagination="true" class="table table-bordered">
+                <tr>Injury Details</tr>
+                <thead>
+                    <th data-field="ChecklistID" data-sortable="true">Nature of Injury:</th>
+                    <th data-field="ChecklistID" data-sortable="true">Body parts affected:</th>
+                    
+                </thead>
+                <tbody>
+                    <tr>
+                        <td> 
+                            <ul>
+                                
+                                {% for nature in incident_obj.nature_of_injury.all %}
+                                <li>{{ nature.text }}</li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                               
+                                {% for nature in incident_obj.bodyparts_affected.all %}
+                                <li>{{ nature.text }}</li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="card">
+                <div class="card-header">Summary</div>
+                <div class="card-body">
+                    {{incident_obj.Summary}}
+                </div>
+                <div class="card-header">contributory factors</div>
+                <div class="card-body">
+                    {{incident_obj.contributory_factors}}
+                </div>
+                <div class="card-header">Corrective Measures</div>
+                <div class="card-body">
+                    {{incident_obj.corrective_measurments}}
+                </div>
+                <div class="card-header">Preventive Measures</div>
+                <div class="card-body">
+                    {{incident_obj.preventive_measures}}
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">Images</div>
+                <div class="card-body">
+                    <div class="row">
+                        {% if incident_obj.image1 %}
+                        <div class="col-lg-3">
+                            <p>Image 1</p>
+                            <img src="{{ incident_obj.image1.url }}" alt="" width="300" height="200">
+                        </div>
+                            {% else %}
+                            <div class="col-lg-3">
+                                No image available
+                            </div>
+                            {% endif %}
+                            <!---->
+                            {% if incident_obj.image2 %}
+                            <div class="col-lg-3">
+                                <p>Image 2</p>
+                                <img src="{{ incident_obj.image2.url }}" alt="" width="300" height="200">
+                            </div>
+                                {% endif %}
+                            <!---->
+                            {% if incident_obj.image3 %}
+                            <div class="col-lg-3">
+                                <p>Image 3</p>
+                                <img src="{{ incident_obj.image3.url }}" alt="" width="300" height="200">
+                            </div>
+                                {% endif %}
+                            <!---->
+                            {% if incident_obj.image4 %}
+                            <div class="col-lg-3">
+                                <p>Image 4</p>
+                                <img src="{{ incident_obj.image4.url }}" alt="" width="300" height="200">
+                            </div>
+                                
+                                {% endif %}
+                               
+                       
+                      
+                         
+                    </div>
+                    
+                </div>
+
+            </div>
+            
+   
+    
+</div>
+	
+
+
+{% endblock content%}

@@ -1,0 +1,183 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Queue Display</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+     
+
+        .flash {
+            animation: flash 1s infinite;
+        }
+
+        @keyframes flash {
+            0%, 100% { background-color: white; }
+            50% { background-color: yellow; }
+        }
+    
+
+   
+    </style>
+</head>
+<body class="bg-gray-100 h-screen flex items-center justify-center relative">
+    <button id="fullscreenBtn" class="absolute top-2 right-2 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">
+        <i class="fas fa-expand-arrows-alt"></i>
+    </button>
+    
+    <div class="container-fluid w-100 h-100" >
+        
+       
+       <table class="table-auto w-full h-full border-collapse border border-gray-400">
+        <thead class="bg-gray-200">
+            <tr>
+                <th class="border w-1/2 px-4 py-2 text-5xl">Counter</th>
+                <th class="border w-1/2 px-4 py-2 text-5xl">Queue Number</th>
+            </tr>
+        </thead>
+        <tbody id="counter_tbody">
+            <tr>
+                <td class="border w-1/2 px-4 py-2 text-7xl ">1</td>
+                <td id="counter-1" class="border w-1/2 px-4 py-2 text-7xl">-</td>
+            </tr>
+            <tr>
+                <td class="border w-1/2 px-4 py-2 text-7xl">2</td>
+                <td id="counter-2" class="border w-1/2 px-4 py-2 text-7xl">-</td>
+            </tr>
+            <tr>
+                <td class="border px-4 py-2 text-7xl">3</td>
+                <td id="counter-3" class="border px-4 py-2 text-7xl">-</td>
+            </tr>
+            <tr>
+                <td class="border px-4 py-2 text-7xl">4</td>
+                <td id="counter-4" class="border px-4 py-2 text-7xl">-</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+
+    <!-- Add an audio element for the notification sound -->
+    <audio id="notification-sound" src="{% static 'sound/notification.wav' %}" preload="auto"></audio>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <script>
+
+
+        const btn = document.getElementById('fullscreenBtn');
+
+        // Function to toggle fullscreen mode
+        function toggleFullScreen() {
+        if (!document.fullscreenElement) {
+            // If the document is not in fullscreen, enter it
+            document.documentElement.requestFullscreen();
+        } else {
+            if (document.exitFullscreen) {
+            // If the document is in fullscreen, exit it
+            document.exitFullscreen();
+            }
+        }
+        }
+    
+        // Add event listener to the button
+        btn.addEventListener('click', toggleFullScreen);
+
+
+let displaySocket;
+
+        function connectWebSocket() {
+          
+        displaySocket = new WebSocket(
+            'ws://' + window.location.host + '/ws/queue/'
+        );
+
+ 
+
+        displaySocket.onopen = function(e) {
+            console.log('WebSocket is open now.');
+        
+            // Set an interval to send a ping message every 30 seconds
+            setInterval(sendPing, 30000);
+        };
+
+        displaySocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            const counter = data.counter;
+            const queueNumber = data.queue_number;
+            console.log(data.type)
+
+            if (data.type === 'queue_update') {
+                // Update the table with the new queue number
+                const counterElement = document.getElementById('counter-' + counter);
+                counterElement.textContent = queueNumber;
+               // counterElement.textContent = queueNumber;
+
+                // Apply flash animation
+                counterElement.classList.add('flash');
+
+                // Remove flash animation after 4 seconds
+                setTimeout(() => {
+                    counterElement.classList.remove('flash');
+                }, 40000);
+
+
+                // Play notification sound
+
+             
+             const notificationSound = document.getElementById('notification-sound');
+               notificationSound.play(); 
+            } else if (data.type === 'ticket_issued') {
+                // Handle ticket issued event if necessary
+                console.log('New Ticket Issued:', data.ticket_number);
+                console.log('issued_at:', data.issued_at);
+               
+            }
+            else if (data.type=== 'queue_update_manual'){
+
+                const counterElement = document.getElementById('counter-' + counter);
+                counterElement.textContent = queueNumber;
+               // counterElement.textContent = queueNumber;
+
+                // Apply flash animation
+                counterElement.classList.add('flash');
+
+                // Remove flash animation after 4 seconds
+                setTimeout(() => {
+                    counterElement.classList.remove('flash');
+                }, 40000);
+
+
+                // Play notification sound
+
+             
+             const notificationSound = document.getElementById('notification-sound');
+               notificationSound.play(); 
+            
+            }
+                
+        };
+
+        displaySocket.onclose = function(e) {
+            console.error('Display socket closed unexpectedly');
+            setTimeout(connectWebSocket, 5000);
+        };
+
+
+        function sendPing() {
+            if (displaySocket.readyState === WebSocket.OPEN) {
+                displaySocket.send(JSON.stringify({ type: 'ping' }));
+            }
+        };
+
+    };
+
+        connectWebSocket();
+    </script>
+</body>
+</html>

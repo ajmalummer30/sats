@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+    <div class="container">
+   
+        <h1>Expense Form</h1>
+        <form method="post">
+        
+           
+                {% csrf_token %}
+                <h2>Expense Form</h2>
+            
+                {{ expense_form|crispy }}
+                {{ formset.management_form }}
+
+               
+                <div id="formset-items">
+                    <!-- Display only the first formset row initially -->
+                   
+            
+                    <!-- Hide the rest of the formset rows initially -->
+                 
+                   
+                        {% for form in formset.forms|slice:"1:" %}
+                            <div class="formset-row" style="display: none;">
+                                {% for field in form %}
+                                
+                                    <td>{{ field }}</td>
+                                    
+                                    
+                                </tr>
+                                  
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </table>
+                </div>
+         
+            <input type="submit" value="Submit">
+        </form>
+        <button id="add-item">Add Item</button>
+
+    </div>
+	
+    <script>
+        $(document).ready(function() {
+            let formsetCount = 1;  // Track the number of visible formsets
+    
+            $('#add-item').click(function(e) {
+                e.preventDefault();
+    
+                // Display the next hidden formset row
+                $('.formset-row:hidden').eq(0).show();
+                formsetCount++;
+    
+                // Hide the "Add Item" button if all formsets are displayed
+                if (formsetCount === 5) {
+                    $(this).hide();
+                }
+            });
+        });
+    </script>
+	
+
+{% endblock content%}

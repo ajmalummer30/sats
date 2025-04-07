@@ -1,0 +1,234 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+
+
+
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div id="Computercount" class="col-2 d-flex offset-1 category"><i class="fa-solid fa-computer"></i> <span>&nbsp;Computer | {{Desktop_count}}</span></div>
+                <div id="Laptopcount" class="col-2 d-flex  offset-1 category" ><i class="fa-solid fa-laptop"></i><span>&nbsp;LAPTOPS | {{Laptop_count}}</span></div>
+                <div id="Printercount" class="col-2 d-flex offset-1 category" ><i class="fa-solid fa-print"></i><span>&nbsp;PRINTERS | {{Printer_count}}</span></div>
+                <div id="CCTVCount" class="col-2 d-flex  offset-1 category" ><i class="fa-solid fa-video"></i><span>&nbsp;CCTV | {{CCTV_count}}</span></div> 
+            </div>
+            
+            
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-2 d-flex offset-1 category" category><i class="fa-solid fa-blender-phone"></i> IP Phones</div>
+                <div class="col-2 d-flex offset-1 category" ><i class="fa-solid fa-mobile"></i> Mobiles</div>
+                <div class="col-2 d-flex offset-1 category" ><i class="fa-solid fa-tv"></i>Smart TV | {{ItProducts_SmartTV}}</div>
+                <div class="col-2 d-flex  offset-1 category" ><i class="fa-solid fa-mobile"></i>MOBILE</div>
+            </div>
+            
+            
+        </div>
+
+    </div>
+    <br>
+    <div class="row" style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+        <div class="col-lg-4 col-md-6">
+            <canvas id="myChart" aria-label="chart" height="220" width="380" ></canvas>
+        </div>
+        <div class="col-lg-4 col-md-6">
+            <canvas id="chartId" aria-label="chart" height="240" width="380"></canvas>
+        </div>
+        <div class="col-lg-4 col-md-6">
+            <canvas id="doughnut" aria-label="chart" height="240" width="380"></canvas>
+        </div>
+    </div>
+
+    <br>
+
+   
+ 
+    <table  id="userTable" data-toggle="table" data-sortable="true" data-pagination="true" class="table">
+        <thead>
+            <tr>
+                <th data-field="ChecklistID" data-sortable="true">Asset NO</th>
+                <th data-field="Serial Number" data-sortable="true">Serial Number</th>
+                <th data-field="Category" data-sortable="true">Category</th>
+                <th data-field="OS" data-sortable="true">Operating System</th>
+                <th data-field="User" data-sortable="true">Processor</th>
+                <th data-field="Memmory" data-sortable="true">Memmory</th>
+                <th data-field="Hard disk" data-sortable="true">Hard disk</th>
+                <th data-field="Product Status" data-sortable="true">Product Status</th>
+                <th data-field="Availability" data-sortable="true">Availability</th>
+                <th data-field="View" data-sortable="true">View</th>
+                <th data-field="EDIT" data-sortable="true">EDIT</th>
+                
+               
+                <!-- Add more table headers for each field in your model -->
+            </tr>
+        </thead>
+        <tbody id="tablescroll" >
+            {% for item in form %}
+            <tr >
+                <td >{{ item.id }}</td>
+                <td >{{ item.serial_number }}</td>
+                <td >{{ item.category }}</td>
+                <td contenteditable="true">{{ item.operating_system }}</td> <!-- Access fields of your model -->
+                <td contenteditable="true">{{ item.processor }}</td>
+                <td contenteditable="true">{{ item.ram }}</td>
+                <td contenteditable="true">{{ item.harddisk }}</td>
+                <td>{{ item.status }}</td>
+                <td>{{ item.allocation_status }}</td> <!-- Replace field_name_1 with actual field name -->
+                <td><a href="{% url 'itassets:ItAssetDetailView' item.id %}" class="btn btn-primary">View </a></td>
+                <!-- <td><a href="{% url 'itassets:ItAssetDetailView' item.id %}" class="btn btn-primary">EDIT </a></td>  -->
+                 <td><a href="{% url 'itassets:EditItAsset' item.id %}" class="btn btn-primary">EDIT </a></td> 
+                <!-- Add more table cells for each field in your model -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <br>
+</div>
+	
+<script>
+   
+
+
+    $(document).ready(function() {
+
+        $('#userTable').DataTable({
+            "scrollY": "50vh",
+            "scrollCollapse": true,
+
+
+
+        });
+
+        var table = $('#userTable').DataTable();
+
+        // Iterate through each row and apply class based on cell value
+        table.rows().every(function() {
+          var data = this.data();
+          var cellValue = data[7]; // Assuming you want to check the value in the first column
+    
+          // Add your conditions to determine the class
+          if (cellValue === 'Damaged') {
+            $(this.node()).addClass('table-danger'); // Change 'table-danger' to your desired Bootstrap class
+          }
+
+
+
+        });
+
+        $('#editableTable td').on('click', function() {
+            $(this).attr('contenteditable', 'true');
+        });
+      
+       
+    });
+    
+    var xValues = ["Computers", "Laptop", "Printer","CCTV","Smart TV"];
+    var desktopCount = {{ Desktop_count }};
+    var laptopCount = {{ Laptop_count }};
+    var printerCount = {{ Printer_count }};
+    var CCTVCount ={{CCTV_count}};
+    var SmartTvCount ={{ItProducts_SmartTV}};
+    var Active_Count = {{ Active_asset_count }};
+    var Inactive_Count = {{ Inactive_asset_count }};
+    var Damaged_Count = {{ Damaged_asset_count }};
+    
+
+    
+
+var barColors = [
+  "#b91d47",
+  "#00aba9",
+  "#2b5797",
+  "#D48E4F",
+  "#1e7145"
+];
+
+new Chart("myChart", {
+  type: "doughnut",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: [desktopCount, laptopCount, printerCount,CCTVCount,SmartTvCount]
+    }]
+  },
+  options: {
+    responsive: true,
+    title: {
+      display: true,
+      text: "Total Asset Count"
+    }
+  }
+});
+
+
+
+var chrt = document.getElementById("chartId").getContext("2d");
+      var chartId = new Chart(chrt, {
+         type: 'bar',
+         data: {
+            labels: ["Active", "Inactive", "Damaged"],
+            datasets: [{
+               label: "Count",
+               data: [Active_Count, Inactive_Count, Damaged_Count],
+               backgroundColor: ["#b91d47","#00aba9","#2b5797"],
+               <!-- borderColor: ['red', 'blue', 'fuchsia', 'green', 'navy', 'black'], -->
+               borderWidth: 2,
+            }],
+         },
+         options: {
+            responsive: false,
+            title: {
+                display: true,
+                text: "Asset Status"
+              },
+            layout: {
+               padding: {
+                  left: 40,
+                  right: 40,
+               }
+            },
+            plugins: {
+               legend: {
+                  labels: {
+                     font: {
+                        size: 25,
+                        family: 'Helvetica',
+                        style: 'bold',
+                     }
+                  }
+               }
+            }
+         },
+      });
+
+      
+      var chrt = document.getElementById("doughnut").getContext("2d");
+      var chartId = new Chart(chrt, {
+         type: 'doughnut',
+         data: {
+            labels: ["Active", "Inactive", "Damaged"],
+            datasets: [{
+            label: "Total Asset Count",
+            data: [Active_Count,Inactive_Count ,Damaged_Count ],
+            backgroundColor: ["#b91d47","#00aba9","#2b5797"],
+            hoverOffset: 5
+            }],
+         },
+         options: {
+            responsive: false,
+            title: {
+                display: true,
+                text: "Total Asset Count"
+              },
+         },
+      });
+
+
+</script>
+
+{% endblock content%}

@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row">
+    {% include 'facilitysidemenu.html' %}
+
+    <div class="col-lg-9">
+
+        <div class="card">
+            <div class="card-header text-center">
+                <h5>Facility Dept</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="row justify-content-center">
+                        <div class="card-deck">
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-4 ">
+                                <div class="card border-light mb-3 custom_height_facility_menu"
+                                style="max-width: 18rem;box-shadow: 0 0 6px rgba(0,0,0,0.05),0 0 6px rgba(0,0,0,0.05);">
+                                <div class="card-header text-center">CATEGORY MANAGEMENT</div>
+                                <div class="card-body ">
+                                    <ul class="list-group list-group-flush ">
+                                        <!-- <li class="list-group-item"> <a class="nav-link linktxtclr"  href="{% url 'polls:add_category' %}">Add category</a></li>
+                                        
+                                        <li class="list-group-item"> <a class="nav-link linktxtclr"  href="{% url 'polls:add_sub_category' %}">Add/View Sub category</a></li> -->
+                                        <li class="list-group-item"> <a class="nav-link linktxtclr"  href="{% url 'polls:View_category' %}">View Category </a></li>    
+                                       
+                                    </ul>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-4 ">
+                                <div class="card border-light mb-3 custom_height_facility_menu"
+                                    style="max-width: 18rem;box-shadow: 0 0 6px rgba(0,0,0,0.05),0 0 6px rgba(0,0,0,0.05);">
+                                    <div class="card-header text-center">Vendor Management</div>
+                                    <div class="card-body ">
+                                        <ul class="list-group list-group-flush ">
+                                            <li class="list-group-item"> <a class="nav-link linktxtclr" href="{% url 'polls:Add_Vendor' %}">Add/View Vendor</a></li>
+                    
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-4 ">
+                                <div class="card border-light mb-3 custom_height_facility_menu"
+                                    style="max-width: 18rem;box-shadow: 0 0 6px rgba(0,0,0,0.05),0 0 6px rgba(0,0,0,0.05);">
+                                    <div class="card-header text-center">CONTRACT MANAGEMENT</div>
+                                    <div class="card-body ">
+                                        <ul class="list-group list-group-flush ">
+                            
+                                            <li class="list-group-item"> <a class="nav-link linktxtclr"
+                                                    href="{% url 'polls:add_Fa_contracts' %}">ADD CONTRACT</a></li>
+                                            <li class="list-group-item"> <a class="nav-link linktxtclr" href="{% url 'polls:ContractsView' %}">VIEW
+                                                    CONTRACT</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-4 ">
+                                <div class="card border-light mb-3 custom_height_facility_menu" style="max-width: 18rem;box-shadow: 0 0 6px rgba(0,0,0,0.05),0 0 6px rgba(0,0,0,0.05);">
+                                    <div class="card-header text-center">WORK ORDER MANAGEMENT</div>
+                                    <div class="card-body ">
+                                        <ul class="list-group list-group-flush ">
+                                            
+                                            <li class="list-group-item"> <a class="nav-link linktxtclr" href="{% url 'polls:IssuePM' %}"> Preventive Maintanence</a></li>
+                                            <li class="list-group-item"> <a class="nav-link linktxtclr" href="{% url 'polls:IssueCM' %}">Corrective Maintanence</a></li>
+                                            <li class="list-group-item"> <a class="nav-link linktxtclr" href="{% url 'polls:issuenewwork' %}">New WorkOrder</a></li>
+                                            <li class="list-group-item"> <a class="nav-link linktxtclr" href="{% url 'polls:WorkOrderView' %}">View Work Orders</a></li> 
+                                             <li class="list-group-item"> <a class="nav-link linktxtclr" href="{% url 'polls:displayevents' %}">View Schedules</a></li> 
+                                             <!-- <li class="list-group-item"> <a class="nav-link linktxtclr" href="{% url 'polls:PMView' %}">View PM Records</a></li> -->
+                                            <!-- <li class="list-group-item"> <a class="nav-link linktxtclr" href="{% url 'polls:CMView' %}">View CM Records</a></li> -->
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-4 ">
+                                <div class="card border-light mb-3 custom_height_facility_menu"
+                                    style="max-width: 18rem;box-shadow: 0 0 6px rgba(0,0,0,0.05),0 0 6px rgba(0,0,0,0.05);">
+                                    <div class="card-header text-center">WORK PERMIT</div>
+                                    <div class="card-body ">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">
+
+                                                <a class="nav-link linktxtclr"
+                                                    href="{% url 'polls:createworkpermit' %}">ISSUE WORKPERMIT</a>
+
+                                            </li>
+                                            <li class="list-group-item"> <a class="nav-link linktxtclr"
+                                                    href="{% url 'polls:displayworkpermits' %}">VIEW WORKPERMITS</a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-4 ">
+                                <div class="card border-light mb-3 custom_height_facility_menu"
+                                    style="max-width: 18rem;box-shadow: 0 0 6px rgba(0,0,0,0.05),0 0 6px rgba(0,0,0,0.05);">
+                                    <div class="card-header text-center">GATEPASS</div>
+                                    <div class="card-body ">
+                                        <ul class="list-group list-group-flush ">
+                                            <li class="list-group-item"> <a class="nav-link linktxtclr"
+                                                    href="{% url 'polls:gatepass' %}">ISSUE GATEPASS</a></li>
+                                            <li class="list-group-item"> <a class="nav-link linktxtclr"
+                                                    href="{% url 'polls:display_gatepass' %}">VIEW GATEPASS</a></li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            `
+        </div>
+    </div>
+</div>
+
+{% endblock content%}

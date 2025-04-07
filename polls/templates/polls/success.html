@@ -1,0 +1,19 @@
+
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+
+
+<h1>Incident Report Submitted</h1>
+<p>Incident ID: {{ incident.pk }}</p>
+<p>Created Date: {{ incident.created_date }}</p>
+<p>User: {{ incident.user }}</p>
+<p>Nature of Injury:</p>
+<ul>
+    {% for nature in incident.nature_of_injury.all %}
+    <li>{{ nature }}</li>
+    {% endfor %}
+</ul>
+
+{% endblock content%}

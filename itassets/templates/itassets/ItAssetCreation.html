@@ -1,0 +1,855 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+
+
+{% block content %}
+{% comment %} {% include 'financesidemenu.html' %} {% endcomment %}
+<div class="row">
+  {% include 'Itsidemenu.html' %}
+  <div class="col-12 col-sm-12 col-md-9">
+    <form method="post" enctype="multipart/form-data" novalidate>
+      <div class="card">
+        <div class="card-header text-center">
+          <h5>Add New IT Asset</h5>
+        </div>
+        <div class="card-body">
+          {% csrf_token %}
+          {% if form.non_field_errors %}
+          <div class="alert alert-danger" role="alert">
+            <ul>
+              {% for error in form.non_field_errors %}
+              <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+
+          <div class="accordion" id="accordionExample">
+            <div class="card">
+              <div class="card-header" id="headingOne">
+
+                <button class="btn  btn-block text-center" type="button" data-toggle="collapse"
+                  data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  <b>ASSET DETAILS </b>
+                </button>
+
+              </div>
+
+              <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-12 col-md-12">
+                      <div class="form-group row">
+                        <div class="col-12 col-md-2 control-label text-md-right text-left">
+                          <label><b>{{ form.brand.label}} </b></label>
+                        </div>
+                        <div class=" col-12 col-md-6">
+                          {{ form.brand }}
+                          {% for error in form.brand.errors %}
+                          <p style="color: red">{{ error }}</p>
+                          {% endfor %}
+
+                        </div>
+                        <div class="col-12 col-md-1">
+                          <!-- Button trigger modal -->
+                          <!-- <button type="button" id="displaybrandform" class="btn btn-primary" data-toggle="modal"
+                            data-target="#id_brand_ajax">
+                            Add Brand
+                          </button> -->
+
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <!---->
+                  <div class="row">
+                    <div class="col-12 col-md-12">
+                      <div class="form-group row">
+                        <div class="col-12 col-md-2 control-label text-md-right text-left"> <b>
+                            <label>{{form.category.label}}</label></b>
+                        </div>
+                        <div class=" col-12 col-md-6">
+                          {{ form.category }}
+                          {% for error in form.category.errors %}
+                          <p style="color: red">{{ error }}</p>
+                          {% endfor %}
+                        </div>
+                        <div class="col-12 col-md-1">
+                          <!-- Button trigger modal -->
+                          <!-- <button type="button" id="displaycategorymodal" class="btn btn-primary" data-toggle="modal"
+                            data-target="#id_category_ajax">
+                            Add Category
+                          </button> -->
+
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <!---->
+                   <!-- <div class="row">
+                    <div class="col-12 col-md-12">
+                      <div class="form-group row">
+                        <div class="col-12 col-md-2 control-label text-md-right text-left"> 
+                          <b> <label>{{form.model.label }}</label></b>
+                        </div>
+                        <div class=" col-12 col-md-8">
+                          {{ form.model }}
+                          {% for error in form.model.errors %}
+                          <p style="color: red">{{ error }}</p>
+                          {% endfor %}
+
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>  -->
+                  <!-- -->
+                  <div class="row">
+                    <div class="col-12 col-md-12">
+                      <div class="form-group row">
+                        <div class="col-12 col-md-2 control-label text-md-right text-left"> <b> <label>{{ form.device_model.label }}</label></b>
+                        </div>
+                        <div class=" col-12 col-md-6">
+                          {{ form.device_model }}
+                          {% for error in form.device_model.errors %}
+                          <p style="color: red">{{ error }}</p>
+                          {% endfor %}
+        
+                        </div>
+                        <div class="col-12 col-md-1">
+                          <!-- Button trigger modal -->
+                          <!-- <button type="button"  class="btn btn-primary displaymodelform" data-toggle="modal" data-target="#id_model_ajax">
+                            Add Model
+                          </button> -->
+          
+                        </div>
+        
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- -->
+                  <div class="row">
+                    <div class="col-12 col-md-12">
+                      <div class="form-group row">
+                        <div class="col-12 col-md-2 control-label text-md-right text-left">
+                          <b><label> {{form.serial_number.label }}</label></b>
+                        </div>
+                        <div class=" col-12 col-md-6">
+                          {{ form.serial_number }}
+                          {% for error in form.serial_number.errors %}
+                          <p style="color: red">{{ error }}</p>
+                          {% endfor %}
+
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <!-- -->
+                  <div class="row">
+                    <div class="col-12 col-md-12">
+                      <div class="form-group row">
+                        <div class="col-12 col-md-2 control-label text-md-right text-left">
+                          <b> <label>{{form.Asset_tag.label }}</label></b>
+                        </div>
+                        <div class=" col-12 col-md-6">
+                          {{ form.Asset_tag }}
+                          {% for error in form.Asset_tag.errors %}
+                          <p style="color: red">{{ error }}</p>
+                          {% endfor %}
+
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <!-- -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          <!---->
+          <br>
+          {% if itmobileform %}
+            {% if flag%}
+          <div id='mobileform' class="card card-header" >
+            {% else %}
+            <div id='mobileform' class="card card-header" style='display:none;'>
+            
+          {% endif %}
+          
+   
+
+   
+
+            <div class="row">
+              <!---->
+             
+              <div class="col-12 col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label>{{ itmobileform.imei.label }}</label>
+                  {{ itmobileform.imei }}
+                  {% for error in itmobileform.imei.errors %}
+                  <p style="color: red">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              </div>
+              <!-- -->
+            </div>
+          </div>
+          {% endif %}
+
+          <!---->
+          {% if itcctvform %}
+          {% if flag%}
+
+          <div id='cctvform' class="card card-header"  >
+            {% else %}
+            <div id='cctvform' class="card card-header" style='display:none;' >
+            {% endif %}
+            <div class="row">
+              <!---->
+              <div class="col-12 col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label>{{ itcctvform.ip_address.label }}</label>
+                  {{ itcctvform.ip_address }}
+                  {% for error in itcctvform.ip_address.errors %}
+                  <p style="color: red">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              </div>
+              <!-- -->
+            </div>
+          </div>
+        
+          {% endif %}
+          <!--  -->
+          <br>
+
+          <div class="card card-header">
+            <div class="row">
+              <div class="col-12 col-sm-12 col-md-2">
+                <div class="form-group">
+                  <label>Date</label>
+                  {{ form.created_date }}
+                  {% for error in form.created_date.errors %}
+                  <p style="color: red">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              </div>
+              <!---->
+              <div class="col-12 col-sm-12 col-md-2">
+                <div class="form-group">
+                  <label>{{ form.warranty_start_date.label }}</label>
+                  {{ form.warranty_start_date }}
+                  {% for error in form.warranty_start_date.errors %}
+                  <p style="color: red">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              </div>
+              <!-- -->
+              
+              <div class="col-12 col-sm-12 col-md-2">
+                <div class="form-group">
+                  <label>{{ form.warranty_end_date.label }}</label>
+                  {{ form.warranty_end_date }}
+                  {% for error in form.warranty_end_date.errors %}
+                  <p style="color: red">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              </div>
+              <!-- -->
+              <div class="col-12 col-sm-12 col-md-2">
+                <div class="form-group">
+                  <label>{{ form.po_number.label }}</label>
+                  {{ form.po_number }}
+                  {% for error in form.po_number.errors %}
+                  <p style="color: red">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <!-- -->
+              <div class="col-12 col-sm-12 col-md-2">
+                <div class="form-group">
+                  <label>{{ form.price.label }}</label>
+                  {{ form.price }}
+                  {% for error in form.price.errors %}
+                  <p style="color: red">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              </div>
+              <!---->
+              <div class="col-12 col-sm-12 col-md-2">
+                <div class="form-group">
+                  <label>supplier</label>
+                  {{ form.supplier }}
+                  {% for error in form.supplier.errors %}
+                  <p style="color: red">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              </div>
+              <!---->
+
+              <div class="col-12 col-sm-12 col-md-2">
+                <div class="form-group">
+                  <label>{{ form.station_name.label }}</label>
+                  {{ form.station_name }}
+                  {% for error in form.station_name.errors %}
+                  <p style="color: red">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              </div>
+              <!---->
+              <div class="col-12 col-sm-12 col-md-2">
+                <div class="form-group">
+                  <label>{{ form.location.label }}</label>
+                  {{ form.location }}
+                  {% for error in form.location.errors %}
+                  <p style="color: red">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              </div>
+              <!---->
+             
+           
+
+
+            </div>
+
+          </div>
+          <!---->
+          <br>
+          <div class="card card-header">
+            <div class="row">
+              <div class="col-12 col-md-2">
+                <div class="form-group">
+                  <label>{{ form.processor.label }}</label>
+                  {{ form.processor }}
+                  {% for error in form.processor.errors %}
+                  <p style="color: red">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              </div>
+              <!-- -->
+              <div class="col-12 col-md-2">
+                <div class="form-group">
+                  <label>{{ form.ram.label }}</label>
+                  {{ form.ram }}
+                  {% for error in form.ram.errors %}
+                  <p style="color: red">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              </div>
+              <!-- -->
+              <div class="col-12 col-md-2">
+                <div class="form-group">
+                  <label>{{ form.harddisk.label }}</label>
+                  {{ form.harddisk }}
+                  {% for error in form.harddisk.errors %}
+                  <p style="color: red">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <!-- -->
+              <div class="col-12 col-md-2">
+                <div class="form-group">
+                  <label>{{ form.operating_system.label }}</label>
+                  {{ form.operating_system }}
+                  {% for error in form.operating_system.errors %}
+                  <p style="color: red">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+          <!---->
+          <br>
+          <div class="card card-header">
+            <div class="row">
+
+              <div class="col-12 col-md-3">
+                <div class="form-group">
+                  <label>{{ form.status.label }}</label>
+                  {{ form.status }}
+                  {% for error in form.status.errors %}
+                  <p style="color: red">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              </div>
+              <!-- -->
+              <div class="col-12 col-md-4">
+                <div class="form-group">
+                  <label>{{ form.image.label }}</label>
+                  {{ form.image }}
+                  {% for error in form.image.errors %}
+                  <p style="color: red">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <!-- -->
+              <div class="col-12 col-md-4">
+                <div class="form-group">
+                  <label>{{ form.file.label }}</label>
+                  {{ form.file }}
+                  {% for error in form.file.errors %}
+                  <p style="color: red">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="col-12 col-md-11">
+                <div class="form-group">
+                  <label>{{ form.asset_remarks.label }}</label>
+                  {{ form.asset_remarks }}
+                  {% for error in form.asset_remarks.errors %}
+                  <p style="color: red">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!--  {{form|crispy}}  -->
+          <button type="submit" class="btn btn-primary btn-block">Create</button>
+        </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal brand-->
+<div class="modal fade" id="id_brand_ajax" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <form action="" method="post" id="form_saveitbrand" enctype="multipart/form-data" novalidate>
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Add New Brand</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="col-lg-6">
+              <div id="form-success_itbrand" style="display:none;">
+                <b style="color:#a61f38">Brand saved successfully</b>
+              </div>
+              <div id="div_itaddbrand" class="form-group">
+                {% csrf_token %}
+                {{ itbrandform }}
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--Modal modelform-->
+<div class="modal fade" id="id_model_ajax" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-content">
+    <form action="" method="post" id="form_saveitbmodel" enctype="multipart/form-data" novalidate>
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Add Model Brand</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-row">
+          <div class="col-lg-6">
+            <div id="form-success_itModel" style="display:none;">
+              <b style="color:#a61f38">Brand saved successfully</b>
+            </div>
+            <div id="div_itaddModel" class="form-group">
+
+            
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+
+<!-- Modal category-->
+<div class="modal fade" id="id_category_ajax" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <form action="" method="post" id="form_saveitcategory" enctype="multipart/form-data" novalidate>
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Add New Category</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="col-lg-6">
+              <div id="form-success_category" style="display:none;">
+                <b style="color:#a61f38">Category saved successfully</b>
+              </div>
+              <div id="div_additcategory" class="form-group">
+                {% csrf_token %}
+                {{ itcategoryform }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function () {
+
+    $("#id_brand").select2({
+      placeholder: 'Select an option',
+      width: '100%'
+    });
+    $('#id_category').select2({
+      placeholder: 'Select an option',
+      width: '100%'
+    });
+
+    $('#id_device_model').select2({
+      placeholder: 'Select an option',
+      width: '100%'
+    });
+
+    $('#id_model').on('input', function () {
+
+      var searchTerm = $(this).val();
+      if (searchTerm.length >= 4) { // Minimum characters before triggering autocomplete
+        $.ajax({
+          url: '{% url "itassets:itModalAjaxautocomplete" %}',  // URL to your Django autocomplete view
+          dataType: 'json',
+          data: {
+            term: searchTerm
+          },
+          success: function (data) {
+            // Update autocomplete suggestions
+            $('#id_model').autocomplete('option', 'source', data);
+            // $('#id_model').val(data[0]);
+            //$( "#id_model" ).autocomplete({source: data}); 
+          }
+        });
+      }
+    });
+
+    $('#id_model').autocomplete({
+      minLength: 0, // Autocomplete will be triggered manually
+    });
+
+
+    function fetchItBrandForm() {
+      $.ajax({
+        url: '{% url "itassets:DisplayItBrand" %}',  // Replace with the actual URL of your view
+        type: 'GET',  // Use GET method to fetch the form
+        dataType: 'json',
+        success: function (response) {
+          // Handle the response from the server
+          if (response.success) {
+            // If the response indicates success, display the form
+            $('#div_itaddbrand').html(response.data);
+          } else {
+            // If there was an error, handle it
+            alert('Failed to fetch form: ' + response.message);
+          }
+        },
+        error: function (xhr, status, error) {
+          // Handle errors that occur during the AJAX request
+          console.error('Error:', error);
+        }
+      });
+    }
+
+
+    $('#displaybrandform').on('click', function (event) {
+      event.preventDefault();  // Prevent the default action of the button
+      // Perform the AJAX request
+      fetchItBrandForm();
+
+    });
+
+
+    function fetchItCategoryForm() {
+      $.ajax({
+        url: '{% url "itassets:DisplayItCategory" %}',  // Replace with the actual URL of your view
+        type: 'GET',  // Use GET method to fetch the form
+        dataType: 'json',
+        success: function (response) {
+          // Handle the response from the server
+          if (response.success) {
+            // If the response indicates success, display the form
+            $('#div_additcategory').html(response.data);
+          } else {
+            // If there was an error, handle it
+            alert('Failed to fetch form: ' + response.message);
+          }
+        },
+        error: function (xhr, status, error) {
+          // Handle errors that occur during the AJAX request
+          console.error('Error:', error);
+        }
+      });
+    }
+
+
+    $('#displaycategorymodal').on('click', function (event) {
+      event.preventDefault();  // Prevent the default action of the button
+      // Perform the AJAX request
+      fetchItCategoryForm();
+
+    });
+
+
+    $('#form_saveitbrand').on('submit', function (event) {
+      event.preventDefault();  // Prevent the form from submitting normally
+
+
+      var formData = new FormData(this);
+
+      $.ajax({
+        url: '{% url "itassets:SaveItBrand" %}',
+        data: formData,
+        type: 'POST',
+        dataType: 'json',
+        processData: false,  // Prevent jQuery from processing the data
+        contentType: false,
+        success: function (response) {
+          if (response.success) {
+
+            // Handle success case
+            $('#form-success_itbrand').show();
+            setTimeout(function () {
+              $('#form-success_itbrand').fadeOut();
+            }, 2000);
+
+            $('#form_saveitbrand')[0].reset();
+
+            $('#id_brand').append($('<option>', {
+              value: response.id,
+              text: response.name
+            }));
+            $('#id_brand').val(response.id).trigger('change');
+            fetchItBrandForm();
+          } else {
+            // Handle validation errors
+            $('#div_itaddbrand').empty().append(response.data);
+
+          }
+        },
+        error: function (xhr, status, error) {
+          // Handle other types of errors
+          console.error('Error:', error);
+        }
+      });
+    });
+
+
+    $('#form_saveitcategory').on('submit', function (event) {
+      event.preventDefault();  // Prevent the form from submitting normally
+
+
+      var formData = new FormData(this);
+
+      $.ajax({
+        url: '{% url "itassets:SaveitCategory" %}',
+        data: formData,
+        type: 'POST',
+        dataType: 'json',
+        processData: false,  // Prevent jQuery from processing the data
+        contentType: false,
+        success: function (response) {
+          if (response.success) {
+
+            // Handle success case
+            $('#form-success_category').show();
+            setTimeout(function () {
+              $('#form-success_category').fadeOut();
+            }, 2000);
+
+            $('#form_saveitcategory')[0].reset();
+
+            $('#id_category').append($('<option>', {
+              value: response.id,
+              text: response.name
+            }));
+            $('#id_category').val(response.id).trigger('change');
+            fetchItCategoryForm();
+          } else {
+            // Handle validation errors
+            $('#div_additcategory').empty().append(response.data);
+
+          }
+        },
+        error: function (xhr, status, error) {
+          // Handle other types of errors
+          console.error('Error:', error);
+        }
+      });
+    });
+
+
+    $('#id_device_model').on('change', function() {
+    var modelId = $(this).val();
+
+          
+            $.ajax({
+                url: '{% url "itassets:GetBrandCategory" %}',
+                data: {
+                    'model_id': modelId
+                },
+                dataType: 'json',
+                success: function(response) {
+                 
+                    $('#id_brand').val(response.brand_id).trigger('change');
+                    $('#id_category').val(response.category_id).trigger('change');
+                
+                    console.log(response);
+
+                  
+                  
+                 
+                },
+                error: function(xhr, status, error) {
+            // Handle errors that occur during the AJAX request
+            console.error('Error:', error);
+            console.log(response);
+        }
+            });
+        });
+
+    function fetchItModelForm() {
+          $.ajax({
+              url: '{% url "itassets:AjaxdisplayItModel" %}',  // Replace with the actual URL of your view
+              type: 'GET',  // Use GET method to fetch the form
+              dataType: 'json',
+              success: function(response) {
+                  // Handle the response from the server
+                  if (response.success) {
+                      // If the response indicates success, display the form
+                      $('#div_itaddModel').html(response.data);
+                  } else {
+                      // If there was an error, handle it
+                      alert('Failed to fetch form: ' + response.message);
+                  }
+              },
+              error: function(xhr, status, error) {
+                  // Handle errors that occur during the AJAX request
+                  console.error('Error:', error);
+              }
+          });
+      }
+      $('.displaymodelform').on('click', function(event) {
+        event.preventDefault();  // Prevent the default action of the button
+        // Perform the AJAX request
+        fetchItModelForm();
+       
+    });
+
+    $('#form_saveitbmodel').on('submit', function (event) {
+      event.preventDefault();  // Prevent the form from submitting normally
+
+
+      var formData = new FormData(this);
+
+      $.ajax({
+        url: '{% url "itassets:AjaxsaveItModel" %}',
+        data: formData,
+        type: 'POST',
+        dataType: 'json',
+        processData: false,  // Prevent jQuery from processing the data
+        contentType: false,
+        success: function (response) {
+          if (response.success) {
+
+            // Handle success case
+            $('#form-success_itModel').show();
+            setTimeout(function () {
+              $('#form-success_itModel').fadeOut();
+            }, 2000);
+
+            $('#form_saveitbmodel')[0].reset();
+            $('#id_device_model').append($('<option>', {
+              value: response.id,
+              text: response.model_name
+            }));
+
+            console.log(response.id);
+
+          } else {
+            // Handle validation errors
+            $('#div_itaddModel').empty().append(response.data);
+
+          }
+        },
+        error: function (xhr, status, error) {
+          // Handle other types of errors
+          console.error('Error:', error);
+        }
+      });
+    })
+
+
+
+    $('#id_category').on('change', function () {
+      var category_id = $(this).val();
+      const mobilePhoneForm = document.getElementById("mobileform");
+      const cctvForm = document.getElementById("cctvform");
+      if (category_id === '20') {
+        mobilePhoneForm.style.display = 'block';
+        cctvForm.style.display = 'none';
+      } else if (category_id === '4') {
+        mobilePhoneForm.style.display = 'none';
+        cctvForm.style.display = 'block';
+      } else {
+        mobilePhoneForm.style.display = 'none';
+        cctvForm.style.display = 'none';
+      }
+
+    });
+
+  });
+</script>
+
+
+
+
+
+
+{% endblock content%}

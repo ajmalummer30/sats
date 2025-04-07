@@ -1,0 +1,55 @@
+-- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
+--
+-- Host: localhost    Database: sats
+-- ------------------------------------------------------
+-- Server version	8.3.0
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `auth_permission`
+--
+
+DROP TABLE IF EXISTS `auth_permission`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `auth_permission` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `content_type_id` int NOT NULL,
+  `codename` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auth_permission_content_type_id_codename_01ab375a_uniq` (`content_type_id`,`codename`),
+  CONSTRAINT `auth_permission_content_type_id_2f476e4b_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=161 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_permission`
+--
+
+LOCK TABLES `auth_permission` WRITE;
+/*!40000 ALTER TABLE `auth_permission` DISABLE KEYS */;
+INSERT INTO `auth_permission` VALUES (1,'Can add user',1,'add_customuser'),(2,'Can change user',1,'change_customuser'),(3,'Can delete user',1,'delete_customuser'),(4,'Can view user',1,'view_customuser'),(5,'Can add profile',2,'add_profile'),(6,'Can change profile',2,'change_profile'),(7,'Can delete profile',2,'delete_profile'),(8,'Can view profile',2,'view_profile'),(9,'Can add department',3,'add_department'),(10,'Can change department',3,'change_department'),(11,'Can delete department',3,'delete_department'),(12,'Can view department',3,'view_department'),(13,'Can add station',4,'add_station'),(14,'Can change station',4,'change_station'),(15,'Can delete station',4,'delete_station'),(16,'Can view station',4,'view_station'),(17,'Can add log entry',5,'add_logentry'),(18,'Can change log entry',5,'change_logentry'),(19,'Can delete log entry',5,'delete_logentry'),(20,'Can view log entry',5,'view_logentry'),(21,'Can add permission',6,'add_permission'),(22,'Can change permission',6,'change_permission'),(23,'Can delete permission',6,'delete_permission'),(24,'Can view permission',6,'view_permission'),(25,'Can add group',7,'add_group'),(26,'Can change group',7,'change_group'),(27,'Can delete group',7,'delete_group'),(28,'Can view group',7,'view_group'),(29,'Can add content type',8,'add_contenttype'),(30,'Can change content type',8,'change_contenttype'),(31,'Can delete content type',8,'delete_contenttype'),(32,'Can view content type',8,'view_contenttype'),(33,'Can add session',9,'add_session'),(34,'Can change session',9,'change_session'),(35,'Can delete session',9,'delete_session'),(36,'Can view session',9,'view_session'),(37,'Can add general question',10,'add_generalquestion'),(38,'Can change general question',10,'change_generalquestion'),(39,'Can delete general question',10,'delete_generalquestion'),(40,'Can view general question',10,'view_generalquestion'),(41,'Can add checklist details',11,'add_checklistdetails'),(42,'Can change checklist details',11,'change_checklistdetails'),(43,'Can delete checklist details',11,'delete_checklistdetails'),(44,'Can view checklist details',11,'view_checklistdetails'),(45,'Can add sub question response',12,'add_subquestionresponse'),(46,'Can change sub question response',12,'change_subquestionresponse'),(47,'Can delete sub question response',12,'delete_subquestionresponse'),(48,'Can view sub question response',12,'view_subquestionresponse'),(49,'Can add gen question response',13,'add_genquestionresponse'),(50,'Can change gen question response',13,'change_genquestionresponse'),(51,'Can delete gen question response',13,'delete_genquestionresponse'),(52,'Can view gen question response',13,'view_genquestionresponse'),(53,'Can add fuel',14,'add_fuel'),(54,'Can change fuel',14,'change_fuel'),(55,'Can delete fuel',14,'delete_fuel'),(56,'Can view fuel',14,'view_fuel'),(57,'Can add workpermit',15,'add_workpermit'),(58,'Can change workpermit',15,'change_workpermit'),(59,'Can delete workpermit',15,'delete_workpermit'),(60,'Can view workpermit',15,'view_workpermit'),(61,'Can add excel file',16,'add_excelfile'),(62,'Can change excel file',16,'change_excelfile'),(63,'Can delete excel file',16,'delete_excelfile'),(64,'Can view excel file',16,'view_excelfile'),(65,'Can add equipment',17,'add_equipment'),(66,'Can change equipment',17,'change_equipment'),(67,'Can delete equipment',17,'delete_equipment'),(68,'Can view equipment',17,'view_equipment'),(69,'Can add equipment specific question',18,'add_equipmentspecificquestion'),(70,'Can change equipment specific question',18,'change_equipmentspecificquestion'),(71,'Can delete equipment specific question',18,'delete_equipmentspecificquestion'),(72,'Can view equipment specific question',18,'view_equipmentspecificquestion'),(73,'Can add nature of injury',19,'add_natureofinjury'),(74,'Can change nature of injury',19,'change_natureofinjury'),(75,'Can delete nature of injury',19,'delete_natureofinjury'),(76,'Can view nature of injury',19,'view_natureofinjury'),(77,'Can add incident',20,'add_incident'),(78,'Can change incident',20,'change_incident'),(79,'Can delete incident',20,'delete_incident'),(80,'Can view incident',20,'view_incident'),(81,'Can add expense',21,'add_expense'),(82,'Can change expense',21,'change_expense'),(83,'Can delete expense',21,'delete_expense'),(84,'Can view expense',21,'view_expense'),(85,'Can add expense item',22,'add_expenseitem'),(86,'Can change expense item',22,'change_expenseitem'),(87,'Can delete expense item',22,'delete_expenseitem'),(88,'Can view expense item',22,'view_expenseitem'),(89,'Can add travel claim',23,'add_travelclaim'),(90,'Can change travel claim',23,'change_travelclaim'),(91,'Can delete travel claim',23,'delete_travelclaim'),(92,'Can view travel claim',23,'view_travelclaim'),(93,'Can add it_ brand',24,'add_it_brand'),(94,'Can change it_ brand',24,'change_it_brand'),(95,'Can delete it_ brand',24,'delete_it_brand'),(96,'Can view it_ brand',24,'view_it_brand'),(97,'Can add it_ category',25,'add_it_category'),(98,'Can change it_ category',25,'change_it_category'),(99,'Can delete it_ category',25,'delete_it_category'),(100,'Can view it_ category',25,'view_it_category'),(101,'Can add it_ device_ status',26,'add_it_device_status'),(102,'Can change it_ device_ status',26,'change_it_device_status'),(103,'Can delete it_ device_ status',26,'delete_it_device_status'),(104,'Can view it_ device_ status',26,'view_it_device_status'),(105,'Can add it_ prodcuts',27,'add_it_prodcuts'),(106,'Can change it_ prodcuts',27,'change_it_prodcuts'),(107,'Can delete it_ prodcuts',27,'delete_it_prodcuts'),(108,'Can view it_ prodcuts',27,'view_it_prodcuts'),(109,'Can add allocation_status',28,'add_allocation_status'),(110,'Can change allocation_status',28,'change_allocation_status'),(111,'Can delete allocation_status',28,'delete_allocation_status'),(112,'Can view allocation_status',28,'view_allocation_status'),(113,'Can add it asset allocation',29,'add_itassetallocation'),(114,'Can change it asset allocation',29,'change_itassetallocation'),(115,'Can delete it asset allocation',29,'delete_itassetallocation'),(116,'Can view it asset allocation',29,'view_itassetallocation'),(117,'Can add custom history',30,'add_customhistory'),(118,'Can change custom history',30,'change_customhistory'),(119,'Can delete custom history',30,'delete_customhistory'),(120,'Can view custom history',30,'view_customhistory'),(121,'Can add in_ body parts',31,'add_in_bodyparts'),(122,'Can change in_ body parts',31,'change_in_bodyparts'),(123,'Can delete in_ body parts',31,'delete_in_bodyparts'),(124,'Can view in_ body parts',31,'view_in_bodyparts'),(125,'Can add in_ category',32,'add_in_category'),(126,'Can change in_ category',32,'change_in_category'),(127,'Can delete in_ category',32,'delete_in_category'),(128,'Can view in_ category',32,'view_in_category'),(129,'Can add in_ incident type',33,'add_in_incidenttype'),(130,'Can change in_ incident type',33,'change_in_incidenttype'),(131,'Can delete in_ incident type',33,'delete_in_incidenttype'),(132,'Can view in_ incident type',33,'view_in_incidenttype'),(133,'Can add in_ nature of injury',34,'add_in_natureofinjury'),(134,'Can change in_ nature of injury',34,'change_in_natureofinjury'),(135,'Can delete in_ nature of injury',34,'delete_in_natureofinjury'),(136,'Can view in_ nature of injury',34,'view_in_natureofinjury'),(137,'Can add in_ surface condition',35,'add_in_surfacecondition'),(138,'Can change in_ surface condition',35,'change_in_surfacecondition'),(139,'Can delete in_ surface condition',35,'delete_in_surfacecondition'),(140,'Can view in_ surface condition',35,'view_in_surfacecondition'),(141,'Can add in_ visibility',36,'add_in_visibility'),(142,'Can change in_ visibility',36,'change_in_visibility'),(143,'Can delete in_ visibility',36,'delete_in_visibility'),(144,'Can view in_ visibility',36,'view_in_visibility'),(145,'Can add whether condition',37,'add_whethercondition'),(146,'Can change whether condition',37,'change_whethercondition'),(147,'Can delete whether condition',37,'delete_whethercondition'),(148,'Can view whether condition',37,'view_whethercondition'),(149,'Can add in_ incidents',38,'add_in_incidents'),(150,'Can change in_ incidents',38,'change_in_incidents'),(151,'Can delete in_ incidents',38,'delete_in_incidents'),(152,'Can view in_ incidents',38,'view_in_incidents'),(153,'Can add employeesinvolved',39,'add_employeesinvolved'),(154,'Can change employeesinvolved',39,'change_employeesinvolved'),(155,'Can delete employeesinvolved',39,'delete_employeesinvolved'),(156,'Can view employeesinvolved',39,'view_employeesinvolved'),(157,'Can add driver involved',40,'add_driverinvolved'),(158,'Can change driver involved',40,'change_driverinvolved'),(159,'Can delete driver involved',40,'delete_driverinvolved'),(160,'Can view driver involved',40,'view_driverinvolved');
+/*!40000 ALTER TABLE `auth_permission` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2024-04-02 13:30:54

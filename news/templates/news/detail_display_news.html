@@ -1,0 +1,86 @@
+{% load static %}
+<html lang="en">
+  {% include 'header.html' %}
+  <head>
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+        }
+        .content {
+            flex: 1;
+        }
+    </style>
+  </head>
+<body>
+    <header>
+       
+            {% include 'indexmenu.html' %}
+       
+    </header>
+    <section>
+
+        <div class="content" style="margin-top:70px;">
+
+            <div class="container">
+
+                <div id="satsmedia-news-details" class="row ">
+                            
+                    {%if news_obj %}
+                   
+                    <div class="col-12 col-md-6 col-lg-6">
+                        <div class="card media">
+                            {%if news_obj.image.url  %}
+                            <img src="{{ news_obj.image.url  }}"  class="card-img-top" alt="..." >
+                            {% endif %}
+                            
+                        </div>
+                    </div>
+                  
+                    {% endif %}
+
+
+                    <div class="col-12 col-md-6 col-lg-6">
+                        <h5 class="card-title">
+                                
+                            {{news_obj.title}}
+                           
+                          </h5>
+                         
+
+                          <p> Published Date :  {{news_obj.published_date | date:"d-m-Y" }}</p>
+                          <br>
+                        {% if news_obj.Paragraph_1 %}
+                        <p class="p_detail_news">  {{news_obj.Paragraph_1}}</p>
+                        {% endif %}
+                        {% if news_obj.Paragraph_2 %}
+                        <p class="p_detail_news">  {{news_obj.Paragraph_2}}</p>
+                        {% endif %}
+                        {% if news_obj.Paragraph_3 %}
+                        <p class="p_detail_news">   {{news_obj.Paragraph_3}}</p>
+                        {% endif %}
+
+                    </div>
+                </div>
+               
+                   
+                    
+               
+
+
+            </div>
+
+        </div>
+    </section>
+    <footer class="footer mt-auto">
+        <div class="card-header">
+            {% include 'footer.html' %}
+        </div>
+    </footer>
+
+    
+   
+  </body>
+</html>

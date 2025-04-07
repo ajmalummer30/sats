@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+
+{% include 'header.html' %}
+
+<body>
+<header>
+   
+ 
+    {% include 'indexmenu.html' %}   
+</header>
+
+<section>
+    <div class="card" >
+        <div style="max-height: 433px; overflow: hidden;">
+            <img src="{% static 'images/global.jpg'%}" alt="" style="width: 100%; height: 100%; object-fit: cover; object-position: center;">
+        </div>
+      
+        <div class="card-img-overlay text-center" id="homeslogan" style=''>
+        <h5 class="card-title" >AMERICA, EUROPE, AFRICA </h5>
+        <h5 class="card-title" >MIDDLE EAST</h5>
+        
+        </div>
+    </div>
+    <!---->
+    <div class="categories-area section-padding30">
+        <div class="container">
+            <div class="row" style="padding-top:70px;">
+                <div style="padding:50px;">
+                    <!-- Section Tittle -->
+                    <div class="section-tittle text-center">
+                       
+                        <p class="p_detail_news">Worldwide Flight Services (WFS), a member of the SATS Group since April 2023, is the world’s largest air cargo logistics provider and one of the leading providers of ground handling services.</p>
+                        <p class="p_detail_news">Now, the combined leadership positions of SATS and WFS at major international airports in Europe, North America and Asia Pacific, enables airlines to benefit from our unique connectivity across major trade lanes provided by the world’s pre-eminent air cargo handling platform.</p>
+                        <p class="p_detail_news">As a combined company, SATS and WFS create an Americas-Europe-APAC network with a global footprint of more than 210 cargo and ground handling stations in 27 countries, covering trade routes responsible for more than 50% of global air cargo volume.</p>
+                        <p class="p_detail_news">WFS provides specialist facilities for temperature-controlled pharma shipments and e-commerce cargo to help clients optimise their cargo capacities and revenue possibilities in addition to general and perishable cargo moving through its 800,000 sqm of warehouse facilities globally. </p>
+                    
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row"> 
+          
+                <img src="{% static 'images/network1.jpg'%}"  alt="">
+                 
+             
+        </div>
+        
+    </div>
+   
+
+
+
+</section>
+
+<br>
+<br>
+<footer>
+    <div  class="card-header">
+        {% include 'footer.html' %}
+    </div>
+</footer>
+
+
+  
+</body>
+</html>
+
+
+    
+    
+  
+
+	
+

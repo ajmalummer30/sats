@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+Dear {{ instance.employee.manager}}
+<br>
+<br>
+
+
+<h4>Mr.{{instance.claimant}} has submitted petty cash request no {{ instance.id }} for approval</h4>
+    <table class="table" border="1" style='border:1px solid black;'>
+      <thead>
+        <tr>
+            <th data-field="SL_No" data-sortable="true">Sl No</th>
+            <th data-field="Claimant" data-sortable="true">Claimant</th>
+            <th data-field="Date" data-sortable="true">Date</th>
+            <th data-field="total_amount" data-sortable="true">Total Amount</th>
+            <th data-field="description" data-sortable="true">Description</th>
+            
+            <!-- Add more table headers for each field in your model -->
+        </tr>
+    </thead>
+    <tbody>
+        
+        <tr>
+            <td>{{ instance.id }}</td>
+            <td>{{ instance.claimant }}</td> <!-- Access fields of your model -->
+            <td>{{ instance.date }}</td>
+            <td>{{ instance.total_amount }} SAR</td>
+            <td>{{ instance.description }}</td>
+            
+        </tr>
+           
+       
+       
+    </tbody>
+      </table>
+<br>
+<br>
+<a href="http://192.168.1.80:8000/pettycash/PcManagerView/">To approve the claim, Please click here</a>  
+    {% comment %} <a href="http://192.168.1.80:8000/pettycash/Mgrtcapprove/{{ claim }}/Approve/?token={{ token }}">To approve the claim, Please click here</a>   {% endcomment %}
+    <!-- <a class="" href="{% url 'pettycash:Pc_Manager_View' %}">Approve PettyCash</a> -->
+    <br>
+    <br>
+    <p>Regards<br>
+        SATS SAUDI Arabia<br>
+        
+      </p>
+</body>
+</html>
+<br>
+<br>
+
+
+

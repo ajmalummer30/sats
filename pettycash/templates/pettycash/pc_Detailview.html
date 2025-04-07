@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+{% include 'financesidemenu.html' %}
+<div class="col-md-9">
+    <div class="card">
+        <div class="card-header text-center">
+           <p>Petty Cash Detail View</p>     
+        </div>
+        <div class="card">
+            <div class="card-header text-center">
+   
+              <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                          <td scope="col">Req No : {{invoice_items.id}}</td>
+                          <td scope="col">Employee Name : {{invoice_items.claimant}}</td>
+                          <td scope="col">Date : {{invoice_items.date}}</td>
+                          <td scope="col">Station : {{invoice_items.station_name}}</td>
+                        </tr>
+                        <tr scope="row">
+                            <td scope="col">Remarks : {{invoice_items.description}}</td>
+                            <td></td>
+                            <td>{% if invoice_items.upload_bill %}
+                              <p>Uploaded File: <a href="{{ invoice_items.upload_bill.url }}" target="_blank">View attachement</a></p>
+                      
+                          {% else %}
+                              <p>No Attachment</p>
+                          {% endif %}</td>
+                        </tr>
+                      </thead>
+                     
+                </table>
+              
+              </div>  
+           </div>  
+                 
+            
+        
+        <div class="card-body">
+           
+            <div class=" table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                          <th data-field="SL_No" data-sortable="true">Sl No</th>
+                          <th data-field="Claimant" data-sortable="true">Claimant</th>
+                          <th data-field="Date" data-sortable="true">Date</th>
+                          <th data-field="total_amount" data-sortable="true">Total Amount</th>
+                          <th data-field="description" data-sortable="true">Status</th>
+                          <th data-field="description" data-sortable="true">Details</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        
+                        {% for lineitems in line_items  %}
+   
+                        <tr>
+                          <th scope="row">{{ forloop.counter }}</th>
+                          <td>{{lineitems.item_name}}</td>
+                          <td>{{lineitems.quantity}}</td>
+                          <td>{{lineitems.unit_price}}</td>
+                          <td>{{lineitems.amount}}</td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td><th scope="col">Total Amount</th></td>
+                            <th>{{ invoice_items.total_amount}}</th>
+                        </tr>
+                      </tbody>
+                      
+                </table>
+                
+                {% if  invoice_items.Approved_status == False and invoice_items.employee.manager == request.user %}
+                <p>Status : Pending</p>
+                <a href="{% url 'pettycash:ApprovePcClaim' invoice_items.id 'Approve' %}" class="btn btn-primary">Approve</a>
+                {% elif invoice_items.Approved_status == True and invoice_items.employee.manager == request.user %}
+                <p>Status : Approved</p>
+                {% elif nvoice_items.Approved_status == False and invoice_items.employee == request.user %}
+                <p>Status : Pending for Approval</p>
+                {% elif nvoice_items.Approved_status == True and invoice_items.employee == request.user %}
+                <p>Status : Approved</p>
+                
+               
+                {% endif %}
+                  
+                
+              </div>  
+
+
+
+         
+        </div>
+    </div>
+</div>
+
+</div>
+{% endblock content %}

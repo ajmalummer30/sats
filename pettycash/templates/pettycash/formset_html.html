@@ -1,0 +1,22 @@
+
+   <table id="formset-items">
+                    <tr>
+                        <th>Sl No:</th>
+                        <th>Item Name</th>
+                        <th>Quantity</th>
+                        <th>unit_price</th>
+                  
+                    </tr> 
+                    {% for form in formset %}
+                            
+                        <tr class="formset-row">
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ form.item_name }}</td>
+                            <td>{{ form.quantity }}</td>
+                            <td>{{ form.unit_price }}</td>
+                           
+                           
+                        </tr> 
+                    {% endfor %}
+                </table> 
+        

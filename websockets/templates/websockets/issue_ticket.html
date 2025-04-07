@@ -1,0 +1,269 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queue Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        .bg-custom { background-color: #a61f38; }
+        .hover\:bg-custom-hover:hover { background-color: #8e1a30; }
+
+        .focus\:ring-custom:focus {
+            --tw-ring-color: #a61f38;; /* Custom ring color */
+            box-shadow: 0 0 0 2px var(--tw-ring-color);
+        }
+        .focus\:border-custom:focus {
+            border-color: #a61f38;; /* Custom border color */
+        }
+
+     
+        #modal {
+            
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            width: 80%;
+            max-width: 640px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 1050;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Style specific for printing */
+        #printable {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        #printable img {
+            max-width: 100px;
+            margin-bottom: 20px;
+        }
+
+        #printable p {
+            font-size: 16px;
+            line-height: 1.5;
+            margin: 10px 0;
+        }
+        #validationMessage {
+            color: #a61f38;  /* Style for error message */
+            display: none; /* Hide by default */
+            padding-top:5px;
+            font-size:25px;
+        }
+            
+
+    </style>
+</head>
+<body class="h-screen flex items-center justify-center relative">
+
+    <img src="{% static 'SATS SaudiArabia.png' %}" alt="Company Logo" class="absolute top-5 left-5 h-12"> <!-- Adjust height as necessary -->
+
+    <button id="fullscreenBtn" class="absolute top-2 right-2 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">
+        <i class="fas fa-expand-arrows-alt"></i>
+    </button>
+
+  
+    <div class="container mx-auto">
+        <div class="p-6 max-w-2xl mx-auto  rounded-lg border ">
+            <h1 class="text-4xl font-bold text-center mb-8">ISSUE TICKET</h1>
+            <div class="flex flex-col items-center">
+                <label for="MobileInput" class="block text-lg font-medium text-gray-700"></label>
+                <input type="tel" id="MobileInput" name="quantity"
+                       class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm placeholder-gray-400
+                              focus:outline-none focus:ring-custom focus:border-custom text-lg form-input"
+                       placeholder="Mobile Number">
+                       <p id="validationMessage"><strong>Please enter a mobile number</strong></p>
+                <!-- Button for issuing tickets -->
+                <button id="issue-ticket-button" class="w-full mt-4 px-10 py-5 bg-custom text-white text-xl rounded hover:bg-custom-hover focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    Issue Ticket
+                </button>
+    
+                <!-- Display of the last issued ticket number -->
+                <p class="mt-8 text-2xl">Last Issued Ticket Number: <span id="current-ticket-number" class="font-semibold text-3xl">0</span></p>
+            </div>
+        </div>
+        {% comment %} <button id="print-ticket-button" class="btn btn-secondary">Print Ticket</button> {% endcomment %}
+        <input type="text" id="text-input" placeholder="Enter text for speech">
+        <button onclick="generateAndPlaySpeech()" class="btn btn-secondary">Generate Speech</button>
+    <audio id="audio-player" controls hidden></audio>
+    
+       
+        
+        <!-- Hidden div for print -->
+        <div id="modal">
+            <div id="printable">
+                <img src="{% static 'SATS SaudiArabia.png' %}" alt="Logo">
+                <p><strong>Printing</strong></p>
+                <p><strong>Token Number: <span id="print-ticket-number">0</span></strong></p>
+                
+                <p><strong>Date & Time:</strong> <span id="print-date-time"></span></p>
+            </div>
+        </div>
+    
+    <script>
+        function generateAndPlaySpeech() {
+            var text = document.getElementById('text-input').value;
+            var audioPlayer = document.getElementById('audio-player');
+
+            // Generate the URL for the GET request
+            var url = `/tts/?text=${encodeURIComponent(text)}`;
+
+            // Use fetch API to get the audio file
+            fetch(url)
+                .then(response => response.blob())
+                .then(blob => {
+                    // Create a URL for the blob
+                    var audioURL = window.URL.createObjectURL(blob);
+                    audioPlayer.src = audioURL;
+                    audioPlayer.play();  // Play the audio automatically
+                })
+                .catch(error => console.error('Error fetching the audio:', error));
+        }
+
+        const btn = document.getElementById('fullscreenBtn');
+
+        // Function to toggle fullscreen mode
+        function toggleFullScreen() {
+        if (!document.fullscreenElement) {
+            // If the document is not in fullscreen, enter it
+            document.documentElement.requestFullscreen();
+        } else {
+            if (document.exitFullscreen) {
+            // If the document is in fullscreen, exit it
+            document.exitFullscreen();
+            }
+        }
+        }
+    
+        // Add event listener to the button
+        btn.addEventListener('click', toggleFullScreen);
+
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/websocket/last_ticket_number/')
+                .then(response => response.json())
+                .then(data => {
+                    const lastTicketNumber = data.ticket_number;
+                    document.getElementById('current-ticket-number').textContent = lastTicketNumber;
+                    document.getElementById('print-ticket-number').textContent = lastTicketNumber;
+                })
+                .catch(error => console.error('Error fetching last ticket number:', error));
+
+        });
+
+        let ticketSocket;
+
+        function connectWebSocket() {
+          
+            ticketSocket = new WebSocket(
+            'ws://' + window.location.host + '/ws/queue/'
+        );
+
+        ticketSocket.onopen = function(e) {
+            console.log('WebSocket is open now.');
+        
+            // Set an interval to send a ping message every 30 seconds
+           setInterval(sendPing, 30000);
+        };
+
+        document.getElementById('issue-ticket-button').onclick = function() {
+            const MobileNumberInputDom = document.getElementById('MobileInput');
+            const mobileNumber = MobileNumberInputDom.value.trim();
+
+
+        // Element to display validation message
+        const validationMessage = document.getElementById('validationMessage');
+        if (mobileNumber === '') {
+            validationMessage.style.display = 'block'; // Show the message if input is empty
+            MobileNumberInputDom.focus(); // Set focus back to the input field
+        } else if (!/^\d+$/.test(mobileNumber)) { // Regex to check if input contains only digits
+            validationMessage.textContent = 'Please enter a valid number. No letters or special characters allowed.'; // Update validation message for non-numeric input
+            validationMessage.style.display = 'block'; // Show the message if input is not a number
+            MobileNumberInputDom.focus(); // Set focus back to the input field
+        }
+        
+        
+        else {
+            validationMessage.style.display = 'none'; 
+            ticketSocket.send(JSON.stringify({
+                'action': 'issue_ticket',
+                'phone_number': mobileNumber,
+                }));
+                MobileNumberInputDom.value = '';
+            }
+        };
+
+        
+        {% comment %} document.getElementById('print-ticket-button').onclick = function() {
+            const ticketNumber = document.getElementById('current-ticket-number').textContent;
+            document.getElementById('print-ticket-number').textContent = ticketNumber;
+
+            const printableDiv = document.getElementById('printable');
+             printableDiv.style.display = 'block'; 
+            window.print();
+            printableDiv.style.display = 'none'; 
+        };
+ {% endcomment %}
+        
+
+        ticketSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            if (data.type === 'ticket_issued') {
+                const ticketNumber = data.ticket_number;
+                const time_date = data.issued_at
+                document.getElementById('current-ticket-number').textContent = ticketNumber;
+                document.getElementById('print-ticket-number').textContent = ticketNumber;
+                document.getElementById('print-date-time').textContent = time_date;
+
+                
+                
+             
+            
+               
+
+                const printableDiv = document.getElementById('modal');
+                printableDiv.style.display = 'flex'; 
+
+                setTimeout(function() {
+                    printableDiv.style.display = 'none';
+                }, 3000);
+               
+            }
+          
+            else if (data.type === 'pong'){
+                console.log('PONG:');
+            }
+        };
+
+        ticketSocket.onclose = function(e) {
+            console.error('Ticket socket closed unexpectedly');
+        };
+
+
+        function sendPing() {
+            if (ticketSocket.readyState === WebSocket.OPEN) {
+                ticketSocket.send(JSON.stringify({ type: 'ping' }));
+            }
+        };
+
+    };
+    connectWebSocket();
+    </script>
+</body>
+</html>

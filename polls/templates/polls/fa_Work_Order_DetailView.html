@@ -1,0 +1,772 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row">
+    {% include 'facilitysidemenu.html' %}
+
+    <div class="col-lg-9 customscroll">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            
+            <li id="warranty" class="nav-item" role="presentation" style="display: none;">
+              <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab"
+                aria-controls="profile" aria-selected="false">Attachments</button>
+            </li>
+            {% if obj.Type_of_work == 1%}
+            <li id="config" class="nav-item" role="presentation">
+              <button class="nav-link active" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab"
+                aria-controls="contact" aria-selected="false">Preventive Maintanence records</button>
+            </li>
+            {% elif obj.Type_of_work == 3 %}
+            <li id="asset" class="nav-item" role="presentation"  >
+                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab"
+                  aria-controls="home" aria-selected="true">New Maintenance</button>
+              </li>
+            
+            {% else %}
+            <li id="allocation" class="nav-item" role="presentation">
+              <button class="nav-link active" id="allocation-tab" data-bs-toggle="tab" data-bs-target="#allocationtab" type="button"
+                role="tab" aria-controls="allocation" aria-selected="false">Corrective maintanence Records</button>
+            </li>
+            {% endif %}
+            <li id="id_maintanence" class="nav-item" role="presentation">
+              <button class="nav-link" id="maintanence-tab" data-bs-toggle="tab" data-bs-target="#maintanencetab" type="button"
+                role="tab" aria-controls="allocation" aria-selected="false">Work Permits</button>
+            </li>
+          </ul>
+
+
+    
+        
+          <div class="tab-content" id="myTabContent">
+            {% if obj.Type_of_work == 3 %}
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                {% else %}
+                <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    {% endif %}
+                    <div class="container-fluid mt-4">
+                        <div class="card">
+                            <div class="card-header text-center">New Works History</div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    {% if Newmaint_obj %}
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <th>WO Ref Number</th>
+                                            <th>Station</th>
+                                            <th>Contract</th>
+                                            <th>Contractor</th>
+                                            <th>Purchase_order</th>
+                                            <th>Amount</th>
+                                            <th>Created By</th>
+                                            <th>Created on</th>
+                                            <th>Details</th>
+                                            <th>Comments</th>
+                                            <th>Attachments</th>
+                                           
+                
+                                        </thead>
+                                        <tbody>
+                                            {% for obj in Newmaint_obj %}
+                                            <tr>
+                                                <td>{{ obj.work_order.id}}</td> 
+                                            <td>{{ obj.station_name}}</td>
+                                            <td>{{ obj.contract}}</td>
+                                            <td>{{ obj.contractor}}</td>
+                                            <td>{{ obj.purchase_order}}</td>
+                                            <td>{{ obj.amount|floatformat:"2"}} SAR</td>
+                                            <td>{{ obj.created_by}}</td>
+                                            <td>{{ obj.work_order.uploaded_at|date:"d-M-Y"}}</td>
+                                            <td>{{ obj.Scope_of_Work}}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#New_commentsModal{{ obj.id }}" data-newid="{{ obj.id }}">
+                                                    Comments
+                                                </button>
+                                                <!---->
+                                                <div class="modal fade" id="New_commentsModal{{ obj.id }}" tabindex="-1" aria-labelledby="New_commentsModal{{ obj.id }}" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="New_modalLabel{{ obj.id }}">Comments</h5>
+                                                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form id="New_commentForm{{ obj.id }}" method="post" action="">
+                                                                    {% csrf_token %}
+                                                                    {{ NewCommentForm|crispy}}
+                                                                    <input type="hidden" name="New_record_id" id="modalNewId" value="{{obj.id}}">
+                                                                    
+                                                                    <button type="submit" class="btn btn-primary">Add Comment</button>
+                                                                </form>
+                                                                <br>
+                                                                  <div><strong> your are adding comments to work order ref number : {{obj.work_order.id}}, issued by : {{obj.work_order.Created_By }} on {{ obj.work_order.uploaded_at|date:"jS F Y" }} at {{ obj.work_order.uploaded_at|date:"g:i A" }}</strong></div>
+                                                                  <br>
+                                                                <table class="table table-bordered">
+                                                                    <thead>
+                                                                        <th>Commented By</th>
+                                                                        <th>Date</th>
+                                                                        <th>Comments</th>
+                                                                    </thead>
+                                                                    <tbody id="New_commentstd{{ obj.id }}">
+                                                                        {% for comment in obj.New_comments.all %}
+                                                                        <tr>
+                                                                            <td>{{ comment.user }}</td>
+                                                                            <td>{{ comment.created_at|date:"Y-m-d H:i:s" }}</td>
+                                                                            <td>{{ comment.text }}</td>
+                                                                        </tr>
+                                                                        
+                                                                        {% endfor %}
+                                                                    </tbody>
+                                                                </table>
+        
+                                                               
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!---->
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#New_exampleModal{{obj.id}}"
+                                                data-new_file_id="{{ obj.id }}">
+                                                Attachments
+                                            </button>
+                                        
+                                            <div class="modal fade" id="New_exampleModal{{obj.id}}" tabindex="-1" aria-labelledby="New_exampleModalLabel"
+                                                aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="New_exampleModalLabel">Modal title</h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form id="Newwork_uploadForm" method="POST" enctype="multipart/form-data"
+                                                                action="{% url 'polls:uploadnewfiles' %}">
+                                                                {% csrf_token %}
+                                                                {{Fa_NewFileuploadForm|crispy}}
+                                                                <input type="hidden" id="new_file_id" name="new_file_id" value="{{obj.id}}">
+                                                                <button type="submit" class="btn btn-primary">Upload</button>
+                                                            </form>
+                                                            <hr>
+                                                            <div><strong> your are uploading files to work order ref number : {{obj.work_order.id}}, issued by : {{obj.work_order.Created_By }} on {{ obj.work_order.uploaded_at|date:"jS F Y" }} at {{ obj.work_order.uploaded_at|date:"g:i A" }} </strong></div>
+                                                                <br>
+                                                            <table class="table table-bordered">
+                                                                <thead>
+                                                                    <th>Uploaded By</th>
+                                                                    <th>Date</th>
+                                                                    <th>Attachments</th>
+                                                                </thead>
+                                                                <tbody id="new_file_commentstd{{ obj.id }}">
+                                                                    {% for file in obj.Fa_New_ContractFile.all %}
+                                                                    <tr>
+                                                                        <td>{{ file.Created_By }}</td>
+                                                                        <td>{{ file.uploaded_at }}</td>
+                                                                        <td><a href="{{ file.file.url }}" target="_blank">{{ file.filename }}</a></td>
+                                                                    </tr>
+                                        
+                                                                    {% endfor %}
+                                                                </tbody>
+                                                            </table>
+                                        
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </td>
+                
+                                            
+                
+                
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    {% else %}
+                                No Orders to display here
+                                {% endif %}
+                                </div>
+                
+                            </div>
+                
+                        </div>
+                
+                    </div>
+
+            </div>
+            
+            {% if obj.Type_of_work == 1 %}
+            <div class="tab-pane fade show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+            {% else %}
+            <div class="tab-pane fade " id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                {% endif %}
+              <div class="container-fluid mt-4">
+                <div class="card">
+                    <div class="card-header text-center">PM History</div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            {% if Preventivemaint_obj %}
+                            <table class="table table-striped">
+                                <thead>
+                                    <th> WO Ref No</th>
+                                    <th>Station</th>
+                                    <th>Contract</th>
+                                    
+                                    <th>Created By</th>
+                                    <th>issued on</th>
+                                    <th>Scope of work</th>
+                                    <th>Comments</th>
+                                    <th>Attachments</th>
+                                   
+                                
+                                </thead>
+                                <tbody>
+                                    {% for obj in Preventivemaint_obj %}
+                                    <tr>
+                                        <td>{{ obj.work_order.id}}</td> 
+                                        <td>{{ obj.station_name}}</td>
+                                        <td>{{ obj.contract}}</td>
+                                       
+                                        <td>{{ obj.Created_By}}</td>
+                                        <td>{{ obj.work_order.uploaded_at|date:"d-M-Y"}}</td>
+                                        <td style=" word-wrap: break-word;white-space: normal;width:20vh;">{{ obj.details}}</td>
+                                        <td >
+                                           
+                                              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#commentsModal{{ obj.id }}" data-pmid="{{ obj.id }}">
+                                                Comments
+                                            </button>
+                                            <!---->
+                                            <div class="modal fade" id="commentsModal{{ obj.id }}" tabindex="-1" aria-labelledby="modalLabel{{ obj.id }}" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="modalLabel{{ obj.id }}">Comments</h5>
+                                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form id="commentForm{{ obj.id }}" method="post" action="">
+                                                                {% csrf_token %}
+                                                                {{ PMCommentform|crispy}}
+                                                                <input type="hidden" name="pm_record_id" id="modalPmId" value="{{obj.id}}">
+                                                                
+                                                                <button type="submit" class="btn btn-primary">Add Comment</button>
+                                                            </form>
+                                                            <br>
+                                                            <div><strong> your are adding comments to work order ref number : {{obj.work_order.id}}, issued by : {{obj.work_order.Created_By }} on {{ obj.work_order.uploaded_at|date:"jS F Y" }} at {{ obj.work_order.uploaded_at|date:"g:i A" }}</strong></div>
+                                                            <br>
+                                                            <table class="table table-bordered">
+                                                                <thead>
+                                                                    <th>Commented By</th>
+                                                                    <th>Date</th>
+                                                                    <th>Comments</th>
+                                                                </thead>
+                                                                <tbody id="pmcommentstd{{ obj.id }}">
+                                                                    {% for comment in obj.PM_comments.all %}
+                                                                    <tr>
+                                                                        <td>{{ comment.user }}</td>
+                                                                        <td>{{ comment.created_at|date:"Y-m-d H:i:s" }}</td>
+                                                                        <td>{{ comment.text }}</td>
+                                                                    </tr>
+                                                                    
+                                                                    {% endfor %}
+                                                                </tbody>
+                                                            </table>
+    
+                                                           
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!---->
+                                        </td>
+                                        <td>
+                                        
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal{{obj.id}}"
+                                                data-pmid="{{ obj.id }}">
+                                                Attachments
+                                            </button>
+                                        
+                                            <div class="modal fade" id="exampleModal{{obj.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                                aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form id="uploadForm" method="POST" enctype="multipart/form-data"
+                                                                action="{% url 'polls:uploadpmfiles' %}">
+                                                                {% csrf_token %}
+                                                                {{pmfileuploadform|crispy}}
+                                                                <input type="hidden" id="pmid" name="pmid" value="{{obj.id}}">
+                                                                <button type="submit" class="btn btn-primary">Upload</button>
+                                                            </form>
+                                                            <hr>
+                                                            <div><strong> your are uploading files to work order ref number : {{obj.work_order.id}}, issued by :
+                                                                    {{obj.work_order.Created_By }} on {{ obj.work_order.uploaded_at|date:"jS F Y" }} at {{ obj.work_order.uploaded_at|date:"g:i A" }} </strong></div>
+                                                            <br>
+                                                            <table class="table table-bordered">
+                                                                <thead>
+                                                                    <th>Uploaded By</th>
+                                                                    <th>Date</th>
+                                                                    <th>Attachments</th>
+                                                                </thead>
+                                                                <tbody id="pmfiletd{{ obj.id }}">
+                                                                    {% for file in obj.Fa_PM_ContractFile.all %}
+                                                                    <tr>
+                                                                        <td>{{ file.Created_By }}</td>
+                                                                        <td>{{ file.uploaded_at }}</td>
+                                                                        <td><a href="{{ file.file.url }}" target="_blank">{{ file.filename }}</a></td>
+                                                                    </tr>
+                                        
+                                                                    {% endfor %}
+                                                                </tbody>
+                                                            </table>
+                                        
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                                               
+                                   </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            {% else %}
+                            No Orders to display here
+                            {% endif %}
+                        </div>
+   
+                    </div>
+                </div>
+               
+              </div>
+            </div>
+            {% if obj.Type_of_work == 2 %}
+            <div class="tab-pane fade show active" id="allocationtab" role="tabpanel" aria-labelledby="allocation-tab">
+                {% else %}
+                <div class="tab-pane fade" id="allocationtab" role="tabpanel" aria-labelledby="allocation-tab">
+                    {% endif %}
+                <div class="container-fluid mt-4">
+                    <div class="card">
+                        <div class="card-header text-center">Corrective Maintanence History</div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                {% if Correctivemaint_obj %}
+                                <table class="table table-striped">
+                                    <thead>
+                                        <th>WO Ref Number</th>
+                                        <th>Station</th>
+                                        <th>Contract</th>
+                                        <th>Contractor</th>
+                                        <th>Purchase_order</th>
+                                        <th>Amount</th>
+                                        <th>Created By</th>
+                                        <th>Created on</th>
+                                        <th>Details</th>
+                                        <th>Comments</th>
+                                        <th>Attachments</th>
+                                       
+            
+                                    </thead>
+                                    <tbody>
+                                        {% for obj in Correctivemaint_obj %}
+                                        <tr>
+                                            <td>{{ obj.work_order.id}}</td> 
+                                        <td>{{ obj.station_name}}</td>
+                                        <td>{{ obj.contract}}</td>
+                                        <td>{{ obj.contractor}}</td>
+                                        <td>{{ obj.purchase_order}}</td>
+                                        <td>{{ obj.amount|floatformat:"2"}} SAR</td>
+                                        <td>{{ obj.Created_By}}</td>
+                                        <td>{{ obj.work_order.uploaded_at|date:"d-M-Y"}}</td>
+                                        <td>{{ obj.Scope_of_Work}}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#CM_commentsModal{{ obj.id }}" data-cmid="{{ obj.id }}">
+                                                Comments
+                                            </button>
+                                            <!---->
+                                            <div class="modal fade" id="CM_commentsModal{{ obj.id }}" tabindex="-1" aria-labelledby="CM_modalLabel{{ obj.id }}" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="CM_modalLabel{{ obj.id }}">Comments</h5>
+                                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form id="CM_commentForm{{ obj.id }}" method="post" action="">
+                                                                {% csrf_token %}
+                                                                {{ CMCommentForm|crispy}}
+                                                                <input type="hidden" name="cm_record_id" id="modalCmId" value="{{obj.id}}">
+                                                                
+                                                                <button type="submit" class="btn btn-primary">Add Comment</button>
+                                                            </form>
+                                                            <br>
+                                                              <div><strong> your are adding comments to work order ref number : {{obj.work_order.id}}, issued by : {{obj.work_order.Created_By }} on {{ obj.work_order.uploaded_at|date:"jS F Y" }} at {{ obj.work_order.uploaded_at|date:"g:i A" }}</strong></div>
+                                                              <br>
+                                                            <table class="table table-bordered">
+                                                                <thead>
+                                                                    <th>Commented By</th>
+                                                                    <th>Date</th>
+                                                                    <th>Comments</th>
+                                                                </thead>
+                                                                <tbody id="cm_commentstd{{ obj.id }}">
+                                                                    {% for comment in obj.CM_comments.all %}
+                                                                    <tr>
+                                                                        <td>{{ comment.user }}</td>
+                                                                        <td>{{ comment.created_at|date:"Y-m-d H:i:s" }}</td>
+                                                                        <td>{{ comment.text }}</td>
+                                                                    </tr>
+                                                                    
+                                                                    {% endfor %}
+                                                                </tbody>
+                                                            </table>
+    
+                                                           
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!---->
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#CM_exampleModal{{obj.id}}"
+                                            data-cm_file_id="{{ obj.id }}">
+                                            Attachments
+                                        </button>
+                                    
+                                        <div class="modal fade" id="CM_exampleModal{{obj.id}}" tabindex="-1" aria-labelledby="CM_exampleModalLabel"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="CM_exampleModalLabel">Modal title</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form id="CM_uploadForm" method="POST" enctype="multipart/form-data"
+                                                            action="{% url 'polls:uploadcmfiles' %}">
+                                                            {% csrf_token %}
+                                                            {{Fa_CMFileuploadForm|crispy}}
+                                                            <input type="hidden" id="cm_file_id" name="cm_file_id" value="{{obj.id}}">
+                                                            <button type="submit" class="btn btn-primary">Upload</button>
+                                                        </form>
+                                                        <hr>
+                                                        <div><strong> your are uploading files to work order ref number : {{obj.work_order.id}}, issued by : {{obj.work_order.Created_By }} on {{ obj.work_order.uploaded_at|date:"jS F Y" }} at {{ obj.work_order.uploaded_at|date:"g:i A" }} </strong></div>
+                                                            <br>
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <th>Uploaded By</th>
+                                                                <th>Date</th>
+                                                                <th>Attachments</th>
+                                                            </thead>
+                                                            <tbody id="cm_file_commentstd{{ obj.id }}">
+                                                                {% for file in obj.Fa_CM_ContractFile.all %}
+                                                                <tr>
+                                                                    <td>{{ file.Created_By }}</td>
+                                                                    <td>{{ file.uploaded_at }}</td>
+                                                                    <td><a href="{{ file.file.url }}" target="_blank">{{ file.filename }}</a></td>
+                                                                </tr>
+                                    
+                                                                {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                    
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </td>
+            
+            
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                {% else %}
+                            No Orders to display here
+                            {% endif %}
+                            </div>
+            
+                        </div>
+            
+                    </div>
+            
+                </div>
+            </div>
+            <div class="tab-pane fade" id="maintanencetab" role="tabpanel" aria-labelledby="maintanence-tab">
+              <div class="container-fluid mt-4">
+                <div class="card">
+                    <div class="card-header text-center">Work Permits</div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <th data-field="ChecklistID" data-sortable="true">WORKPERMIT REF NO</th>
+                                    <th data-field="Equipment" data-sortable="true">STATION</th>
+                                    <th data-field="Equipment" data-sortable="true">PERMI ISSUE DATE</th>
+                                    <th data-field="Equipment" data-sortable="true">PERMIT END DATE</th>
+                                    <th data-field="User" data-sortable="true">VENDOR</th>
+                                    <th data-field="View_Checklist" data-sortable="true">View Details</th>
+        
+        
+                                </thead>
+                                <tbody>
+                                    {% for item in workpermit_obj %}
+                                    <tr>
+                                        <tr>
+                    
+                                            <td>{{ item.id }}</td>
+                                            <td>{{ item.station_name }}</td>
+                                            <td>{{ item.created_date|date:"d-M-Y" }}</td> 
+                                            <td>{{ item.end_date }}</td> <!-- Access fields of your model -->
+                                            <td>{{ item.Contracting_Company_Name }}</td> <!-- Replace field_name_1 with actual field name -->
+                                            <td><a href="{% url 'polls:detailwpview' item.id %}" class="btn btn-primary">View </a></td>
+                                            <!-- Add more table cells for each field in your model -->
+                                        </tr>
+        
+        
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+        
+                    </div>
+        
+                </div>
+              </div>
+            </div>
+          </div>
+    
+
+
+       
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function() {
+
+    $('#exampleModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var pmid = button.data('pmid'); // Extract info from data-* attributes
+        var modal = $(this);
+        modal.find('#pmid').val(pmid);
+    });
+
+
+    $('form[id^="commentForm"]').on('submit', function(event)  {
+            event.preventDefault(); 
+            var form = $(this);
+            
+        $.ajax({
+            type: 'POST',
+            url: '{% url "polls:add_comment" %}',  // Ensure Django template renders this correctly
+            data: form.serialize(),
+            success: function(data) {
+                if (data.success) {
+                var createdAt = new Date(data.comment.created_at);
+                var localTime = createdAt.toLocaleString();  // Localizes the date
+                var newComment = '<tr><td>' + data.comment.user + '</td><td>' + localTime + '</td><td>' + data.comment.text + '</td></tr>';
+                $('#pmcommentstd' + data.comment.pm).append(newComment);  // Appends to the specific list
+                form[0].reset();// Resets the form fields after successful submission
+                toastr.success('Comment added successfully!.Refer the last row of table for recently added comments');  
+            } else {
+                var error_message=data.message
+                toastr.error( error_message); // Error handling
+            }
+                
+               
+            },
+            error: function(xhr, status, error) {
+                // Handle errors here
+                console.error("Error on Ajax call: ", status, error);
+                alert('Failed to add comment: ' + error);
+            }
+        });
+    });
+
+    $('[id^="uploadForm"]').on('submit', function(event) {
+        event.preventDefault();
+        var form = $(this);
+        var formData = new FormData(this);
+        $.ajax({
+            url: "{% url 'polls:uploadpmfiles' %}",
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                if (response.success) {
+                form[0].reset(); // Reset the form
+                //$('#exampleModal' + response.pm_id).modal('hide'); // Hide the modal
+                var newRecord = '<tr><td>' + response.Created_By + '</td><td>' + response.uploaded_at + '</td><td><a href="' + response.file_url + '" target="_blank">' + response.filename + '</a></td></tr>';
+                $('#pmfiletd' + response.pm_id).append(newRecord);
+                toastr.success('Document added successfully!.Refer the last row of table for recently added Document');  
+            } else {
+                var error_message=response.message
+                toastr.error( error_message);   // Error handling
+            }
+            },
+            error: function(xhr, errmsg, err) {
+                alert('There was an error uploading the file. Please try again.');
+            }
+        });
+    });
+
+    $('form[id^="CM_commentForm"]').on('submit', function(event)  {
+            event.preventDefault(); 
+            var form = $(this);
+           
+        $.ajax({
+            type: 'POST',
+            url: '{% url "polls:add_CM_comment" %}',  // Ensure Django template renders this correctly
+            data: form.serialize(),
+            success: function(data) {
+                if (data.success) {
+                var createdAt = new Date(data.comment.created_at);
+                var localTime = createdAt.toLocaleString();  // Localizes the date
+                var newComment = '<tr><td>' + data.comment.user + '</td><td>' + localTime + '</td><td>' + data.comment.text + '</td></tr>';
+                $('#cm_commentstd' + data.comment.cm).append(newComment);  // Appends to the specific list
+                form[0].reset();// Resets the form fields after successful submission
+                toastr.success('Comment added successfully!.Refer the last row of table for recently added comments');  
+            } else {
+                var error_message=data.message
+                toastr.error( error_message);   // Error handling
+            }
+                
+               
+            },
+            error: function(xhr, status, error) {
+                // Handle errors here
+                console.error("Error on Ajax call: ", status, error);
+                alert('Failed to add comment: ' + error);
+            }
+        });
+    });
+
+    $('[id^="CM_uploadForm"]').on('submit', function(event) {
+        event.preventDefault();
+        var form = $(this);
+        var formData = new FormData(this);
+        $.ajax({
+            url: "{% url 'polls:uploadcmfiles' %}",
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                if (response.success) {
+                form[0].reset(); // Reset the form
+                //$('#exampleModal' + response.pm_id).modal('hide'); // Hide the modal
+                var newRecord = '<tr><td>' + response.Created_By + '</td><td>' + response.uploaded_at + '</td><td><a href="' + response.file_url + '" target="_blank">' + response.filename + '</a></td></tr>';
+                $('#cm_file_commentstd' + response.cm_id).append(newRecord);
+                toastr.success('Document added successfully!.Refer the last row of table for recently added Document');  
+            } else {
+                var error_message=response.message
+                toastr.error( error_message);  // Error handling
+            }
+            },
+            error: function(xhr, errmsg, err) {
+                alert('There was an error uploading the file. Please try again.');
+            }
+        });
+    });
+
+
+    $('form[id^="New_commentForm"]').on('submit', function(event)  {
+            event.preventDefault(); 
+            
+            var form = $(this);
+           
+        $.ajax({
+            type: 'POST',
+            url: '{% url "polls:AddNewWorkComment" %}',  // Ensure Django template renders this correctly
+            data: form.serialize(),
+            success: function(data) {
+                if (data.success) {
+                var createdAt = new Date(data.comment.created_at);
+                var localTime = createdAt.toLocaleString();  // Localizes the date
+                var newComment = '<tr><td>' + data.comment.user + '</td><td>' + localTime + '</td><td>' + data.comment.text + '</td></tr>';
+                $('#New_commentstd' + data.comment.cm).append(newComment);  // Appends to the specific list
+                form[0].reset();// Resets the form fields after successful submission
+                toastr.success('Comment added successfully!.Refer the last row of table for recently added comments');  
+            } else {
+                var error_message=data.message
+                toastr.error( error_message);   // Error handling
+            }
+                
+               
+            },
+            error: function(xhr, status, error) {
+                // Handle errors here
+                console.error("Error on Ajax call: ", status, error);
+                alert('Failed to add comment: ' + error);
+            }
+        });
+    });
+
+    $('[id^="Newwork_uploadForm"]').on('submit', function(event) {
+        event.preventDefault();
+        var form = $(this);
+        var formData = new FormData(this);
+        $.ajax({
+            url: "{% url 'polls:uploadnewfiles' %}",
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                if (response.success) {
+                form[0].reset(); // Reset the form
+                //$('#exampleModal' + response.pm_id).modal('hide'); // Hide the modal
+                var newRecord = '<tr><td>' + response.Created_By + '</td><td>' + response.uploaded_at + '</td><td><a href="' + response.file_url + '" target="_blank">' + response.filename + '</a></td></tr>';
+                $('#new_file_commentstd' + response.cm_id).append(newRecord);
+                toastr.success('Document added successfully!.Refer the last row of table for recently added Document');  
+            } else {
+                var error_message=response.message
+                toastr.error( error_message);  // Error handling
+            }
+            },
+            error: function(xhr, errmsg, err) {
+                alert('There was an error uploading the file. Please try again.');
+            }
+        });
+    });
+
+
+
+});
+    </script>
+{% endblock content%}

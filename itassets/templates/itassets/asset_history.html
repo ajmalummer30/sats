@@ -1,0 +1,34 @@
+
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+
+
+{% block content %}
+{% include 'financesidemenu.html' %}
+
+<div class="col-md-9">
+    <div class="card">
+      <div class="card-header text-center">
+        <h4>Asset History</h4>
+      </div>
+      <div class="card card-body">
+        <p><strong>Asset ID:</strong> {{ asset.id }}</p>
+            <p><strong>Asset Remarks:</strong> {{ asset.asset_remarks }}</p>
+            <hr>
+            <h4>History:</h4>
+            <ul>
+                {% for record in history %}
+                    <li>
+                        <strong>{{ record.history_date }}</strong>: 
+                        <em>{{ record.history_type }}</em> - 
+                        <em>{{ record.history_user }}</em> - 
+                        <em>{{ record.history_change_reason }}</em>
+                    </li>
+                {% endfor %}
+            </ul>    
+      </div>
+    </div>
+</div>
+
+{% endblock content%}

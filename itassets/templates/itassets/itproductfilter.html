@@ -1,0 +1,440 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+{% csrf_token %}
+
+<div class="container-fluid mt-5">
+    <div class="row">
+        <!-- Left Side Menu -->
+        
+        <!---->
+
+        <div class="col-lg-2" id="prod_filter_sidemenu">
+        
+        
+            <!---->
+            <div class="accordion" id="accordionPanelsStayOpenExample">
+                <div class="accordion-item">
+        
+                    <button class="accordion-button customaccordian" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true"
+                        aria-controls="panelsStayOpen-collapseThree">
+                        <label> Station</label>
+                    </button>
+        
+                    <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show"
+                        aria-labelledby="panelsStayOpen-headingThree">
+                        <div class="accordion-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <div class="form-check-inline">
+                                        <input class="form-check-input filter-checkbox" type="checkbox"
+                                            data-filter="station_name" value="1" id="flexCheck3" name="dmm">
+                                        <label class="form-check-label" for="flexCheck3">
+                                            DMM
+                                        </label>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="form-check-inline">
+                                        <input class="form-check-input filter-checkbox" type="checkbox"
+                                            data-filter="station_name" value="2" id="flexCheck4" name="RUH">
+                                        <label class="form-check-label" for="flexCheck4">
+                                            RUH
+                                        </label>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="form-check-inline">
+                                        <input class="form-check-input filter-checkbox" type="checkbox"
+                                            data-filter="station_name" value="3" id="flexCheck5" name="JED">
+                                        <label class="form-check-label" for="flexCheck5">
+                                            JED
+                                        </label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item ">
+        
+                    <button class="accordion-button  customaccordian" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false"
+                        aria-controls="panelsStayOpen-collapseOne">
+                        <label> Allocation status</label>
+                    </button>
+        
+                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse"
+                        aria-labelledby="panelsStayOpen-headingOne">
+                        <div class="accordion-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <div class="form-check-inline">
+                                        <input class="form-check-input filter-checkbox" data-filter="allocation_status"
+                                            type="checkbox" value="1" id="ex_stock" name="ex_stock">
+                                        <label class="form-check-label" for="ex_stock">
+                                            Ex Stock
+                                        </label>
+                                    </div>
+        
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="form-check-inline">
+                                        <input class="form-check-input filter-checkbox" data-filter="allocation_status"
+                                            type="checkbox" value="2" id="in_use" name="in_use">
+                                        <label class="form-check-label" for="in_use">
+                                            In Use
+                                        </label>
+                                    </div>
+                                </li>
+        
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+        
+                    <button class="accordion-button  customaccordian" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
+                        aria-controls="panelsStayOpen-collapseTwo">
+                        <label> Asset Status</label>
+                    </button>
+        
+                    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
+                        aria-labelledby="panelsStayOpen-headingTwo">
+                        <div class="accordion-body">
+                            <ul class="list-group list-group-flush">
+        
+                                <li class="list-group-item">
+                                    <div class="form-check-inline">
+                                        <input class="form-check-input filter-checkbox" data-filter="status" type="checkbox"
+                                            value="1" id="Active" name="Active">
+                                        <label class="form-check-label" for="Active">
+                                            Active
+                                        </label>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="form-check-inline">
+                                        <input class="form-check-input filter-checkbox" data-filter="status" type="checkbox"
+                                            value="2" id="in_Active" name="in_Active">
+                                        <label class="form-check-label" for="in_Active">
+                                            In Active
+                                        </label>
+                                    </div>
+                                </li>
+        
+                                <li class="list-group-item">
+                                    <div class="form-check-inline">
+                                        <input class="form-check-input filter-checkbox" data-filter="status" type="checkbox"
+                                            value="4" id="Damaged" name="Damaged">
+                                        <label class="form-check-label" for="Damaged">
+                                            Damaged
+                                        </label>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="form-check-inline">
+                                        <input class="form-check-input filter-checkbox" data-filter="status" type="checkbox"
+                                            value="3" id="Obselute" name="Obselute">
+                                        <label class="form-check-label" for="Obselute">
+                                            Obselute
+                                        </label>
+                                    </div>
+                                </li>
+        
+                            </ul>
+                        </div>
+                    </div>
+        
+                </div>
+               
+                <div class="accordion-item">
+        
+                    <button class="accordion-button  customaccordian" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false"
+                        aria-controls="panelsStayOpen-collapseFour">
+                        <label> category</label>
+                    </button>
+        
+                    <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse"
+                        aria-labelledby="panelsStayOpen-headingFour">
+                        <div class="accordion-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <div class="form-check-inline">
+                                        <input class="form-check-input filter-checkbox" type="checkbox" data-filter="category"
+                                            value="4" id="flexCheck3" name="cctv">
+                                        <label class="form-check-label" for="flexCheck3">
+                                            CCTV
+                                        </label>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="form-check-inline">
+                                        <input class="form-check-input filter-checkbox" type="checkbox" data-filter="category"
+                                            value="1" id="flexCheck4" name="computer">
+                                        <label class="form-check-label" for="flexCheck4">
+                                            Computers
+                                        </label>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="form-check-inline">
+                                        <input class="form-check-input filter-checkbox" type="checkbox" data-filter="category"
+                                            value="7" id="flexCheck5" name="allinone">
+                                        <label class="form-check-label" for="flexCheck5">
+                                            All In One
+                                        </label>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="form-check-inline">
+                                        <input class="form-check-input filter-checkbox" type="checkbox" data-filter="category"
+                                            value="2" id="flexCheck5" name="laptop">
+                                        <label class="form-check-label" for="flexCheck5">
+                                            Laptop
+                                        </label>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="form-check-inline">
+                                        <input class="form-check-input filter-checkbox" type="checkbox" data-filter="category"
+                                            value="8" id="flexCheck5" name="ipphone">
+                                        <label class="form-check-label" for="flexCheck5">
+                                            IP Phone
+                                        </label>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="form-check-inline">
+                                        <input class="form-check-input filter-checkbox" type="checkbox" data-filter="category"
+                                            value="20" id="flexCheck5" name="mobile">
+                                        <label class="form-check-label" for="flexCheck5">
+                                            Mobile
+                                        </label>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="form-check-inline">
+                                        <input class="form-check-input filter-checkbox" type="checkbox" data-filter="category"
+                                            value="3" id="flexCheck5" name="printer">
+                                        <label class="form-check-label" for="flexCheck5">
+                                            Printer
+                                        </label>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="form-check-inline">
+                                        <input class="form-check-input filter-checkbox" type="checkbox" data-filter="category"
+                                            value="17" id="flexCheck5" name="SmartTv">
+                                        <label class="form-check-label" for="flexCheck5">
+                                            Smart Tv
+                                        </label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+        
+               
+            </div>
+            
+
+
+
+
+        </div>
+
+        <!---->
+        
+
+        <!-- Card Body -->
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header">
+                    <p>Asset List</p>
+                    <div id="filteredproducts">
+                        <div class="progress progress-striped active">
+                            <div class="progress-bar progress-bar-success" style="width:0%">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body" id="productappenddiv">
+                        <table id="userTable" data-toggle="table" data-sortable="true" data-pagination="true"
+                            class="table">
+                            <thead>
+                                <tr>
+                                    <th data-field="ChecklistID" data-sortable="true">Asset NO</th>
+                                    <th data-field="Image" data-sortable="true">Image</th>
+                                    <th data-field="Product Status" data-sortable="true">Product Status</th>
+                                    <th data-field="Serial Number" data-sortable="true">Serial Number</th>
+                                    <th data-field="Category" data-sortable="true">Category</th>
+                                    <th data-field="Category" data-sortable="true">Brand</th>
+                                    <th data-field="Model" data-sortable="true">Model</th>
+                                    <th data-field="Serial Number" data-sortable="true">Station</th>
+                                    <th data-field="Location" data-sortable="true">Location</th>
+                                    <th data-field="OS" data-sortable="true">Operating System</th>
+                                    <th data-field="User" data-sortable="true">Processor</th>
+                                    <th data-field="Memmory" data-sortable="true">Memmory</th>
+                                    <th data-field="Hard disk" data-sortable="true">Hard disk</th>
+                                   
+                                    <th data-field="Availability" data-sortable="true">Availability</th>
+                                    <th data-field="View" data-sortable="true">View</th>
+                                    <th data-field="EDIT" data-sortable="true">EDIT</th>
+
+
+                                    <!-- Add more table headers for each field in your model -->
+                                </tr>
+                            </thead>
+                            <tbody id="tablescroll">
+                                {% for item in form %}
+                                <tr>
+                                    <td>{{ item.id }}</td>
+                                    <td> {% if item.device_model.image %}
+
+                                        <img src="{{ item.device_model.image.url }}" width="90" height="60" alt="Uploaded Image">
+
+                                        {% else %}
+
+                                        <p>No image</p>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ item.status }}</td>
+                                    <td>{{ item.serial_number }}</td>
+                                    <td>{{ item.category }}</td>
+                                    <td>{{ item.brand }}</td>
+                                    <td>{{ item.device_model }}</td>
+                                    <td>{{ item.station_name }}</td>
+                                    <td>{{ item.location }}</td>
+                                    <td contenteditable="true">{{ item.operating_system }}</td>
+                                    <!-- Access fields of your model -->
+                                    <td contenteditable="true">{{ item.processor }}</td>
+                                    <td contenteditable="true">{{ item.ram }}</td>
+                                    <td contenteditable="true">{{ item.harddisk }}</td>
+                                   
+                                    <td>{{ item.allocation_status }}</td>
+                                    <!-- Replace field_name_1 with actual field name -->
+                                    <td><a href="{% url 'itassets:ItAssetDetailView' item.id %}"
+                                            class="btn btn-primary">View </a></td>
+                                    <!-- <td><a href="{% url 'itassets:ItAssetDetailView' item.id %}" class="btn btn-primary">EDIT </a></td>  -->
+
+                                    <td><a href="{% url 'itassets:EditItAsset' item.id %}" class="btn btn-primary">EDIT
+                                        </a></td>
+                                    <!-- Add more table cells for each field in your model -->
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+    <script>
+        {% comment %} let checkbox = document.getElementById("flexCheck1");
+        checkbox.addEventListener("change", () => {
+            if (checkbox.checked) {
+                alert("checked");
+            } else {
+                alert("not  checked");
+            }
+        }); {% endcomment %}
+
+
+        $(document).ready(function () {
+
+            $(".progress-bar").animate({
+                width: "100%"
+            }, 2500);
+
+
+
+            $('#userTable').DataTable({
+                "scrollY": "70vh",
+                "scrollCollapse": true,
+                // other DataTable options...
+            });
+
+
+            function applyClassBasedOnCellValue() {
+                var table = $('#userTable').DataTable(); // Define DataTable inside the function
+
+                table.rows().every(function () {
+                    var data = this.data();
+                    var cellValue = data[2]; // Assuming you want to check the value in the first column
+
+                    // Add your conditions to determine the class
+                    if (cellValue === 'Damaged') {
+                        $(this.node()).addClass('table-danger'); // Change 'table-danger' to your desired Bootstrap class
+                    }
+                });
+            }
+
+// Call the function
+applyClassBasedOnCellValue();
+
+
+
+            $(".filter-checkbox").on('click', function () {
+
+
+                var filterobj = {};
+                $(".filter-checkbox").each(function (index, ele) {
+                    var filterval = $(this).val();
+                    var filterkey = $(this).data('filter');
+                    filterobj[filterkey] = Array.from(document.querySelectorAll('input[data-filter=' + filterkey + ']:checked')).map(function (el) {
+                        return el.value;
+                    });
+
+                });
+                console.log(filterobj);
+
+                $.ajax({
+                    url: '{% url "itassets:itassetfilter" %}',
+                    data: filterobj,
+                    type: 'GET',
+                    dataType: 'json',
+                    beforeSend: function () {
+
+                        $('#filteredproducts').show();
+                    },
+                    success: function (data) {
+                        $('#productappenddiv').empty().append(data.filter_results_html);
+                        $('#userTable').DataTable({
+                            "scrollY": "70vh",
+                            "scrollCollapse": true,
+                            // other DataTable options...
+                        });
+                        applyClassBasedOnCellValue();
+
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+
+
+            });
+
+
+
+
+
+        });
+
+    </script>
+
+
+
+
+    {% endblock content%}

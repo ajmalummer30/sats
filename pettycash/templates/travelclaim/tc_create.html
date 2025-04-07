@@ -1,0 +1,216 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<div class="row">
+  {% include 'financesidemenu.html' %}
+  <div class="col-md-9">
+    <form method="post" enctype="multipart/form-data" novalidate>
+      <div class="card">
+        <div class="card-header text-center">
+          <h5>Travel Claim Form</h5>
+        </div>
+        <div class="card-body">
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="id_Employee_Name">Employee Name</label>
+                    <input type="text" name="Employee_Name" id="id_Employee_Name" class="form-control"
+                      value="{{ forminfo.Employee_Name.value }}" readonly>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="id_Employee_Email">Employee Email</label>
+                    <input type="email" name="Employee_Email" id="id_Employee_Email" class="form-control"
+                      value="{{ forminfo.Employee_Email.value }}" readonly>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="id_Station">Station</label>
+                    <input type="text" name="Manager_Email" id="id_Station" class="form-control"
+                      value="{{ forminfo.Station.value }}" readonly>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="id_Manager_Email">Manager Email</label>
+                    <input type="email" name="Manager_Email" id="id_Manager_Email" class="form-control"
+                      value="{{ forminfo.Manager_Email.value }}" readonly>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="card mb-3">
+            <div class="card-header">
+              <h6>Form Fields</h6>
+            </div>
+            <div class="card-body">
+              {% csrf_token %}
+              {% if form.non_field_errors %}
+              <div class="alert alert-danger" role="alert">
+                <ul>
+                  {% for error in form.non_field_errors %}
+                  <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+              {% endif %}
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-group">
+                    <label>{{ form.justification.label }}</label>
+                    {{ form.justification }}
+                    {% for error in form.justification.errors %}
+                    <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label>{{ form.start_date.label }}</label>
+                    {{ form.start_date }}
+                    {% for error in form.start_date.errors %}
+                    <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label>{{ form.end_date.label }}</label>
+                    {{ form.end_date }}
+                    {% for error in form.end_date.errors %}
+                    <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label>{{ form.days.label }}</label>
+                    {{ form.days }}
+                    {% for error in form.end_date.errors %}
+                    <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="form-group">
+                    <label>{{ form.upload_bill.label }}</label>
+                    {{ form.upload_bill }}
+                    {% for error in form.upload_bill.errors %}
+                    <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                  </div>
+                </div>
+                <!-- Add other fields with their respective column sizes and form-control class -->
+              </div>
+              <div class="row">
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label>{{ form.accommodation.label }}</label>
+                    {{ form.accommodation }}
+                    {% for error in form.accommodation.errors %}
+                    <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                  </div>
+                </div>
+                <!---->
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label>{{ form.transportation.label }}</label>
+                    {{ form.transportation }}
+                    {% for error in form.transportation.errors %}
+                    <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                  </div>
+                </div>
+                <!---->
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label>{{ form.meals.label }}</label>
+                    {{ form.meals }}
+                    {% for error in form.meals.errors %}
+                    <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                  </div>
+                </div>
+                <!---->
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label>{{ form.miscellaneous.label }}</label>
+                    {{ form.miscellaneous }}
+                    {% for error in form.miscellaneous.errors %}
+                    <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                  </div>
+                </div>
+                <!---->
+              </div>
+
+
+
+
+
+              <!-- {{ form|crispy }} -->
+              <!-- <div class="row">
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger" role="alert">
+                            <ul>
+                                {% for error in form.non_field_errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                      {% for field in form %}
+                      
+                          <div class="col-lg-4 col-sm-12">
+                              <label>{{field.label}}</label>
+                              {% if field.field.required %}
+                                  <span style="color: red;" class="required">*</span>
+                              {% endif %}
+                          
+                              {{field}}
+                              {% if field.help_text %}
+                                  <small style="color: grey">{{ field.help_text }}</small>
+                              {% endif %}
+                              {% for error in field.errors %}
+                                  <p style="color: red">{{ error }}</p>
+                              {% endfor %}
+                          </div>
+                  
+                      {% endfor %}
+                  </div>   -->
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary btn-block">SUBMIT</button>
+          </div>
+
+        </div>
+      </div>
+    </form>
+  </div>
+
+
+</div>
+
+
+</div>
+
+
+
+{% endblock content%}

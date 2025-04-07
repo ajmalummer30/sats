@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+<form method="POST" novalidate>
+	{% csrf_token %}
+	<h2>Login</h2>
+	{{form|crispy}}
+
+	
+
+
+	<input type="submit" value="Login" />
+	<p>Don't have an account? <a href="{%url 'usrmgmt:register' %}">Register</a></p>
+</form>
+
+{% endblock content%}

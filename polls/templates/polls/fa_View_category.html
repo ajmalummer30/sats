@@ -1,0 +1,69 @@
+
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row">
+    {% include 'facilitysidemenu.html' %}
+
+    <div class="col-lg-9">
+        <div class="card">
+            <div class="card-header text-center">View Categories</div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="id_fa_category" class="table table-striped">
+                        <thead>
+                            <th> SL No</th>
+                            <th>Category</th>
+                            <th>Subcategory</th>
+                            <th>Description</th>
+                        </thead>
+                        <tbody>
+                            {% for category in categoy_obj %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+    
+                                <td><strong>{{ category.name }}</strong></td>
+                                <td>
+    
+                                    {% if category.subcategories.all %}
+                                    <ul class="">
+                                        {% for subcategory in category.subcategories.all %}
+                                        <li class="">
+                                            {{ subcategory.name }}
+                                            {% endfor %}
+                                    </ul>
+                                    {% endif %}
+    
+                                </td>
+    
+                                <td>{{ category.description }}</td>
+                            </tr>
+    
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+                
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+<script>
+$(document).ready(function () {
+
+$('#id_fa_category').DataTable({
+    //"scrollY": "100vh",
+    //"scrollCollapse": true,
+    // other DataTable options...
+});
+
+});
+
+</script>
+
+{% endblock content%}

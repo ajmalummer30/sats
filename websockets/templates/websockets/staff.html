@@ -1,0 +1,424 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queue Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <style>
+        body { padding-top: var(--navbar-height); }
+        .bg-custom { background-color: #a61f38; }
+        .hover\:bg-custom-hover:hover { background-color: #8e1a30; }
+        .custom-text-color {
+            color: #a61f38; /* Example: blue color, replace with your desired hex code */
+        }
+
+        /* Custom styles for link visibility */
+        a.opacity-toggle {
+            opacity: 0;
+            transition: opacity 0.3s ease; /* Smooth transition for opacity */
+        }
+
+        a.opacity-toggle:hover {
+            opacity: 1;
+        }
+
+
+    </style>
+</head>
+<body class="bg-gray-100 h-screen ">    
+    
+    <div class="bg-white shadow-md w-full fixed">
+        <div class="max-w-screen-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col justify-between items-center py-3 space-y-3 sm:space-y-0 sm:flex-row sm:space-x-4 md:space-x-10">
+                <div class="flex justify-center sm:justify-start w-full md:w-auto md:flex-1">
+                    <a href="#">
+                        <span class="sr-only">Your Company</span>
+                        <img class="h-8 w-auto sm:h-10" src="{% static 'satsksa.png' %}" alt="Logo">
+                    </a>
+                </div>
+    
+                <nav class="flex space-x-3 md:space-x-10">
+                    <a target="_blank" href="{% url 'websockets:issue_ticket' %}" class="text-base font-medium custom-text-color">Token Issuance</a>
+                    <a target="_blank" href="{% url 'websockets:display' %}" class="text-base font-medium custom-text-color">Display Token</a>
+                </nav>
+    
+                <div class="flex flex-col items-center sm:flex-row sm:justify-end w-full md:flex-1 lg:w-0">
+                    {% if request.user.is_authenticated %}
+                    <p class="text-center sm:text-left"><span class="custom-text-color">Logged In: {{ user.Web_profile.counter }}</span></p>
+                    <a href="{% url 'accounts:logout' %}" class="mt-2 sm:mt-0 sm:ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-custom bg-custom-hover">Log Out</a>
+                    {% else %}
+                    <a href="{% url 'accounts:login' %}" class="mt-2 sm:mt-0 sm:ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700">Log in</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <audio id="notification-sound" src=""  preload="auto"></audio>
+    <div class="flex flex-col flex-wrap sm:flex-row">
+    
+        <!-- Main content -->
+        <div class="w-full  sm:w-8/12 sm:m-2 p-20 bg-white  rounded-lg shadow-lg">
+            
+        
+        
+                {% if user.is_authenticated %}
+                <select id="counter-select"
+                    class="block w-full  px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <option value="{{ user.Web_profile.counter.id }}">{{ user.Web_profile.counter }}</option>
+                </select>
+        
+                {% else %}
+                <select id="counter-select"
+                    class="block w-full mt-20 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <option value="">Please log In</option>
+                </select>
+                {% endif %}
+        
+        
+            
+            
+                <div class="overflow-x-auto mt-6">
+                    <table id="queueTable" class="w-full border-collapse border border-gray-300">
+                        <tbody>
+                            <tr>
+                                <th class="border p-3 text-left w-1/2">Last Called Token</th>
+                                {% if last_called_obj %}
+                                <td id="id_last_queue_number" class="border p-3">{{last_called_obj.ticket_number}}</td>
+                                {% else %}
+                                <td id="id_last_queue_number" class="border p-3">0</td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                                <th class="border p-3 text-left">Last Issued Token</th>
+                                {% if last_issued_ticket %}
+                                <td id="id_last_ticket" class="border p-3">{{last_issued_ticket.ticket_number}}</td>
+                                {% else %}
+                                <td id="id_last_ticket" class="border p-3">0</td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                                <th class="border p-3 text-left">Remaining in Queue</th>
+                                <td id="id_queue_count" class="border p-3">{{open_tickets_count}}</td>
+                            </tr>
+                
+                
+                        </tbody>
+                    </table>
+                </div>
+        
+                <!-- New Section for Current Queue Details -->
+                <div id="currentQueueDetails" class="2xl:p-8 p-2 bg-white rounded-lg shadow-sm">
+        
+                    <div class="px-4 sm:px-0">
+                        <h3 class="text-base font-semibold leading-7 text-gray-900">Current Queue Information</h3>
+        
+                    </div>
+                    <div class="mt-6 border-t border-gray-100">
+                        <dl class="divide-y divide-gray-100">
+                            {% if current_ticket %}
+                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt class="text-sm font-medium leading-6 text-gray-900">Queue number</dt>
+                                <dd id="id_current_queue_number"
+                                    class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                    {{current_ticket.ticket_number}}</dd>
+                            </div>
+                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt class="text-sm font-medium leading-6 text-gray-900">Mobile Number</dt>
+                                <dd id="id_current_mobilenumber"
+                                    class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                    {{current_ticket.mobile_number}}</dd>
+                            </div>
+                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt class="text-sm font-medium leading-6 text-gray-900">Issued Date & TIme</dt>
+                                <dd id="id_current_datetime" class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                    {{current_ticket.issued_at}}</dd>
+                            </div>
+                            <input type="hidden" id="hiddenDataField" value="{{ current_ticket.id }}">
+                            {% else %}
+                            <div id='id_current_empty_message' class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt class="text-sm font-medium leading-6 text-gray-900">no data available</dt>
+        
+                            </div>
+                            {% endif %}
+                        </dl>
+                    </div>
+        
+        
+                </div>
+        
+        
+                <div class="flex flex-wrap justify-center space-x-0 md:space-x-2 mt-6 sm:mt-1">
+                    <button id="call-queue-increment" class="px-4 py-2 md:px-8 md:py-4 bg-custom text-white text-sm md:text-lg rounded-md hover:bg-custom-hover focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-full md:w-auto mb-2 md:mb-0">
+                        Call Queue DB
+                    </button>
+                    <button id="recall-queue" class="px-4 py-2 md:px-8 md:py-4 bg-custom text-white text-sm md:text-lg rounded-md hover:bg-custom-hover focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-full md:w-auto mb-2 md:mb-0">
+                        ReCall Queue DB
+                    </button>
+                    <!-- Uncomment if the move back button is needed -->
+                    <!-- <button id="moveback-queue" class="px-4 py-2 md:px-8 md:py-4 bg-custom text-white text-lg rounded-md hover:bg-custom-hover focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-full md:w-auto">
+                        Move Back   
+                    </button> -->
+                </div>
+               
+                <!-- New Section for Queue Number Input and Call Queue Button -->
+                 
+                <div class=" sm:mt-8  p-4  bg-gray-50 border border-gray-200 rounded-lg shadow-sm w-full">
+                    <label for="queue-number-input" class="block text-sm font-medium text-gray-700">Call Missed Queue Number</label>
+                    <div class="mt-1 flex flex-col sm:flex-row items-center">
+                        <input id="queue-number-input" type="text" placeholder="Enter next queue number"
+                               class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm mb-2 sm:mb-0 sm:mr-4">
+                        <button id="call-queue-button"
+                                class="px-4 py-2 bg-custom text-white rounded-md hover:bg-custom-hover focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 w-full sm:w-auto">
+                                Call Queue
+                        </button>
+                    </div>
+                </div>
+        
+           
+        </div>
+
+        <div class="w-full sm:w-3/12 sm:m-2 h-screen md:p-20   bg-white rounded-lg shadow-lg overflow-y-auto flex-grow">
+            <h2 class="text-xl font-bold text-center  p-4 border-b">Recent Queues</h2>
+            <ul id="ticketList" class="divide-y flex flex-col items-center">
+                <!-- Example list items, dynamically populate based on your data -->
+                {% for ticket in open_ticket %}
+                <li id='id_{{ticket.id}}' class="p-3 flex flex-col lg:flex-row justify-between items-center hover:bg-gray-100">
+                    <p class="sm:w-full"><strong>Queue:</strong> #{{ticket.ticket_number}}</p>
+                    <p class="sm:w-full"><strong>Mobile:</strong> {{ticket.mobile_number}}</p>
+                    <p class="sm:w-full"><strong>Time:</strong> {{ticket.issued_at}}</p>
+                </li>
+                
+                {% empty %}
+                <li id="id_queue_empty_message" class="p-3 flex justify-between items-center hover:bg-gray-100">No open tickets available.</li>
+                {% endfor %}
+                <!-- Repeat for each recent queue -->
+            </ul>
+        </div>
+    </div>
+   
+    <!-- Modal -->
+
+    <div id="queueEmptyModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
+        <div class="relative top-1/4 mx-auto p-5 border w-1/2 shadow-lg rounded-md bg-white">
+            <div class="mt-3 text-center">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Queue is Empty</h3>
+                <div class="mt-2 px-7 py-3">
+                    <p class="text-sm text-gray-500">There are no more tickets in the queue.</p>
+                </div>
+                <div class="items-center px-4 py-3">
+                    <button id="closeModalButton"
+                        class="px-4 py-2 bg-custom text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-custom-hover focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        OK
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    <script>
+
+        
+
+        let queueSocket;
+
+        function connectWebSocket() {
+          
+        queueSocket = new WebSocket(
+            'ws://' + window.location.host + '/ws/queue/'
+        );
+
+ 
+       
+
+        queueSocket.onopen = function(e) {
+            console.log('WebSocket is open now.');
+        
+            // Set an interval to send a ping message every 30 seconds
+            setInterval(sendPing, 30000);
+        };
+
+        document.getElementById('call-queue-button').onclick = function() {
+            const queueNumberInputDom = document.getElementById('queue-number-input');
+            const queueNumber = queueNumberInputDom.value;
+            const counterSelectDom = document.getElementById('counter-select');
+            const counter = counterSelectDom.value;
+            queueSocket.send(JSON.stringify({
+                'action': 'call_queue',
+                'queue_number': queueNumber,
+                'counter': counter
+            }));
+            queueNumberInputDom.value = '';
+        }; 
+
+        document.getElementById('call-queue-increment').onclick = function() {
+           
+            const counterSelectDom = document.getElementById('counter-select');
+            const counter = counterSelectDom.value;
+            queueSocket.send(JSON.stringify({
+                'action': 'call_queue_db',   
+                'counter': counter
+            }));
+           
+        };
+
+        document.getElementById('recall-queue').onclick = function() {
+           
+            const counterSelectDom = document.getElementById('counter-select');
+            const counter = counterSelectDom.value;
+            queueSocket.send(JSON.stringify({
+                'action': 'recall-queue_db',   
+                'counter': counter
+            }));
+           
+        };
+
+       /*  document.getElementById('moveback-queue').onclick = function() {
+           
+            const counterSelectDom = document.getElementById('counter-select');
+            const counter = counterSelectDom.value;
+            queueSocket.send(JSON.stringify({
+                'action': 'move_back',   
+                'counter': counter
+            }));
+           
+        }; */
+
+
+
+
+        queueSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            
+            if (data.type === 'queue_empty') {
+                document.getElementById('id_last_ticket').textContent = data.last_created_obj;
+                document.getElementById('id_last_queue_number').textContent = data.last_called_obj;
+                
+                showQueueEmptyModal();
+            }
+
+            function showQueueEmptyModal() {
+                const modal = document.getElementById('queueEmptyModal');
+                modal.classList.remove('hidden');
+            }
+            document.getElementById('closeModalButton').addEventListener('click', function() {
+                const modal = document.getElementById('queueEmptyModal');
+                modal.classList.add('hidden');
+            });
+
+            if (data.type === 'queue_update') {
+                // Update the table with the new queue number
+                console.log('Queue Number:', data.queue_number, 'Counter:', data.counter,'uncalled_ticket_count:',data.uncalled_ticket_count, data.audio_url);
+                document.getElementById('id_last_queue_number').textContent = data.queue_number;
+                document.getElementById('id_last_ticket').textContent = data.last_created_obj;
+                document.getElementById('id_queue_count').textContent = data.uncalled_ticket_count;
+               
+
+                const audio = document.getElementById('notification-sound');
+                    audio.src = data.audio_url;
+                    audio.play().catch(error => {
+                        console.error('Error playing audio:', error);
+                    });
+                
+                const ticketToRemove = document.getElementById(`id_${data.id}`);
+              
+                if (ticketToRemove) {
+                    ticketToRemove.remove();
+                }
+                
+               
+            }
+
+            const selectedCounter = document.getElementById('counter-select').value;
+    
+            if (data.type === 'queue_specific_update' && data.counter === selectedCounter) {
+                // Update the DOM elements based on the data received
+                document.getElementById('id_current_queue_number').textContent = data.queue_number;
+                document.getElementById('id_current_mobilenumber').textContent = data.mobile_number;
+                document.getElementById('id_current_datetime').textContent = data.issued_at;
+                document.getElementById('hiddenDataField').value = data.id;
+                
+            }
+            
+            else if (data.type === 'ticket_issued') {
+                // Handle ticket issued event if necessary
+                console.log('New Ticket Issued:', data.ticket_number);
+
+
+                const messageDiv = document.getElementById('id_queue_empty_message');
+                    // Hide the div
+                    if (messageDiv) {
+                        messageDiv.style.display = 'none';
+                    }
+                document.getElementById('id_last_queue_number').textContent = data.last_called_obj;
+                document.getElementById('id_last_ticket').textContent = data.ticket_number;
+                document.getElementById('id_queue_count').textContent = data.uncalled_ticket_count;
+
+                const ticketList = document.getElementById('ticketList');
+
+                // Create a new list item element for the new ticket
+                const newTicket = document.createElement('li');
+                newTicket.className = 'p-3 flex justify-between items-center hover:bg-gray-100';
+
+                newTicket.id = `id_${data.id}`;
+                                
+            
+                // HTML content for the new ticket
+                newTicket.innerHTML = `
+                   
+                        <p><strong>Queue:</strong> #${data.ticket_number}</p>
+                        <p><strong>Mobile:</strong> ${data.mobile_number}</p>
+                        <p><strong>Time:</strong> ${data.issued_at}</p>`;
+            
+                // Append the new ticket to the list
+                ticketList.appendChild(newTicket);
+
+
+
+
+            }
+            else if (data.type === 'forget_queue_call'){
+
+                const queueEmptyModal = document.getElementById('queueEmptyModal');
+                const textParagraph = document.querySelector("#queueEmptyModal .text-sm.text-gray-500");
+
+                // Update the text in the paragraph
+                textParagraph.textContent = "Please call a queue first.";
+
+                // Show the modal by changing the display style
+                if (queueEmptyModal) {
+                    queueEmptyModal.classList.remove('hidden');
+                    }
+                    
+            }
+            else if (data.type === 'queue_update_manual'){
+                console.log(data.audio_url)
+                const audio = document.getElementById('notification-sound');
+                    audio.src = data.audio_url;
+                    audio.play().catch(error => {
+                        console.error('Error playing audio:', error);
+                    });
+            }
+
+            else if (data.type === 'pong'){
+                console.log('PONG:');
+            }
+        };
+
+        queueSocket.onclose = function(e) {
+            console.error('Queue socket closed unexpectedly');
+            setTimeout(connectWebSocket, 5000);
+        };
+
+        function sendPing() {
+            if (queueSocket.readyState === WebSocket.OPEN) {
+                queueSocket.send(JSON.stringify({ type: 'ping' }));
+            }
+        };
+   };
+        connectWebSocket();
+    </script>
+</body>
+</html>

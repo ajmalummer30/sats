@@ -1,0 +1,52 @@
+<!-- Left Side Menu -->
+        
+<div class="col-sm-12 col-md-9 col-lg-2 prod_filter_sidemenu" >  
+   
+    <div class="card sticky"> 
+        <div class="card-header" style="text-align:center;">
+            <label> IT DEPT</label>
+        </div>
+          
+        
+      
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <button class="btn dropdown-toggle" type="button"  data-toggle="collapse" data-target="#collapsetc" aria-expanded="false" aria-controls="collapsetc"  >
+                   Configurable Items
+                </button>
+                <div class="collapse" id="collapsetc">   
+                    <div class="card-body">
+                      
+                       
+                        {% comment %} <a class="dropdown-item" href="#id_brand_ajax"  data-toggle="modal" >Add Model1</a> {% endcomment %}
+                        <button type="button" id="displaybrandform" class="dropdown-item" data-toggle="modal"  data-target="#id_brand_ajax">
+                            Add Brand
+                        </button>
+                        <button type="button" class="dropdown-item" data-toggle="modal" data-target="#id_category_ajax">
+                            Add Category
+                        </button>
+                        <button type="button"  class="dropdown-item displaymodelform" data-toggle="modal" data-target="#id_model_ajax">
+                            Add Model
+                          </button>
+                       
+        
+                    </div>  
+                </div> 
+             </li>
+             <li class="list-group-item">
+                <button class="btn dropdown-toggle" type="button"  data-toggle="collapse" data-target="#collapsepc" aria-expanded="false" aria-controls="collapsepc"  >
+                   demo1
+                </button>
+                <div class="collapse" id="collapsepc">   
+                    <div class="card-body">
+                       
+                        <a class="dropdown-item" href="{% url 'itassets:create_main_request' %}">Create MR</a>
+                        
+        
+                    </div>  
+                </div>  
+            </li>
+        </ul>
+        
+    </div>
+</div>

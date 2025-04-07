@@ -1,0 +1,244 @@
+{% extends "base.html" %}
+
+
+
+
+{% block content %}
+
+<div class="row">
+{% include 'financesidemenu.html' %}
+<div class="col-md-9">
+    <div class="card">
+        <div class="card-header text-center">
+           <p>Petty Cash Requests</p>     
+        </div>
+        <div class="card-body" >
+
+            <form enctype="multipart/form-data"  method="post" id="product_form">
+                {% csrf_token %}
+                <!-- main form start --- in our case product form -->
+                <div class="card">
+                    <div class="card-header card-header-secondary">
+                        <h4 class="card-title">Petty Cash Claim Form</h4>
+                    </div>
+                </div>
+                <div class="row">
+        
+                    {% for field in form %}
+                    
+                        <div class="col-lg-3 col-sm-12">
+                            <label>{{field.label}}</label>
+                            {% if field.field.required %}
+                                <span style="color: red;" class="required">*</span>
+                            {% endif %}
+                        
+                            {{field}}
+                            {% if field.help_text %}
+                                <small style="color: grey">{{ field.help_text }}</small>
+                            {% endif %}
+                            {% for error in field.errors %}
+                                <p style="color: red">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                
+                    {% endfor %}
+                </div> 
+                
+                <!-- inline form for Variant start -->
+
+                <!-- EXPLAINING with named_formsets.variants as formset -->
+                <!-- Note: named_formsets is used in get_context_data function in views.py -->
+                <!-- Note: here variants is our VariantFormSet name, used in get_named_formsets function in views.py -->
+                {% with named_formsets.variants as formset %}
+                    {{ formset.management_form }}
+                    <script type="text/html" id="variants-template">  // id="inlineformsetname-template"
+                        // id='inlineformsetname-__prefix__' 
+                        <tr id="variants-__prefix__" class= hide_all>
+                            {% for fields in formset.empty_form.hidden_fields %}
+                                {{ fields }}
+                            {% endfor %}
+                        
+                            {% for fields in formset.empty_form.visible_fields %}
+                                <td>{{fields}}</td>
+                            {% endfor %}
+                        </tr>
+                    </script>
+                    <div class="table-responsive card mt-4">
+                        <div class="card-header card-header-secondary">
+                            <h4 class="card-title">Add Variants</h4>
+                        </div>
+                        <table class="table card-header">
+                            <thead class="text-secondary">
+                                <th>Item Name <span style="color: red;" class="required">*</span></th>
+                                <th>Quantity <span style="color: red;" class="required">*</span></th>
+                                <th>Unit Price <span style="color: red;" class="required">*</span></th>
+                                <th>Amount <span style="color: red;" class="required">*</span></th>
+                                <th>Exclude Row <span style="color: red;" class="required">*</span></th>
+                                
+                            
+                            </thead>
+                            <tbody id="item-variants">  <!-- id="item-inlineformsetname" -->
+                                <!-- formset non forms errors -->
+                                {% for error in formset.non_form_errors %}
+                                    <span style="color: red">{{ error }}</span>
+                                {% endfor %}
+                                {% for formss in formset %}
+                                    {{ formss.management_form }}
+                                    <tr id="variants-{{ forloop.counter0 }}" class= hide_all>  <!-- id="inlineformsetname-counter" -->
+                                        {{ formss.id }}
+                                        {% for field in formss.visible_fields %}
+                                            <td>
+                                                {{field}}
+                                                {% for error in field.errors %}
+                                                    <span style="color: red">{{ error }}</span>
+                                                {% endfor %}
+                                                
+                                            
+                                            </td> 
+                                        {% endfor %}
+                                        {% comment %} for delete {% endcomment %}
+                                        {% if formss.instance.pk %}
+                                            <td>
+                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal{{formss.instance.pk}}">
+                                                    Delete
+                                                </button>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="exampleModal{{formss.instance.pk}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel{{formss.instance.pk}}" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel{{formss.instance.pk}}">Are Your Sure You Want To Delete This?</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <a href="{% url 'pettycash:delete_variant' formss.instance.pk %}" type="button" class="btn btn-primary">Yes, Delete</a>
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </td>            
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <a href="#" id="add-variant-button" class="btn btn-secondary add-variants">+</a> <!-- id="add-inlineformsetname-button" -->
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <button type="button" id="calculateButton" class="btn btn-outline-info col-lg-6 col-sm-12">Show Total Amount</button>
+                        </div>
+                        <div class="col d-flex justify-content-end">
+                            <input class="form-control col-lg-2 col-sm-12" id="totalamount" type="text" placeholder="" aria-label="0.0" >
+
+                        </div>
+                        
+                        
+                        
+                    </div>
+                    
+                    {% endwith %}
+                    <!-- inline form for Images end -->
+
+                    <div class="row ">
+                        <div class="col d-flex justify-content-end">
+                            
+                        <button type="submit" class="btn btn-primary btn-block col-lg-1 col-sm-12">SAVE</button>
+                    
+                        </div>
+                    </div>
+                    
+            </form>
+
+        </div>
+    </div>
+</div>
+
+</div>
+
+
+<script>
+   
+    function calculateTotalSum() 
+    {
+        var totalSum = 0;
+        var count = $('#item-variants').children().length;
+    
+        // Loop through the IDs and add their values to totalSum
+        for (var i = 0; i < count; i++) 
+        {
+            var textboxId = 'id_variants-' + i + '-amount';
+            var textboxValue = parseFloat(document.getElementById(textboxId).value) || 0;
+    
+            totalSum += textboxValue;
+        }
+        return totalSum;
+    }
+     
+  $(document).ready(function() 
+  {
+   
+    $('#calculateButton').on('click', function() {
+        // Call the function to calculate the total sum
+        sum=calculateTotalSum();
+        $('#totalamount').val(sum.toFixed(2));
+    });
+
+
+    // when user clicks add more btn of variants
+      $('.add-variants').click(function(ev)
+       {
+          ev.preventDefault();
+          var count = $('#item-variants').children().length;
+          var tmplMarkup = $('#variants-template').html();
+          var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count);
+          $('#item-variants').append(compiledTmpl);
+  
+          // update form count
+          $('#id_variants-TOTAL_FORMS').attr('value', count+1);
+        });
+
+        $(document).on('input', '#item-variants input[type="number"]', function() 
+    {
+        
+        
+            var totalSum=0 ;
+            var row = $(this).closest('tr'); 
+      
+            var quantity = parseFloat(row.find('[name$="quantity"]').val()) || 0;
+            var unitPrice = parseFloat(row.find('[name$="unit_price"]').val()) || 0;
+            var amountField = row.find('[name$="amount"]'); 
+            
+
+            var amount = (quantity * unitPrice).toFixed(2);
+           
+            amountField.val(amount);
+
+
+           
+            
+            
+          
+
+    });
+
+
+
+    
+       
+  });
+
+
+ 
+
+</script>
+        
+{% endblock content %}

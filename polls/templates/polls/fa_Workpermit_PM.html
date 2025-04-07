@@ -1,0 +1,488 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+<div class="row">
+  {% include 'facilitysidemenu.html' %}
+  
+  <div class="col-md-9">
+        <div class="card">
+            <div class="card-header text-center">
+                <h2>WORK PERMIT FORM :</h2>
+                
+            </div>
+            <div class="card-body">
+                <form action="" method="post" enctype="multipart/form-data" novalidate >
+                  {% csrf_token %}
+                  {% if form.non_field_errors %}
+                    <div class="alert alert-danger" role="alert">
+                      <ul>
+                        {% for error in form.non_field_errors %}
+                          <li>{{ error }}</li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  {% endif %}
+
+                  <div class="col-12 col-md-12">
+                    <div class="form-group row">
+                    
+                      <div class="col-12 col-md-2 control-label text-md-right text-left"><label><b>{{ form.work_order.label }}</b></label></div>
+                      <div class=" col-12 col-md-8">
+                        
+                        {{ form.work_order }}
+                        {% for error in form.work_order.errors %}
+                          <p style="color: red">{{ error }}</p>
+                        {% endfor %}
+                      </div>
+                    </div>
+                </div>
+                  
+                      <div class="col-12 col-md-12">
+                          <div class="form-group row">
+                          
+                            <div class="col-12 col-md-2 control-label text-md-right text-left"><label><b>{{ form.start_date.label }}</b></label></div>
+                            <div class=" col-12 col-md-8">
+                              
+                              {{ form.start_date }}
+                              {% for error in form.start_date.errors %}
+                                <p style="color: red">{{ error }}</p>
+                              {% endfor %}
+                            </div>
+                          </div>
+                      </div>
+                      
+
+
+
+                      <div class="col-12 col-md-12">
+                        <div class="form-group row">
+                        
+                          <div class="col-12 col-md-2 control-label text-md-right text-left"><label><b>{{ form.end_date.label }}</b></label></div>
+                          <div class=" col-12 col-md-8">
+                            
+                            {{ form.end_date }}
+                            {% for error in form.end_date.errors %}
+                              <p style="color: red">{{ error }}</p>
+                            {% endfor %}
+                          </div>
+                        </div>
+                    </div>
+                      <div class="col-12 col-md-12">
+                          <div class="form-group row">
+                          
+                            <div class="col-12 col-md-2 control-label text-md-right text-left"><label><b>{{ form.created_date.label }}</b></label></div>
+                            <div class=" col-12 col-md-8">
+                              
+                              {{ form.created_date }}
+                              {% for error in form.created_date.errors %}
+                                <p style="color: red">{{ error }}</p>
+                              {% endfor %}
+                            </div>
+                          </div>
+                      </div>
+                      <!---->
+                      <div class="col-12 col-md-12">
+                        <div class="form-group row">
+                        
+                          <div class="col-12 col-md-2 control-label text-md-right text-left"><label><b>{{ form.station_name.label }}</b></label></div>
+                          <div class=" col-12 col-md-8">
+                            
+                            {{ form.station_name }}
+                            {% for error in form.station_name.errors %}
+                              <p style="color: red">{{ error }}</p>
+                            {% endfor %}
+                          </div>
+                        </div>
+                    </div>
+                    <!---->
+                    <div class="col-12 col-md-12">
+                      <div class="form-group row">
+                      
+                        <div class="col-12 col-md-2 control-label text-md-right text-left"><label><b>{{ form.Contracting_Company_Name.label }}</b></label></div>
+                        <div class=" col-12 col-md-7">
+                          
+                          {{ form.Contracting_Company_Name }}
+                          {% for error in form.Contracting_Company_Name.errors %}
+                            <p style="color: red">{{ error }}</p>
+                          {% endfor %}
+                        </div>
+                        <div class="col-12 col-md-1">
+                          <!-- Button trigger modal -->
+                          <button type="button" id="id_showcompanymodal" class="btn btn-primary" data-toggle="modal" data-target="#id_addcompany" style="display:none;">
+                            Add New
+                          </button>
+
+                        </div>
+                      </div>
+                  </div>
+                  <!---->
+                  <div class="col-12 col-md-12">
+                    <div class="form-group row">
+                    
+                      <div class="col-12 col-md-2 control-label text-md-right text-left"><label><b>{{ form.workers.label }}</b></label></div>
+                      <div class=" col-12 col-md-7">
+                        
+                        {{ form.workers }}
+                        {% for error in form.workers.errors %}
+                          <p style="color: red">{{ error }}</p>
+                        {% endfor %}
+                      </div>
+                      <div class="col-12 col-md-1">
+                        <!-- Button trigger modal -->
+                        <button type="button" id="id_showworkermodal" class="btn btn-primary" data-toggle="modal" data-target="#id_workers_tab">
+                          Add New
+                        </button>
+
+                      </div>
+                    </div>
+                </div>
+                <!---->
+                <div class="col-12 col-md-12">
+                  <div class="form-group row">
+                  
+                    <div class="col-12 col-md-2 control-label text-md-right text-left"><label><b>{{ form.Staff_in_charge.label }}</b></label></div>
+                    <div class=" col-12 col-md-8">
+                      
+                      {{ form.Staff_in_charge }}
+                      {% for error in form.Staff_in_charge.errors %}
+                        <p style="color: red">{{ error }}</p>
+                      {% endfor %}
+                    </div>
+                  </div>
+              </div>
+              <!---->
+              <div class="col-12 col-md-12">
+                <div class="form-group row">
+                
+                  <div class="col-12 col-md-2 control-label text-md-right text-left"><label><b>{{ form.Phone_number.label }}</b></label></div>
+                  <div class=" col-12 col-md-8">
+                    
+                    {{ form.Phone_number }}
+                    {% for error in form.Phone_number.errors %}
+                      <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                  </div>
+                </div>
+            </div>
+            <!---->
+              <div class="col-12 col-md-12">
+                <div class="form-group row">
+                
+                  <div class="col-12 col-md-2 control-label text-md-right text-left"><label><b>{{ form.Employee_Count.label }}</b></label></div>
+                  <div class=" col-12 col-md-8">
+                    
+                    {{ form.Employee_Count }}
+                    {% for error in form.Employee_Count.errors %}
+                      <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                  </div>
+                </div>
+            </div>
+            <!---->
+            <div class="col-12 col-md-12">
+              <div class="form-group row">
+              
+                <div class="col-12 col-md-2 control-label text-md-right text-left"><label><b>{{ form.Description.label }}</b></label></div>
+                <div class=" col-12 col-md-8">
+                  
+                  {{ form.Description }}
+                  {% for error in form.Description.errors %}
+                    <p style="color: red">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              </div>
+          </div>
+          <!---->
+              <div class="col-12 col-md-12">
+                <div class="form-group row">
+                
+                  <div class="col-12 col-md-2 control-label text-md-right text-left"><label><b>{{ form.Additional_notes.label }}</b></label></div>
+                  <div class=" col-12 col-md-8">
+                    
+                    {{ form.Additional_notes }}
+                    {% for error in form.Additional_notes.errors %}
+                      <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                  </div>
+                </div>
+            </div>
+            <!---->
+            <div class="col-12 col-md-12">
+              <div class="form-group row">
+              
+                <div class="col-12 col-md-2 control-label text-md-right text-left"><label><b>{{ form.Tools.label }}</b></label></div>
+                <div class=" col-12 col-md-8">
+                  
+                  {{ form.Tools }}
+                  {% for error in form.Tools.errors %}
+                    <p style="color: red">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              </div>
+          </div>
+          <!---->
+          
+          <input type="submit" class="col-md-8 btn btn-primary btn-block mx-auto d-block" value="SUBMIT" />
+                  
+                </form>
+
+        <!-- Modal 1-->
+        <div class="modal fade" id="id_addcompany" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <form action="" method="post" id="form_savecompany" novalidate>
+              <div class="card">
+
+                <div class="card-header text-center">
+                  
+                    <h5 class="card-title" id="exampleModalLongTitle">Add NEW COMPANY</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  
+                </div>
+                <div class="card-body">
+                
+                    <div class="form-row">
+                      <div class="col-lg-6">
+                        <div id="form-success" style="display:none;">
+                          <b style="color:#a61f38">Company added successfully</b>
+                        </div>
+                        <div id="div_addcompany" class="form-group">
+                      {% comment %}     {% csrf_token %}
+                          {{ contractorform|crispy }}   {% endcomment %}  
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+              
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                  </div>
+                
+              </div>
+            </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal 2-->
+        <div class="modal fade" id="id_workers_tab" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+            <form action="" method="post" id="form_saveworker" enctype="multipart/form-data" novalidate>
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Add New worker</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="form-row">
+                  <div class="col-lg-6">
+                    <div id="form-success_worker" style="display:none;">
+                      <b style="color:#a61f38">Worker saved successfully</b>
+                    </div>
+                    <div id="div_addworkers" class="form-group">
+                     {% comment %}  {% csrf_token %}
+                      {{ workerform|crispy }}    {% endcomment %} 
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+              </div>
+            </form>
+            </div>
+          </div>
+        </div>
+
+                <br>
+                <br>
+            </div>
+
+
+        </div>
+  </div>
+</div>
+
+
+
+
+<script>
+
+ 
+$(document).ready(function(){
+       // Initialize Select2 for the multiple choice field
+       $('#id_workers').select2({ 
+        placeholder: 'Select an option',
+        multiple: true,
+        closeOnSelect: false, 
+        width: '100%'
+    });
+
+
+    function ShowWorkerModal() {
+    $.ajax({
+      url: '{% url "polls:DisplayWorkerModal" %}', // Replace with the actual URL of your view
+      type: 'GET', // Use GET method to fetch the form
+      dataType: 'json',
+      success: function (response) {
+        // Handle the response from the server
+        if (response.success) {
+          // If the response indicates success, display the form
+          $('#div_addworkers').html(response.data);
+        } else {
+          // If there was an error, handle it
+          alert('Failed to fetch form: ' + response.message);
+        }
+      },
+      error: function (xhr, status, error) {
+        // Handle errors that occur during the AJAX request
+        console.error('Error:', error);
+      }
+    });
+  }
+
+  $('#id_showworkermodal').on('click', function (event) {
+    event.preventDefault(); // Prevent the default action of the button
+    // Perform the AJAX request
+    ShowWorkerModal();
+
+  });
+
+
+    
+/* script for adding new worker */
+    $('#form_saveworker').on('submit', function(event) {
+        event.preventDefault();  // Prevent the form from submitting normally
+        
+        
+        var formData = new FormData(this);
+        
+      $.ajax({
+        url: '{% url "polls:saveworkerinfo" %}',
+        data: formData,
+        type: 'POST',
+        dataType: 'json',
+        processData: false,  // Prevent jQuery from processing the data
+        contentType: false,
+        success: function(response) {
+          if (response.success) {
+            
+              // Handle success case
+              $('#form-success_worker').show();
+              setTimeout(function() {
+                  $('#form-success_worker').fadeOut();
+              }, 2000);
+              
+              $('#form_saveworker')[0].reset();
+              
+              $('#id_workers').append($('<option>', {
+                value: response.id,
+                text: response.name
+            }));
+            $('#id_workers').val(response.id).trigger('change');
+            ShowWorkerModal();
+          } else {
+              // Handle validation errors
+              $('#div_addworkers').empty().append(response.data); 
+
+              
+          }
+      },
+      error: function(xhr, status, error) {
+          // Handle other types of errors
+          console.error('Error:', error);
+      }
+    });
+  });
+
+  function ShowCompanyModal() {
+    $.ajax({
+      url: '{% url "polls:DisplayCompanyModal" %}', // Replace with the actual URL of your view
+      type: 'GET', // Use GET method to fetch the form
+      dataType: 'json',
+      success: function (response) {
+        // Handle the response from the server
+        if (response.success) {
+          // If the response indicates success, display the form
+          $('#div_addcompany').html(response.data);
+        } else {
+          // If there was an error, handle it
+          alert('Failed to fetch form: ' + response.message);
+        }
+      },
+      error: function (xhr, status, error) {
+        // Handle errors that occur during the AJAX request
+        console.error('Error:', error);
+      }
+    });
+  }
+
+  $('#id_showcompanymodal').on('click', function (event) {
+    event.preventDefault(); // Prevent the default action of the button
+    // Perform the AJAX request
+    ShowCompanyModal();
+
+  });
+
+
+
+
+/* script for adding new company */
+$('#form_savecompany').on('submit', function(event) {
+        event.preventDefault();  // Prevent the form from submitting normally
+        
+        
+        var formData = $(this).serialize(); 
+        
+      $.ajax({
+        url: '{% url "polls:savecompanyinfo" %}',
+        data: formData,
+        type: 'POST',
+        dataType: 'json',
+        success: function(response) {
+          if (response.success) {
+              // Handle success case
+              $('#form-success').fadeIn();
+              setTimeout(function() {
+                  $('#form-success').fadeOut();
+              }, 2000);
+              $('#form_savecompany')[0].reset();
+              $('.invalid-feedback').empty();
+
+              
+              $('#id_Contracting_Company_Name').append($('<option>', {
+                value: response.id,
+                text: response.name
+            }));
+            $('#id_Contracting_Company_Name').val(response.id).trigger('change');
+            ShowCompanyModal();
+          } else {
+              // Handle validation errors
+              $('#div_addcompany').empty().append(response.data); 
+              
+          }
+      },
+      error: function(xhr, status, error) {
+          // Handle other types of errors
+          console.error('Error:', error);
+      }
+    });
+  });
+
+
+
+   });
+  
+ </script>
+
+ {% endblock content%}
+ 

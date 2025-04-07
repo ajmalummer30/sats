@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+
+
+{% block content %}
+{% comment %} {% include 'financesidemenu.html' %} {% endcomment %}
+<div class="row">
+    {% include 'Itsidemenu.html' %}
+    <div class="col-12 col-sm-12 col-md-9">
+        <div class="card">
+            <div class="card-header text-center"><h5>CCTV Serial Numbers</h5></div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <!-- Loop over the serial numbers and create textboxes -->
+                    <table class="table table-striped">
+                        <thead>
+                            <th>SL No</th>
+                            <th>Serial Number</th>
+                            <th>Asset_Tag</th>
+                        </thead>
+                        <tbody>
+                            {% for serial_number in cctv_serial_numbers %}
+                            <tr>
+                                <td>{{serial_number.id}}</td>
+                                <td> <input type="text" name="serial_number_{{ serial_number }}" value="{{ serial_number }}" class="form-control"></td>
+                                <td>{{serial_number.Asset_tag}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                   
+                       
+                 
+                    <button type="submit" class="btn btn-primary" >Submit</button>
+                </form>
+            </div>
+        </div>
+        
+    </div>
+</div>
+{% endblock content%}

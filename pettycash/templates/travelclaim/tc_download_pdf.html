@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+    <h1>Download PDF</h1>
+    <p>Click the link below to download the PDF:</p>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Request No</th>
+            <th scope="col">Employee ID</th>
+            <th scope="col">Employee Name</th>
+            <th scope="col">Total Amount</th>
+            <th scope="col">Approval Status</th>
+            <th scope="col">Download PDF</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">{{ instance.id}}</th>
+            <td>{{ instance.user}}</td>
+            <td>{{ instance.user.first_name }} {{ instance.user.last_name }}</td>
+            <td>{{ instance.Total_Amount}}</td>
+            <td>{% if instance.status == True %}
+                approved
+              {% else %}
+                pending
+              {% endif %}</td>
+              <td><a href="{% url 'pettycash:travelclaimpdf' instance.id %}" class="btn btn-primary">Click here to Dowload PDF</a></td>
+          </tr>
+          
+        </tbody>
+      </table>
+
+
+   
+ {% endblock content%}

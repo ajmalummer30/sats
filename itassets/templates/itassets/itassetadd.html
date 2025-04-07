@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+
+
+<p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
+
+<div class="progress">
+ 
+ <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"  aria-valuenow="{{ wizard.steps.current}}" aria-valuemin="1" aria-valuemax="{{ wizard.steps.count }}"></div> 
+  
+</div>
+
+<form action="" method="post" novalidate>
+  {% csrf_token %}
+  <table>
+    {{ wizard.management_form }}
+    {% if wizard.form.forms %}
+      {{ wizard.form.management_form }}
+      {% for form in wizard.form.forms %}
+        {% crispy form %}
+      {% endfor %}
+    {% else %}
+      {% crispy wizard.form %}
+    {% endif %}
+  </table>
+
+  <div class="row justify-content-center">
+     
+  {% if wizard.steps.prev %}
+  
+   
+  <button id="bt-prev" class="btn btn-secondary btn-block col-lg-1 ml-2" name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}">prev step</button>
+
+  {% endif %}
+  <input id="bt-cancel" class="btn btn-warning btn-block col-lg-1 ml-2" type="button" value="Cancel" onclick="window.location.href='{% url 'itassets:itassetdisplay' %}'"/>
+  <br>
+  <input id="bt-submit" class="btn btn-primary btn-block col-lg-1 ml-2" type="submit" value="submit"/>
+  
+   
+  </div>
+  
+</form>
+
+
+
+<script>
+  $(document).ready(function() {
+     
+      // Update progress bar width dynamically
+      var currentStep = {{ wizard.steps.current }};
+      var currentStep1 = currentStep +1 ;
+      var totalSteps = {{ wizard.steps.count }};
+      var progressPercent = (currentStep1 / (totalSteps)) * 100;
+    
+     
+      $("#progress-bar").css("width",progressPercent  + "%");
+  });
+</script>
+
+{% endblock %}

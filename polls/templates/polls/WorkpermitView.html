@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+
+<div class="row">
+    {% include 'facilitysidemenu.html' %}
+
+   
+    
+    <div class="col-lg-9">
+
+
+    
+        <form action="{% url 'polls:filter_petty_workpermits' %}" method="GET" >
+            <div class="card">
+                <div class="card-header text-center">
+                    <div class="card-title">Filter Work Permits</div>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="form-row d-flex flex-wrap justify-content-between">
+                            <div class="form-group flex-grow-1 mx-2 mb-3">
+                                <label for="startDate" class="col-form-label">Start Date:</label>
+                                <input type="date" name="Start_date" id="startDate" class="form-control">
+                            </div>
+                            <div class="form-group flex-grow-1 mx-2 mb-3">
+                                <label for="endDate" class="col-form-label">End Date:</label>
+                                <input type="date" name="End_date" id="endDate" class="form-control">
+                            </div>
+                            <div class="form-group flex-grow-1 mx-2 mb-3">
+                                <label for="station_name" class="col-form-label">Station</label>
+                                {{ form.station_name }}
+                            </div>
+                            <div class="form-group flex-grow-1 mx-2 mb-3">
+                                <label for="Contracting_Company_Name" class="col-form-label">Vendor</label>
+                                {{ form.Contracting_Company_Name }}
+                            </div>
+                            <div class="form-group flex-grow-1 mx-2 mb-3 d-flex align-items-end">
+                                <button type="submit" class="btn btn-primary w-100">Filter</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </form>
+   
+        <div class="card customscroll" style="max-height:70vh !important">
+               
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="sortableTable" data-toggle="table" data-sortable="true" data-pagination="true" class="table table-striped">
+                            <thead>
+                                <tr>
+                               
+                                     
+                                         
+                                                
+                                                <th data-field="ChecklistID" data-sortable="true">WORKPERMIT REF NO</th>
+                                                <th data-field="Equipment" data-sortable="true">STATION</th>
+                                                <th data-field="Equipment" data-sortable="true">CREATED DATE</th>
+                                                <th data-field="User" data-sortable="true">VENDOR</th>
+                                                <th data-field="View_Checklist" data-sortable="true">View Details</th>
+                                                
+                                               
+                                                <!-- Add more table headers for each field in your model -->
+                                            
+                                
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in obj %}
+                                <tr>
+                                    
+                                    <td>{{ item.id }}</td>
+                                    <td>{{ item.station_name }}</td>
+                                    <td>{{ item.created_date|date:"d-M-Y" }}</td> <!-- Access fields of your model -->
+                                    <td>{{ item.Contracting_Company_Name }}</td> <!-- Replace field_name_1 with actual field name -->
+                                    <td><a href="{% url 'polls:detailwpview' item.id %}" class="btn btn-primary">View </a></td>
+                                    <!-- Add more table cells for each field in your model -->
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+        </div>
+    
+  
+
+</div>
+</div>
+
+	
+<script>
+    $(document).ready(function() {
+      
+      
+    });
+</script>
+
+{% endblock content%}

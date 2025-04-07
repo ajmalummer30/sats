@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+
+<form method="POST" class="form-group" novalidate>
+	{% csrf_token %}
+	<h2>Sign Up</h2>
+	{{ form|crispy }}		
+  {% comment %}  {% for field in form %}
+	<p>
+		{% if field.errors %}
+		<ul class="errorlist">
+			{% for error in field.errors %}
+			<li>{{ error }}</li>
+			{% endfor %}
+		</ul>
+		{% endif %}
+	 	{{ field.label_tag }} {{ field }}
+	</p>
+	{% endfor %}  {% endcomment %}
+	<input type="submit" value="Register" />
+	<p>Already has an account? <a href="{%url 'usrmgmt:login' %}">Login</a></p>
+</form>
+
+{% endblock content%}

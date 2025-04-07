@@ -1,0 +1,159 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .container {
+    display: flex;
+    justify-content: right; /* Horizontal centering */
+    align-items: center; /* Vertical centering */
+    /* Optional: Set height of the container */
+}
+        
+  .center-heading {
+    text-align: center;
+    
+  }
+  .bckclr{
+    background-color:lightgrey;
+  }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th[colspan="2"] {
+            text-align: center;
+        }
+        .border{
+            border: 1px solid black !important  ;
+            padding:10px;
+            
+        }
+       
+        
+    </style>
+
+</head>
+<body>
+    
+    
+    <div style="text-align: left;">
+        {% if Gatepass_obj.Mode == 1 %}
+        <h5 style="font-size: 20px;">GATE PASS (Exit)   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            <img src="{% static 'satsksa.png' %}" class="" width="200px" height="auto" /> </h5>
+    {% else %}
+    <h5 style="font-size: 20px;">GATE PASS (Entry)   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        <img src="{% static 'satsksa.png' %}" class="" width="200px" height="auto" /> </h5>
+    {% endif %}
+   
+    
+    </div>  
+
+    
+    
+    <table>
+        <tr>
+            <th class="center-heading bckclr" colspan="6"><h5>GATEPASS NO: {{Gatepass_obj.id}}</h5></th>
+            
+        </tr>
+        <tr>
+            <td colspan="2"><b>Issued Date & Time </b>:{{Gatepass_obj.Issue_Date}} {{Gatepass_obj.Created_time}}</td> 
+            <td colspan="2"><b>Station </b>:{{Gatepass_obj.station_name}}</td>
+            <td colspan="2"><b>Issued By</b> :{{Gatepass_obj.user}}</td>
+        </tr>
+        <tr>
+            <td colspan="6">    
+                {% if Gatepass_obj.Return_status == '1' %}
+                <b>Item Return Status</b>: Returnable
+                {% else %}
+                <b>Item Return Status</b>:Non Returnable
+                {% endif %}
+
+               
+            </td>
+        </tr>
+        <tr>
+           <td colspan="6" style="height: 10px;"> </td>
+        </tr>
+        <tr>
+            <td colspan="6" class="center-heading bckclr"><b>Vendor Details</b></td>
+        </tr>
+        <tr>
+            <td colspan="2"><b>Company Name</b> : {{Gatepass_obj.Company_Name}}</td>
+            <td colspan="2"><b>Driver Name</b> : {{Gatepass_obj.Driver_name}}</td>
+            <td><b>Iqama Number</b> : {{Gatepass_obj.Iqama_Number}}</td>
+            <td><b>Contact Details</b> : {{Gatepass_obj.Contact_Details}}</td>
+        </tr>
+        <tr>
+            <td colspan="6" style="height: 10px;"> </td>
+         </tr>
+         <tr>
+            <td colspan="6" class="center-heading bckclr"><b>Item Description</b></td>
+        </tr>
+        <tr>
+            <td colspan="6" style="height:130px;">
+                <b>Description</b> :  {{Gatepass_obj.Item_Description}}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="6" style="height: 10px;"> </td>
+         </tr>
+         <tr>
+            <td colspan="6" class="center-heading bckclr"><b>Reason</b></td>
+        </tr>
+        <tr>
+            <td colspan="6" style="height:130px;">
+                {{Gatepass_obj.Reason}}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="6" style="height: 10px;"> </td>
+         </tr>
+         <tr>
+            <td colspan="2" class="center-heading bckclr"><b>Approved By Facility/Admin</b></td>
+            <td colspan="2" class="center-heading bckclr"><b>Noted By Security</b></td>
+            <td colspan="2" class="center-heading bckclr"><b>Acknowledged By Vendor</b></td>
+        </tr>
+        <tr>
+            <td colspan="2">Date :</td>
+            <td colspan="2">Date :</td>
+            <td colspan="2">Date :</td>
+   
+           
+            </tr>
+         <tr>
+            <td colspan="2">Name :</td>
+            <td colspan="2">Name :</td>
+            <td colspan="2">Name :</td>
+           
+            </tr>
+            <tr>
+                <td style="height:100px;" colspan="2">Signature :</td>
+                <td colspan="2">Signature :</td>
+                <td colspan="2">Signature :</td>
+               
+                </tr>
+         
+        <!-- Add more rows as needed -->
+    </table>
+    <br>
+    <br>
+
+    <div class="center-heading">** Two copies will be presented by the vendor out of which one copy for the Vendor and one for security.<br>
+        The vendor will present his copy while bringing the item back</div>
+    
+</body>
+</html>
+
+

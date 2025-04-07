@@ -1,0 +1,339 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+
+{% include 'header.html' %}
+
+<body>
+<header>
+
+    {% include 'indexmenu.html' %}
+    
+
+</header>
+
+<section>
+
+    
+    <div  class="conatiner-fluid">
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="{% static 'images/dmm terminal.jpg'%}" class="d-block w-100" style="height: 600px;" alt="...">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5>sdfsdfsdf</h5>
+                                <p>sdfsdfsfsfdsdf</p>
+                              </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{% static 'images/Picture1.jpg'%}" class="d-block w-100" style="height: 600px;" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{% static 'images/Picture2.jpg'%}" class="d-block w-100" style="height: 600px;" alt="...">
+                        </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+                </button>
+              
+        </div>
+
+       
+    </div>
+    <div class="container" id="id_aboutus">
+        <div class="row" >
+            <div class="col-lg-12">
+                <!-- Section Tittle -->
+                <div class="section-tittle text-center mb-80">
+                    <span>ABOUT US</span>
+                          
+                </div>
+            </div>
+        <div class="row" >
+            <div class="col-lg-12">
+                <!-- Section Tittle -->
+                <div class="section-tittle ">
+                    <p class="aboutus_p">SATS is proud to be a home-grown company, tracing our roots back to the very beginning of commercial aviation in Singapore, marked by the inaugural flight that took off from Singapore Kallang Airport in 1947. </p>
+                    <p class="aboutus_p">Over the next few decades, we grew in tandem with our young city-state as Singapore transformed itself into a global business and aviation hub. </p>
+                    <p class="aboutus_p">Relocating to Changi Airport in 1981, we continued working hard to expand our network, strengthen competitiveness, and grow operational capabilities together with industry partners like Singapore Airlines.</p>
+                    <p class="aboutus_p">Overseas joint ventures (JVs) paved the way for strategic new business opportunities while enabling us to establish ourselves in new markets. At the same time, we diversified our business, expanding into new non-aviation industry segments such as institutional catering and cruise terminal management. </p>
+                    <p class="aboutus_p">As a brand and a business, we are proud to have come a long way and we could not have achieved what we have without the passion and dedication of our people. </p>
+                    <p class="aboutus_p">Looking ahead, we are committed to building a sustainable future for our customers and communities, adopting a technology-driven, people-led approach as we incorporate key sustainability goals into our business development. </p>     
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="container" id="visionmission">
+
+        <div class="row" >
+            <div class="col-lg-12">
+                <!-- Section Tittle -->
+                <div class="section-tittle text-center mb-80">
+                    <span>OUR VISION & MISSION</span>
+                    
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="col-lg-12">
+                    <div class="card d-flex align-items-center">
+                        <div class="card-body">
+                          <h5 class="card-title">At SATS, we are inspired by our vision to be the market leader by delighting customers with innovative food solutions and seamless connections.</h5>
+                         
+                          
+                        </div>
+                      </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <img src="{% static 'images/world network.jpg' %}" class="img-fluid" >
+                        </div>
+                      </div>
+                </div>
+            </div> 
+
+            <div class="col-lg-6">
+                <div class="col-lg-12">
+                    <div class="card d-flex align-items-center">
+                        <div class="card-body">
+                            <h5 class="card-title">As a global leader in gateway services and Asia's preeminent provider of food solutions, we are dedicated to creating long-term value and sustainable outcomes for the communities we serve</h5> 
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <img src="{% static 'images/mission.png' %}" class="img-fluid" >
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+ 
+
+    <div class="container" style="padding-top:50px;" id="id_corevalues">
+        <div class="row" >
+            <div class="col-lg-12">
+                <!-- Section Tittle -->
+                <div class="section-tittle text-center mb-80">
+                    <span>OUR CORE VALUES</span>
+                    
+                    
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-lg-3">
+                <div class="card" id="id_core_trust">
+                    <img class="card-img coreimg" src="{% static 'images/corevalues_trust.png' %}" alt="Card image">
+                    <div class="card-img-overlay">
+                        <h5 class="card-title">TRUST</h5>
+                        <p class="hidden-p">Having empathy, taking responsibility, and keeping our promises.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-lg-3">
+                <div class="card" id="id_core_trust">
+                    <img class="card-img coreimg" src="{% static 'images/corevalues_innovation.png' %}" alt="Card image">
+                    <div class="card-img-overlay">
+                        <h5 class="card-title">INNOVATION</h5>
+                        <p class="hidden-p">Having empathy, taking responsibility, and keeping our promises.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-lg-3">
+                <div class="card" id="id_core_trust">
+                    <img class="card-img coreimg" src="{% static 'images/safety.jpeg' %}" alt="Card image">
+                    <div class="card-img-overlay">
+                        <h5 class="card-title">SAFETY</h5>
+                        <p class="hidden-p">Having empathy, taking responsibility, and keeping our promises.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-lg-3">
+                <div class="card" id="id_core_trust">
+                    <img class="card-img coreimg" src="{% static 'images/teamwork.jpg' %}" alt="Card image">
+                    <div class="card-img-overlay">
+                        <h5 class="card-title">TEAM WORK</h5>
+                        <p class="hidden-p">Having empathy, taking responsibility, and keeping our promises.</p>
+                    </div>
+                </div>
+            </div>
+           
+
+        </div>      
+    </div>
+    
+    <div class="" id="journeycontainer">
+        <div class="container">
+
+                
+            <h2>Our Journey  </h2>
+            <h1>In Saudi Arabia</h1>
+            
+            <div class="timeline">
+            
+                <!--first-->
+                <div class="timeline__event  animated fadeInUp delay-3s timeline__event--type1">
+                    <div class="timeline__event__icon ">
+                        MARCH 2017
+                        <!-- <i class="lni-sport"></i>-->
+            
+                    </div>
+                    <div class="timeline__event__date">
+                      
+                        <img src="{% static 'images/startup terminal.jpg' %}" class="responsive-image" style="width:100px;height:100px;" >
+                    </div>
+                    <div class="timeline__event__content ">
+                        <div class="timeline__event__title">
+                            SATS STARTUP TERMINAL DAMMAM
+                        </div>
+                        <div class="timeline__event__description">
+                            <p>Ground handling services and inflight catering started with Singapore’s first commercial aviation operations at Kallang Airport. The first inflight kitchen was established with a production volume of 200 meals a day.</p>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            
+                <!--second-->
+            
+                <div class="timeline__event animated fadeInUp delay-2s timeline__event--type2">
+                    <div class="timeline__event__icon">
+                        <!-- <i class="lni-sport"></i>-->
+                        MARCH 2019
+                    </div>
+                    <div class="timeline__event__date">
+                       
+                        <img src="{% static 'images/dmm terminal.jpg' %}" class="responsive-image" style="width:100px;height:100px;" >
+                    </div>
+                    <div class="timeline__event__content">
+                        <div class="timeline__event__title">
+                          SATS AIR FRIEGHT TERMINAL DAMMAM
+                        </div>
+                        <div class="timeline__event__description">
+                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel, nam! Nam eveniet ut aliquam ab asperiores, accusamus iure veniam corporis incidunt reprehenderit accusantium id aut architecto harum quidem dolorem in!</p>
+                        </div>
+                    </div>
+                </div>
+            
+                <!--third-->
+            
+                <div class="timeline__event animated fadeInUp delay-1s timeline__event--type3">
+                    <div class="timeline__event__icon">
+                        <!-- <i class="lni-sport"></i>-->
+            SEP 2021
+                    </div>
+                    <div class="timeline__event__date">
+                        <img src="{% static 'images/naqelterminal.jpg' %}" class="responsive-image" style="width:100px;height:100px;" >
+                    </div>
+                    <div class="timeline__event__content">
+                        <div class="timeline__event__title">
+                           SATS NAQEL START UP TERMINAL RIYADH
+                        </div>
+                        <div class="timeline__event__description">
+                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel, nam! Nam eveniet ut aliquam ab asperiores, accusamus iure veniam corporis incidunt reprehenderit accusantium id aut architecto harum quidem dolorem in!</p>
+                        </div>
+            
+                    </div>
+                </div>
+            
+                <!--forth-->
+            
+                <div class="timeline__event animated fadeInUp timeline__event--type1">
+                    <div class="timeline__event__icon">
+                        <!-- <i class="lni-sport"></i>-->
+            MARCH 2022
+                    </div>
+                    <div class="timeline__event__date">
+                        <img src="{% static 'images/jeddahterminal.jpg' %}" class="responsive-image" style="width:100px;height:100px;" >
+                    </div>
+                    <div class="timeline__event__content">
+                        <div class="timeline__event__title">
+                           SATS AIR FRIEGHT TERMINAL JEDDAH
+                        </div>
+                        <div class="timeline__event__description">
+                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel, nam! Nam eveniet ut aliquam ab asperiores, accusamus iure veniam corporis incidunt reprehenderit accusantium id aut architecto harum quidem dolorem in!</p>
+                        </div>
+                    </div>
+                </div>
+            
+                <!--first-->
+                <div class="timeline__event  animated fadeInUp delay-3s timeline__event--type1">
+                    <div class="timeline__event__icon ">
+                        <!-- <i class="lni-sport"></i>-->
+                        DEC 2022
+                    </div>
+                    <div class="timeline__event__date">
+                        <img src="{% static 'images/Picture2.jpg' %}" class="responsive-image" style="width:100px;height:100px;" > 
+                    </div>
+                    <div class="timeline__event__content ">
+                        <div class="timeline__event__title">
+                            SATS AIR FRIEGHT TERMINAL RIYADH
+                        </div>
+                        <div class="timeline__event__description">
+                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel, nam! Nam eveniet ut aliquam ab asperiores, accusamus iure veniam corporis incidunt reprehenderit accusantium id aut architecto harum quidem dolorem in!</p>
+                        </div>
+                    </div>
+                </div>
+            
+             
+                <!--third-->
+        
+            
+            </div>
+        </div>
+    </div>
+            
+        
+     
+           
+   
+   
+
+   
+   
+    
+
+
+</section>
+<footer>
+    <div  class="card-header">
+        {% include 'footer.html' %}
+    </div>
+</footer>
+
+
+</body>
+</html>
+
+
+    
+    
+  
+
+	
+

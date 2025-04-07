@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+
+
+{% block content %}
+
+<div class="container">
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="Electric_question" value='Electric'>
+        {{ questionform|crispy }}
+        {{ form.errors }}
+        
+ <input type="submit" class="btn btn-primary btn-block" value="SAVE" />
+    </form>
+    <br>
+    <table data-toggle="table" data-sortable="true" data-pagination="true" class="table table-striped">
+        <tr>
+            <th>Sl No:</th>
+            <th>Checklist Items</th>
+            <th>EDIT</th>
+            <th>DELETE</th>
+        </tr>
+        {% for question in questions %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ question.text}}</td>
+                <td><a href="{% url 'polls:UpdateQuestions' question.id %}" class="btn btn-outline-warning">Update</a></td>
+                <td><a href="{% url 'polls:DeleteQuestions' question.id %}" class="btn btn-outline-danger">Delete</a></td>
+            </tr>
+        {% endfor %}
+
+    </table>
+
+</div>
+
+  
+	
+	
+
+{% endblock content%}

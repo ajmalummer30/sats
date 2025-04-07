@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row">
+    {% include 'facilitysidemenu.html' %}
+
+    <div class="col-md-9">
+<div class="card">
+    <div class="card-header">ADD CONTRACTS</div>
+    <div class="card-body">
+<form action="" method="post"  enctype="multipart/form-data" >
+{% csrf_token %}
+{{form|crispy}}
+<input type="submit" class="btn btn-primary btn-block mx-auto d-block" value="SUBMIT" />
+</form>
+
+<br>
+<br>
+<table class="table table-striped">
+    <thead>
+        <th> SL No</th>
+        <th>Category</th>
+        <th>Subcategory</th>
+        <th>Description</th>
+    </thead>
+    <tbody>
+        {% for category in categoy_obj %}
+        <tr>
+            <td >{{ forloop.counter }}</td>
+               
+            <td ><strong>{{ category.name }}</strong></td>
+            <td>
+                
+                {% if category.subcategories.all %}
+                <ul class="">
+                    {% for subcategory in category.subcategories.all %}
+                    <li class="">
+                        {{ subcategory.name }}
+                    {% endfor %}
+                </ul>
+                {% endif %}
+               
+            </td>
+            
+            <td>{{ category.description }}</td>
+        </tr>
+        
+        {% endfor %}
+    </tbody>
+</table>
+
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+
+{% endblock content%}

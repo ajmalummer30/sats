@@ -1,0 +1,163 @@
+
+{%load static %}
+
+<!DOCTYPE html>
+
+
+{% include 'header.html' %}
+<body>
+    
+        <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+            <a class="nav-link disabled" href="{% url 'accounts:home' %}" > 
+                <img src="{% static 'satsgroupcmyk.png' %}" width="30" height="30" class="d-inline-block align-top" alt=""></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                      <a class="nav-link " href="{% url 'pettycash:home' %}" id="navbarDropdown" role="button" data-toggle="" aria-haspopup="true" aria-expanded="false">
+                        FINANCE
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'pettycash:create_product' %}">PETTY CASH CLAIM</a>
+                        <a class="dropdown-item" href="{% url 'pettycash:travelclaimrequest' %}">TRAVEL CLAIM</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'pettycash:list_products' %}">VIEW Petty Cash REQUESTS</a>
+                        
+                      </div>
+                    </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link" href="{% url 'polls:facility_menu' %}" id="navbarDropdown" role="button" data-toggle="" aria-haspopup="true" aria-expanded="false">
+                      FACILITY
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <!-- <a class="dropdown-item" href="{% url 'polls:home' %}">FILL CHECKLIST</a> -->
+                      <a class="dropdown-item" href="{% url 'polls:createworkpermit' %}">CREATE WORKPERMIT</a>
+                      <a class="dropdown-item" href="{% url 'polls:gatepass' %}">CREATE GATEPASS</a>
+                      <a class="dropdown-item" href="{% url 'polls:display_gatepass' %}">DISPLAY GATEPASS</a>
+                      <a class="dropdown-item" href="{% url 'polls:displayworkpermits' %}">DISPLAY WORKPERMITS</a>
+                     
+                     <!--  <a class="dropdown-item" href="{% url 'polls:create_questions' %}">ADD/EDIT ELECTRIC CHECKLIST</a>
+                      <a class="dropdown-item" href="{% url 'polls:create_Dieselquestions' %}">ADD/EDIT DIESEL CHECKLIST</a> -->
+                    </div>
+                  </li>
+
+                <!-- <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="{% url 'itassets:It_Graph_Display' %}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    IT ASSET REGISTRY
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{% url 'itassets:It_Product_Add' %}">Add Assets</a>
+                    <a class="dropdown-item" href="#"></a>
+                    
+                    <a class="dropdown-item" href="{% url 'itassets:itassetdisplay' %}">View Assets</a>
+                     <a class="dropdown-item" href="{% url 'itassets:It_Graph_Display' %}">View Reports</a> -->
+                 <!-- </div>
+                </li> -->
+                {% if request.user %}
+                {% for group in request.user.groups.all %}
+                  {% if group.name == "IT" %}
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="{% url 'itassets:It_Graph_Display' %}" id="navbarDropdown" role="button"
+                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          IT ASSET REGISTRY
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <a class="dropdown-item" href="{% url 'itassets:It_Product_Add' %}">Add Assets</a>
+                          <a class="dropdown-item" href="{% url 'itassets:itassetdisplay' %}">View Assets</a>
+                          <!-- <a class="dropdown-item" href="{% url 'itassets:It_Graph_Display' %}">View Reports</a> -->
+                        </div>
+                      </li>
+                      {% endif %}  
+                {% endfor %}
+              {% endif %}
+                <!-- <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Safety & Quality
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{% url 'quality:home' %}">Create Incident Report</a>
+                    <a class="dropdown-item" href="{% url 'quality:listincidents' %}">VIew Reports</a>
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link disabled" href="#">Disabled</a>
+                </li> -->
+              </ul>
+             
+                  
+                 
+              {% comment %} <span class="badge badge-dark">Hi {{ request.user.username}} {% for group in request.user.groups.all %}{{group.name}} {% endfor %}</span> {% endcomment %}
+              <span class="badge badge-dark">Hi {{ request.user.username}}</span>
+              <ul class="navbar-nav mr-right">
+               
+                <li class="nav-item dropdown">
+                    
+                    
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="{% static 'satsgroupcmyk.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        {%if request.user.is_authenticated %}
+                        <a class="dropdown-item" href="{% url 'accounts:home' %}">HOME</a>
+                        <a class="dropdown-item" href="{% url 'pettycash:home' %}">Service Menu</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="{% url 'accounts:logout'%}">LOG OUT</a>
+
+                      {%else%}
+                      <a class="dropdown-item" href="{% url 'accounts:login'%}">LOG IN</a>
+                      {%endif%}
+
+                    </div>
+                  </li>
+              </ul>
+              
+              
+            </div>
+          </nav>
+            
+          <main>
+            {% if messages %}
+                  <div class="messages">
+                      {% for message in messages %}
+                          <div class="alert {% if message.tags %} alert-{{ message.tags }}"{% endif %}>
+                              {{ message }}
+                          </div>
+                          
+                      {% endfor %}
+                  </div>
+              {% endif %}
+                  
+             <!--  {% if breadcrumbs %}
+ 
+              {% include "dynamic_breadcrumbs/breadcrumbs.html" with breadcrumbs=breadcrumbs%}
+     
+   
+         
+          {% endif %}  -->
+
+
+            </main>
+          <div class="container-fluid">
+            
+              <div class="container-fluid" style="padding-top: 30px;">
+                <div class="">
+
+              
+                  {% block content %}
+                      
+                                      
+        
+                  {% endblock %}
+
+                  </div>
+                </div>    
+            </div>
+       
+    
+</body>
+</html>
+          

@@ -1,0 +1,413 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+{% include 'financesidemenu.html' %}
+
+<div class="col-md-9">
+    <form method="post" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        <div class="card">
+            <div class="card-header text-center">
+                <h5>Incident Investigation Report</h5>
+            </div>
+            <div class="card-body">
+
+                {% if form.non_field_errors %}
+                  <div class="alert alert-danger" role="alert">
+                    <ul>
+                      {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                {% endif %}
+              <div class="row">
+                    <div class="col-lg-3">
+                      <div class="form-group">
+                        <label>{{ form.type.label }}</label>
+                        {{ form.type }}
+                        {% for error in form.type.errors %}
+                          <p style="color: red">{{ error }}</p>
+                        {% endfor %}
+                      </div>
+                    </div>
+                    <div class="col-lg-3">
+                      <div class="form-group">
+                        <label>{{ form.category.label }}</label>
+                        {{ form.category }}
+                        {% for error in form.category.errors %}
+                          <p style="color: red">{{ error }}</p>
+                        {% endfor %}
+                      </div>
+                    </div>
+                    <div class="col-lg-3">
+                      <div class="form-group">
+                        <label>{{ form.station.label }}</label>
+                        {{ form.station }}
+                        {% for error in form.station.errors %}
+                          <p style="color: red">{{ error }}</p>
+                        {% endfor %}
+                      </div>
+                    </div>
+                    <div class="col-lg-3">
+                      <div class="form-group">
+                        <label>{{ form.Location.label }}</label>
+                        {{ form.Location }}
+                        {% for error in form.Location.errors %}
+                          <p style="color: red">{{ error }}</p>
+                        {% endfor %}
+                      </div>
+                    </div>
+                    <!-- Add other fields with their respective column sizes and form-control class -->
+
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3">
+                    <div class="form-group">
+                      <label>{{ form.whether_condition.label }}</label>
+                      {{ form.whether_condition }}
+                      {% for error in form.whether_condition.errors %}
+                        <p style="color: red">{{ error }}</p>
+                      {% endfor %}
+                    </div>
+                  </div>
+                  <div class="col-3">
+                    <div class="form-group">
+                      <label>{{ form.visibility.label }}</label>
+                      {{ form.visibility }}
+                      {% for error in form.visibility.errors %}
+                        <p style="color: red">{{ error }}</p>
+                      {% endfor %}
+                    </div>
+                  </div>
+                  <div class="col-lg-3">
+                    <div class="form-group">
+                      <label>{{ form.surface_condition.label }}</label>
+                      {{ form.surface_condition }}
+                      {% for error in form.surface_condition.errors %}
+                        <p style="color: red">{{ error }}</p>
+                      {% endfor %}
+                    </div>
+                  </div>
+                  <div class="col-lg-3">
+                    <div class="form-group">
+                      <label>{{ form.date_of_occurance.label }}</label>
+                      {{ form.date_of_occurance }}
+                      {% for error in form.date_of_occurance.errors %}
+                        <p style="color: red">{{ error }}</p>
+                      {% endfor %}
+                    </div>
+                  </div>
+                  <!-- Add other fields with their respective column sizes and form-control class -->
+
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label>{{ form.time_of_occurance.label }}</label>
+                    {{ form.time_of_occurance }}
+                    {% for error in form.time_of_occurance.errors %}
+                      <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                  </div>
+                </div>
+                <!-- Add other fields with their respective column sizes and form-control class -->
+
+            </div>   
+            </div>
+        </div>
+        <br>
+        <div class="card">
+          <div class="card-header text-center">
+            Injury Summary
+          </div>
+        <div class="row">
+          <div class="col-lg-3">
+            <div id="success-message" style="display: none;">
+              Data saved successfully.
+            </div>
+              <div class="form-group">
+                <label>{{ form.driver_name.label }}</label>
+                {{ form.driver_name }}
+                {% for error in form.driver_name.errors %}
+                  <p style="color: red">{{ error }}</p>
+                {% endfor %}
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                  +
+                </button>
+              </div>
+          </div>
+          <div class="col-lg-3">
+            <div id="success-message" style="display: none;">
+              Data saved successfully.
+            </div>
+              <div class="form-group">
+                <label>{{ form.employees_name.label }}</label>
+                {{ form.employees_name }}
+                {% for error in form.employees_name.errors %}
+                  <p style="color: red">{{ error }}</p>
+                {% endfor %}
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                  +
+                </button>
+              </div>
+          </div>  
+          <div class="col-lg-3">
+            <div class="form-group">
+                <label>{{ form.bodyparts_affected.label }}</label>
+                <div class="dropdown show">
+                    <button class="btn btn-secondary dropdown-toggle col-lg-12" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Click Here
+                    </button>
+                    <div class="dropdown-menu col-lg-12" aria-labelledby="dropdownMenuButton"
+                         style="max-height: 200px; overflow-y: auto;">
+                        {{ form.bodyparts_affected }}
+                    </div>
+                </div>
+                {% for error in form.bodyparts_affected.errors %}
+                    <p style="color: red">{{ error }}</p>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="form-group">
+              <label>{{ form.nature_of_injury.label }}</label>
+              <div class="dropdown show">
+                  <button class="btn btn-secondary dropdown-toggle col-lg-12" type="button" id="dropdownMenuButton"
+                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Click Here
+                  </button>
+                  <div class="dropdown-menu col-lg-12" aria-labelledby="dropdownMenuButton"
+                       style="max-height: 200px; overflow-y: auto;">
+                      {{ form.nature_of_injury }}
+                  </div>
+              </div>
+              {% for error in form.nature_of_injury.errors %}
+                  <p style="color: red">{{ error }}</p>
+              {% endfor %}
+          </div>
+      </div>
+          
+        </div>
+     </div>
+     <br>
+     <div class="card">
+      <div class="card-header text-center">
+        Detailed Summary
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+            <div class="form-group">
+              <label>{{ form.Summary.label }}</label>
+              {{ form.Summary }}
+              {% for error in form.Summary.errors %}
+                <p style="color: red">{{ error }}</p>
+              {% endfor %}
+            </div>
+
+        </div>      
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+          <div class="form-group">
+            <label>{{ form.contributory_factors.label }}</label>
+            {{ form.contributory_factors }}
+            {% for error in form.contributory_factors.errors %}
+              <p style="color: red">{{ error }}</p>
+            {% endfor %}
+          </div>
+
+      </div>      
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+        <div class="form-group">
+          <label>{{ form.corrective_measurments.label }}</label>
+          {{ form.corrective_measurments }}
+          {% for error in form.corrective_measurments.errors %}
+            <p style="color: red">{{ error }}</p>
+          {% endfor %}
+        </div>
+
+    </div>      
+</div>
+<div class="row">
+  <div class="col-lg-12">
+      <div class="form-group">
+        <label>{{ form.preventive_measures.label }}</label>
+        {{ form.preventive_measures }}
+        {% for error in form.preventive_measures.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+      </div>
+
+  </div>      
+</div>
+
+
+    </div>
+
+    <div class="card">
+      <div class="card-header text-center"> Upload attachments</div>
+
+      <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+              
+              <label>{{ form.image1.label }}</label>
+              {{ form.image1 }}
+              {% for error in form.image1.errors %}
+                <p style="color: red">{{ error }}</p>
+              {% endfor %}
+            </div>
+      
+        </div>  
+        <div class="col-lg-6">
+          <div class="form-group">
+            
+            <label>{{ form.image2.label }}</label>
+            {{ form.image2 }}
+            {% for error in form.image2.errors %}
+              <p style="color: red">{{ error }}</p>
+            {% endfor %}
+          </div>
+    
+      </div> 
+      
+      <div class="col-lg-6">
+        <div class="form-group">
+          
+          <label>{{ form.image3.label }}</label>
+          {{ form.image3 }}
+          {% for error in form.image3.errors %}
+            <p style="color: red">{{ error }}</p>
+          {% endfor %}
+        </div>
+  
+    </div>
+
+    <div class="col-lg-6">
+      <div class="form-group">
+        
+        <label>{{ form.image4.label }}</label>
+        {{ form.image4 }}
+        {% for error in form.image4.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+      </div>
+
+  </div>
+      </div>
+    </div>
+    <input type="submit" class="btn btn-primary col-lg-12" value="SUBMIT" />
+    
+    </form>
+    <br>
+<br>
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form action="" method="post" id="driverinfo">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Driver Details/h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="col-lg-6">
+              <div id="form-errors" style="display:none;"></div>
+              <div class="form-group">
+                {% csrf_token %}
+                {{ driverform|crispy }}    
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button id="savedriverinfo" type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#nature_injury').select2({
+            multiple: true
+
+        });
+
+        $('#body_parts').select2({
+            multiple: true
+
+        });
+        $('#driver_name').select2({
+          multiple: true
+
+      });
+      $('#employee_name').select2({
+        multiple: true
+
+    });
+
+      $('#driverinfo').on('submit', function(event) {
+        event.preventDefault();  // Prevent the form from submitting normally
+        
+        
+        var formData = $(this).serialize(); 
+        
+      $.ajax({
+        url: '{% url "quality:savedriverinfo" %}',
+        data: formData,
+        type: 'POST',
+        dataType: 'json',
+        success: function(response) {
+          if (response.success) {
+              // Handle success case
+              $('#success-message').fadeIn();
+              setTimeout(function() {
+                  $('#success-message').fadeOut();
+              }, 3000);
+              $('#driverinfo')[0].reset();
+              $('.modal .close').trigger('click');
+              $('#driver_name').append($('<option>', {
+                value: response.id,
+                text: response.name
+            }));
+          } else {
+              // Handle validation errors
+              console.log('Form submission failed:', response.errors);
+              var errorsHtml = '<ul>';
+                $.each(response.errors, function(field, fieldErrors) {
+                    $.each(fieldErrors, function(i, error) {
+                        errorsHtml += '<li>' + error + '</li>';
+                    });
+                });
+                errorsHtml += '</ul>';
+              $('#form-errors').html(errorsHtml).show();
+          }
+      },
+      error: function(xhr, status, error) {
+          // Handle other types of errors
+          console.error('Error:', error);
+      }
+    });
+  });
+
+    });
+</script>
+
+{% endblock content%}
+

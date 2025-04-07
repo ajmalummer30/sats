@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+    <h1>Travel Claim Approval</h1>
+   
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Request No</th>
+            <th scope="col">Employee ID</th>
+            <th scope="col">Employee Name</th>
+            <th scope="col">Total Amount</th>
+            <th scope="col">Approval Status</th>
+            <th scope="col">Approval Link</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">{{ instance.id}}</th>
+            <td>{{ instance.user.employee_id}}</td>
+            <td>{{ instance.user.first_name }} {{ instance.user.last_name }}</td>
+            <td>{{ instance.Total_Amount}}</td>
+            <td>{% if instance.status == True %}
+                {{instance.approved_date}}
+              {% else %}
+                pending
+              {% endif %}</td>
+              <td>{% if instance.status == True %}
+                Already approved
+              {% else %}
+                <a href="{% url 'pettycash:ApproveTcClaim' instance.id 'Approve' %}" class="">Approve the claim</a>
+              {% endif %}</td>
+          </tr>     
+          
+        </tbody>
+      </table>
+
+
+   
+ {% endblock content%}

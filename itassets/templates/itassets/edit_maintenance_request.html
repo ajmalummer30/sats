@@ -1,0 +1,55 @@
+
+
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+
+{% block content %}
+
+<div class="row">
+    {% include 'Itsidemenu2.html' %}
+  <div class="col-12 col-sm-12 col-md-9">
+    <form method="post" enctype="multipart/form-data" novalidate>
+      <div class="card">
+        <div class="card-header text-center">
+          <h5>Edit Maintanence request</h5>
+        </div>
+        <div class="card-body"> 
+
+            {% csrf_token %}
+            {{ form|crispy }}  
+
+            <button type="submit" class="btn btn-primary btn-block">Create</button>
+        </div>
+
+            </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+    {% comment %} $(document).ready(function() {
+
+        var flag = {{ flag|yesno:"true,false" }};
+        
+    
+    // Show or hide the Warranty_type select box based on the initial value of flag
+    if (flag) {
+        $('#div_id_Warranty_type').show();
+    } else {
+        $('#div_id_Warranty_type').hide();
+    }
+       
+        // Event listener for checkbox change
+        $('#id_is_under_warranty').change(function() {
+            if ($(this).is(':checked')) {
+                $('#div_id_Warranty_type').show();
+            } else {
+                $('#div_id_Warranty_type').hide();
+                $('#id_Warranty_type').val(''); // Clear the select box value if hidden
+            }
+        });
+    }); {% endcomment %}
+    </script>
+
+{% endblock content%}

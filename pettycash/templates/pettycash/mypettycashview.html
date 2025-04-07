@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+{% include 'financesidemenu.html' %}
+<div class="col-md-9">
+    <div class="card">
+        <div class="card-header text-center">
+           <p>Petty Cash Requests</p>     
+        </div>
+        <div class="card-body" >
+            <div class="row">
+                <form action="" method="GET" class="col-12">
+                    <div class="card-header card-header-secondary">
+                        <h4 class="card-title">Filter Petty Requests</h4>
+                        <div class="form-group row">
+                            <div class="col-2">
+                                <label for="startDate" class="col-form-label">Start Date:</label>
+                                <input type="date" name="Start_date" id="startDate" class="form-control">
+                            </div>
+                            <div class="col-2">
+                                <label for="endDate" class="col-form-label">End Date:</label>
+                                <input type="date" name="End_date" id="endDate" class="form-control">
+                            </div>
+                            
+                            
+                            <div class="col-2 d-flex flex-column justify-content-end align-items-end">
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">Filter</button>
+                                </div>
+                                
+                                
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                           
+                        </div>
+                    </div>
+                </form>
+            </div>
+           
+            <div class="container mt-4">
+                <div class="table-responsive">
+                    <table id="sortableTable" data-toggle="table" data-sortable="true" data-pagination="true" class="table">
+                        <thead>
+                            <tr>
+                                <th data-field="SL_No" data-sortable="true">Sl No</th>
+                                <th data-field="Claimant" data-sortable="true">Claimant</th>
+                                <th data-field="Station" data-sortable="true">Station</th>
+                                <th data-field="Date" data-sortable="true">Date</th>
+                                <th data-field="total_amount" data-sortable="true">Total Amount</th>
+                                <th data-field="description" data-sortable="true">Status</th>
+                                <th data-field="description" data-sortable="true">Details</th>
+                                
+                                
+                                <!-- Add more table headers for each field in your model -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in products %}
+                            <tr>
+                                <td>{{ item.id }}</td>
+                                <td>{{ item.claimant }}</td> <!-- Access fields of your model -->
+                                <td>{{ item.employee.station_name }}</td>
+                                <td>{{ item.date }}</td>
+                                <td>{{ item.total_amount }} SAR</td>
+                                <td>{% if item.Approved_status == True %}
+                                    Approved
+                                    {% else %}
+                                    Pending for approval
+                                    {% endif %}
+                                </td>
+                                <td><a href="{% url 'pettycash:ViewUserPettyCashDetail' item.id %}" class="">View Details</a></td>
+                                 <td><a href="{% url 'pettycash:pettycashpdf' item.id %}" class="">Download Form</a></td>
+                            </tr>
+                                <!-- <td><a href="{% url 'pettycash:update_product' item.id %}" class="btn btn-primary">EDIT</a></td> -->
+                                <!-- Add more table cells for each field in your model -->
+                        
+                            {% endfor %}
+                            <tr>
+                                <td colspan="4"><b>Total Amount</b></td>
+                                <td>
+                                   
+                                    <b>{{ total_sum }} SAR</b>
+                             
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+        
+            </div>
+                <!-- <ul>
+                    {% for product in products %}
+                        <li class="card-body">{{ product.description }} | <a href="{% url 'pettycash:update_product' product.id %}">Edit</a></li>
+                    {% endfor %}
+                </ul> -->
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+</div>
+{% endblock content %}

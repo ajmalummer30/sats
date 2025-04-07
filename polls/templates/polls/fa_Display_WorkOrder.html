@@ -1,0 +1,138 @@
+
+
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row">
+    {% include 'facilitysidemenu.html' %}
+
+    <div class="col-lg-9">
+        <form action="{% url 'pettycash:filter_petty_requests' %}" method="GET" class="col-12">
+            <div class="card-header card-header-secondary">
+                <h4 class="card-title">Filter Petty Requests</h4>
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label for="startDate" class="col-form-label">Start Date:</label>
+                        <input type="date" name="Start_date" id="startDate" class="form-control">
+                    </div>
+                    <div class="col-2">
+                        <label for="endDate" class="col-form-label">End Date:</label>
+                        <input type="date" name="End_date" id="endDate" class="form-control">
+                    </div>
+                    <div class="col-2">
+                        <label for="station_name" class="col-form-label">Station</label>
+                        {{ form.station_name }}
+                    </div>
+                    <div class="col-2">
+                        <label for="employee" class="col-form-label">Employee</label>
+                        {{ form.employee }}
+                    </div>
+                    <div class="col-2 d-flex flex-column justify-content-end align-items-end">
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">Filter</button>
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+                <div class="form-group row">
+                   
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-lg-9 customscroll">
+<div class="card">
+    <div class="card-header text-center">View Work Orders</div>
+    <div class="card-body">
+        <div class="table-responsive">
+            {% if workorder_obj%}
+    <table class="table table-striped">
+        <thead>
+            <th> SL No</th>
+            <th>Type</th>
+            <th>Station</th>
+            <th>Created on</th>
+            <th>Created By</th>
+            
+            <th>Vendor</th>
+            <th>Details</th>
+            <th>View</th>
+            <th>WorkPermit</th>
+           
+        
+        </thead>
+        <tbody>
+            {% for obj in workorder_obj %}
+            <tr>
+                <td>{{ obj.id}}</td>
+                <td>{% if obj.Type_of_work == 1 %}
+                        Preventive Maintanence
+                    {% elif obj.Type_of_work == 2 %}
+                        Corrective Maintanence
+                    {% else %}
+                        New Maintanence
+                        {% endif %}
+                </td> 
+                <td>{{ obj.station_name}}</td>
+                <td>{{ obj.uploaded_at|date:"d-M-Y"}}</td>
+                <td>{{ obj.Created_By}}</td>
+               <td>{% if obj.preventivemaintenance %}
+                    {{ obj.preventivemaintenance.contract.contractor }}
+                {% elif obj.correctivemaintenance %}
+                    
+                    {{ obj.correctivemaintenance.contractor }}
+                    
+                {% else %}
+                {{ obj.newmaintenance.contractor }}
+                {% endif %} </td>
+
+                <td> {% if obj.preventivemaintenance %}
+                    {{ obj.preventivemaintenance.details }}
+                {% elif obj.correctivemaintenance %}
+                    {{ obj.correctivemaintenance.Scope_of_Work }}
+                {% else %}
+                {{ obj.newmaintenance.scope_of_work }}
+                {% endif %} </td>
+                <td><a href="{% url 'polls:Detail_Work_Order_View' obj.id %}" class="btn btn-primary">View Details </a></td>
+                <td>    
+                    {% if obj.Type_of_work == 1 %}
+                    <a class="btn btn-primary" href="{% url 'polls:Create_WorkPermit_PM' obj.id %}">Issue WorkPermit</a>
+                {% elif obj.Type_of_work == 2 %}
+                <a class="btn btn-primary" href="{% url 'polls:Create_WorkPermit_CM' obj.id %}">Issue WorkPermit</a>
+                {% else %}
+                <a class="btn btn-primary" href="{% url 'polls:createwpnew' obj.id %}">Issue WorkPermit</a>
+                    {% endif %}
+                   
+                   
+                   
+                    
+                </td> 
+            
+               
+            
+           </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    No work orders to Display
+
+    {% endif %}
+
+        </div>
+        
+
+        
+    </div>
+</div>
+
+
+
+</div>
+</div>
+
+
+{% endblock content%}

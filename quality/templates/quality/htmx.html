@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{%load static %}
+{% block content %}
+
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header text-center"><h5>Incident Details</h5>
+        </div>
+
+        <form method="post" hx-encoding='multipart/form-data'  hx-post='/upload'>
+            {% csrf_token %}
+
+    <input type="text" name="q"
+    hx-post="{% url 'quality:username' %}"
+    hx-trigger="keyup delay:500ms"
+    hx-swap='outerHTML'
+    hx-target="#search-results">
+
+        <div id='search-results'>
+           this content will be released
+        </div>  
+
+
+        <input type='file' name='file'>
+        <button>
+            Upload
+        </button>
+        <progress id='progress' value='0' max='100'></progress>
+
+
+    </form>
+
+    </div>      
+</div>
+	
+
+
+{% endblock content%}

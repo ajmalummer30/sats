@@ -1,0 +1,134 @@
+
+
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row">
+    {% include 'facilitysidemenu.html' %}
+
+    <div class="col-lg-9">
+<div class="card">
+    <div class="card-header text-center">VIEW EVENTS</div>
+    <div class="card-body">
+
+<div id="id_calendar">
+    
+<div id='calendar'></div>
+</div>
+
+  
+
+  
+<div class="modal fade" id="eventDetailsModal" tabindex="-1" aria-labelledby="eventDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eventDetailsModalLabel">Event Details</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="eventTitle"></p>
+                <p id="eventDates"></p>
+                <p id="eventDescription"></p>
+                <!-- Add more paragraphs or elements as needed -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+        
+    </div>
+</div>
+
+
+
+</div>
+</div>
+<script>
+    $(document).ready(function() {
+        var today = new Date();
+        var twentyDaysLater = new Date();
+        twentyDaysLater.setDate(today.getDate() + 20); // Calculate the date 20 days from today
+    
+        // Normalize both dates to start of the day to avoid time-related issues
+        today.setHours(0, 0, 0, 0);
+        twentyDaysLater.setHours(0, 0, 0, 0);
+    
+        $('#contractsTable tr').each(function() {
+            var endDateStr = $(this).find('.endDate').text();
+            if (endDateStr) {
+                var endDate = new Date(endDateStr);
+                endDate.setHours(0, 0, 0, 0); // Normalize the end date to the start of the day
+    
+                // Check if the end date is from today up to the next 20 days
+                if (endDate >= today && endDate <= twentyDaysLater) {
+                    $(this).css({
+                        'background-color': '#F08080', // Apply light coral background
+                        'color': 'white' // Change text color to white
+                    });
+                }
+            }
+        });
+
+        var calendarEl = document.getElementById('calendar');
+        var calendarEventsUrl = "{% url 'polls:calendar-events' %}";
+        
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          
+            initialView: 'dayGridMonth',
+            views: {
+                multiMonthYear: {
+                type: 'multiMonth',
+                duration: { months: 6 }
+                }
+            },
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'multiMonthYear,dayGridMonth,timeGridWeek,timeGridDay'
+                },
+            events: calendarEventsUrl,
+            
+            selectable: true,
+            selectHelper: true,
+            editable: true,  // Allow modifications of events
+            select: function(info) {
+                alert('Selected from ' + info.startStr + ' to ' + info.endStr);
+                // Here you can also add code to prompt for creating a new event
+            },
+            eventClick: function(info) {
+                var dateFormatter = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+                var startDate = dateFormatter.format(info.event.start);
+                var endDate = info.event.end ? dateFormatter.format(info.event.end) : '';
+                   
+                $('#eventDetailsModalLabel').text('Event Details: ' + info.event.title);
+                $('#eventTitle').text('Title: ' + info.event.title);
+                $('#eventDates').text('End: ' + info.event.start + (info.event.end ? ', End: ' + info.event.end : ''));
+                   
+                    $('#eventDescription').html('Description: ' + (info.event.extendedProps.description || 'No description provided.'));
+                    // Assuming 'participants' is another custom field you might want to display
+                    $('#eventDescription').append('<br>details: ' + (info.event.extendedProps.details || 'N/A'));
+
+                    // Show the modal
+                    $('#eventDetailsModal').modal('show');
+            },
+           
+            
+        });
+
+        calendar.render();
+
+        setInterval(function() {
+            calendar.render();
+        }, 5 * 60 * 1000); // 5 minutes in milliseconds
+
+        
+    });
+</script>
+
+{% endblock content%}

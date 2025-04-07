@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+<div id="error-messages">
+  {% if form.errors %}
+    <strong>Error:</strong>
+    <ul>
+      {% for field, errors in form.errors.items %}
+        {% for error in errors %}
+          <li>{{ field }}: {{ error }}</li>
+        {% endfor %}
+      {% endfor %}
+    </ul>
+  {% endif %}
+</div>
+
+{% block content %}
+  <form method="post" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+    {% crispy form %}
+    
+  </form>
+
+  <script>
+    $(document).ready(function() {
+      // Add click event handler to the button
+      $('#configure').click(function() {
+        // Remove the "active" class from all navigation links
+        $('.nav-link').removeClass('active');
+        // Add the "active" class to the navigation link with href="#configure"
+        $('.nav-link[href="#configuration"]').addClass('active');
+      });
+
+      $('#vendor').click(function() {
+        
+        // Remove the "active" class from all navigation links
+        $('.nav-link').removeClass('active');
+        // Add the "active" class to the navigation link with href="#configure"
+        $('.nav-link[href="#vendor-info"]').addClass('active');
+      });
+
+    });
+  </script>
+
+{% endblock %}

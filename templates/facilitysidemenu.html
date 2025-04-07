@@ -1,0 +1,44 @@
+<!-- Left Side Menu -->
+        
+<div class="d-none d-md-block col-lg-3 col-xl-2 prod_filter_sidemenu" >  
+   
+    <div class="card sticky"> 
+        <div class="card-header" style="text-align:center;">
+            <label> Facility</label>
+        </div>
+          
+        
+      
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <button class="btn dropdown-toggle" type="button"  data-toggle="collapse" data-target="#collapsetc" aria-expanded="false" aria-controls="collapsetc"  >
+                   WORK PERMITS
+                </button>
+                <div class="collapse" id="collapsetc">   
+                    <div class="card-body">
+                      
+                        <a class="dropdown-item" href="{% url 'polls:createworkpermit' %}">ISSUE WORKPERMIT</a>
+                        <a class="dropdown-item" href="{% url 'polls:displayworkpermits' %}">VIEW WORKPERMITS</a>
+                       
+        
+                    </div>  
+                </div> 
+             </li>
+             <li class="list-group-item">
+                <button class="btn dropdown-toggle" type="button"  data-toggle="collapse" data-target="#collapsepc" aria-expanded="false" aria-controls="collapsepc"  >
+                    GATE PASS
+                </button>
+                <div class="collapse" id="collapsepc">   
+                    <div class="card-body">
+                       
+                        <a class="dropdown-item" href="{% url 'polls:gatepass' %}">ISSUE GATEPASS</a>
+                        <a class="dropdown-item" href="{% url 'polls:display_gatepass' %}">VIEW GATEPASS</a>
+                        
+        
+                    </div>  
+                </div>  
+            </li>
+        </ul>
+        
+    </div>
+</div>

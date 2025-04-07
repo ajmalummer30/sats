@@ -1,0 +1,59 @@
+{% load crispy_forms_filters %}
+
+<table id="userTable" data-toggle="table" data-sortable="true" data-pagination="true" class="table">
+    <thead>
+        <tr>
+            <th data-field="ChecklistID" data-sortable="true">Asset NO</th>
+                                    <th data-field="Image" data-sortable="true">Image</th>
+                                    <th data-field="Product Status" data-sortable="true">Product Status</th>
+                                    <th data-field="Serial Number" data-sortable="true">Serial Number</th>
+                                    <th data-field="Category" data-sortable="true">Category</th>
+                                    <th data-field="Model" data-sortable="true">Model</th>
+                                    <th data-field="Location" data-sortable="true">Location</th>
+                                    <th data-field="Location" data-sortable="true">Asset Tag</th>
+                                    
+                                    
+                                    <th data-field="Availability" data-sortable="true">Availability</th>
+                                    <th data-field="View" data-sortable="true">View</th>
+                                    <th data-field="EDIT" data-sortable="true">EDIT</th>
+
+
+            <!-- Add more table headers for each field in your model -->
+        </tr>
+    </thead>
+    <tbody id="tablescroll">
+        {% for item in result %}
+        <tr>
+            
+                <td>{{ item.id }}</td>
+                <td> {% if item.device_model.image %}
+
+                    <img src="{{ item.device_model.image.url }}" width="90" height="60" alt="Uploaded Image">
+
+                    {% else %}
+
+                    <p>No image</p>
+                    {% endif %}
+                </td>
+                <td>{{ item.status }}</td>
+                <td>{{ item.serial_number }}</td>
+                <td>{{ item.category }}</td>
+                <td>{{ item.device_model }}</td>
+                <td>{{ item.location }}</td>
+                <td>{{ item.Asset_tag }}</td>
+                
+             
+                <td>{{ item.allocation_status }}</td>
+                <!-- Replace field_name_1 with actual field name -->
+                <td><a href="{% url 'itassets:ItAssetDetailView' item.id %}"
+                        class="btn btn-primary">View </a></td>
+                <!-- <td><a href="{% url 'itassets:ItAssetDetailView' item.id %}" class="btn btn-primary">EDIT </a></td>  -->
+
+                <td><a href="{% url 'itassets:EditItAsset' item.id %}" class="btn btn-primary">EDIT
+                    </a></td>
+                <!-- Add more table cells for each field in your model -->
+            </tr>
+            {% endfor %}
+        </tbody>
+       
+</table>

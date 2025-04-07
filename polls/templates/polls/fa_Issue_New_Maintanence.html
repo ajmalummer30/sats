@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row">
+    {% include 'facilitysidemenu.html' %}
+
+    <div class="col-lg-9">
+<div class="card">
+    <div class="card-header">Issue New Maintanence Order</div>
+    <div class="card-body">
+        <form action="" method="post"  enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            {{form|crispy}}
+            <input type="submit" class="btn btn-primary btn-block mx-auto d-block" value="SUBMIT" />
+            </form>
+    </div>
+</div>
+
+
+
+</div>
+</div>
+
+
+
+<script>
+    $(document).ready(function() {
+
+        $('#id_category').select2({ 
+            placeholder: 'Select an option',
+            multiple: false,
+            closeOnSelect: true, 
+            width: '100%'
+        });
+
+        $('#id_subcategory').select2({ 
+            placeholder: 'Select an option',
+            multiple: true,
+            closeOnSelect: false, 
+            width: '100%'
+        });
+        $('#id_contract').select2({ 
+            placeholder: 'Select an option',
+            multiple: false,
+            closeOnSelect: true, 
+            width: '100%'
+        });
+        
+        $('#id_contractor').select2({ 
+            placeholder: 'Select an option',
+            multiple: false,
+            closeOnSelect: true, 
+            width: '100%'
+        });
+    
+
+        $('#id_category').change(function() {
+            var categoryId = $(this).val();
+            var $subcategorySelect = $('#id_subcategory');
+            $subcategorySelect.empty();
+            $subcategorySelect.append('<option value="">Select a subcategory</option>');
+
+            if (categoryId) {
+                $.ajax({
+                    url: '{% url "polls:getsubcategories" 0 %}'.slice(0, -2) + categoryId + '/',
+                    method: 'GET',
+                    success: function(data) {
+                        $.each(data, function(index, subcategory) {
+                            $subcategorySelect.append('<option value="' + subcategory.id + '">' + subcategory.name + '</option>');
+                        });
+                    },
+                    error: function() {
+                        alert('Error retrieving subcategories');
+                    }
+                });
+            }
+        });
+
+        $('#id_contract').change(function() {
+            var contractId = $(this).val();
+            if (contractId && contractId != 1) {
+                $.ajax({
+                    url: '{% url "polls:get_contract_details" %}',
+                    data: {
+                        'contract_id': contractId
+                    },
+                    success: function(data) {
+                        // Update contractor dropdown
+                        $('#id_contractor').val(data.contractor).trigger('change');
+                        
+                        // Update category dropdown
+                        $('#id_category').val(data.category).trigger('change');
+                        
+                        // Update subcategory dropdown
+                        var $subcategory = $('#id_subcategory');
+                            $subcategory.empty();
+                            var selectedValues = [];
+                            $.each(data.subcategories, function(index, subcategory) {
+                                var option = new Option(subcategory.name, subcategory.id, true, true);
+                                $subcategory.append(option);
+                                selectedValues.push(subcategory.id);
+                            });
+                            $subcategory.val(selectedValues).trigger('change');  
+                                
+                        
+                    }
+                });
+            } else {
+                // Clear the dropdowns if no contract is selected
+                $('#id_contractor').val('');
+                $('#id_category').val('').trigger('change');
+                $('#id_subcategory').empty().trigger('change');
+            }
+        });
+
+
+
+    });
+</script>
+
+{% endblock content%}

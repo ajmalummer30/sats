@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<br>
+<br>
+Dear {{ instance.user.manager}}
+<br>
+<br>
+<h3>Please fidn the below TravelClaim Details</h3>
+    <table class="table" border="1" style='border:1px solid black;'>
+        <thead>
+          <tr>
+            <th scope="col">Request No</th>
+            <th scope="col">Employee Name</th>
+            <th scope="col">Days</th>
+            <th scope="col">Total Amount</th>
+            <th scope="col">Justification</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">{{instance.id}}</th>
+            <td>{{instance.user.first_name}} {{instance.user.last_name}}</td>
+            <td>{{instance.days}}</td>
+            <td>{{instance.Total_Amount}}</td>
+            <td>{{instance.justification}}</td>
+          </tr>
+          
+        </tbody>
+      </table>
+<br>
+<br>
+<a href="http://192.168.1.80:8000/pettycash/Mgrtcapprove/{{ instance.id }}/">To approve the request, Please click here</a>  
+    {% comment %} <a href="http://192.168.1.80:8000/pettycash/Mgrtcapprove/{{ claim }}/Approve/?token={{ token }}">To approve the claim, Please click here</a>   {% endcomment %}
+    <br>
+    <br>
+    <p>Regards<br>
+        SATS SAUDI Arabia<br>
+        
+      </p>
+</body>
+</html>
+<br>
+<br>
+
+
+

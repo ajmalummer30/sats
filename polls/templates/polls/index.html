@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+
+
+<!-- Download link for the PDF file -->
+
+<div class="container">
+    
+    
+    
+    
+
+    <form  method="post" id='myform' action="{% url 'polls:get_questions' %}" class="my-3 p-3 border rounded" novalidate> 
+        
+        {{ drpform|crispy }}
+       
+        <div id="subject-specific-questions" class="form-check">
+           
+
+        </div>
+        {% csrf_token %}
+    </form>
+    {% comment %} <label for="subject-dropdown">Select Subject:</label>
+    <select id="subject-dropdown" name="my_dropdown">
+        <option value="" selected disabled>Select</option>
+        {% for subject in subjects %}
+            <option value="{{ subject.id }}">{{ subject.name }}</option>
+        {% endfor %}
+    </select> {% endcomment %}
+
+    {% comment %} <div id="questions">
+        <h3>Check List:</h3>
+        <ul id="common-questions">
+          
+        </ul> {% endcomment %}
+
+        
+    
+</div>
+    
+
+
+<script>
+    $(document).ready(function() {
+        $('#subject-dropdown').change(function(event) {
+            event.preventDefault();
+            var subjectId = $(this).val();
+            
+            $.ajax({
+                url: 'get_questions/',  // Replace with your Django view URL
+                type: 'GET',
+                data: {
+                    subject_id: subjectId
+                },
+                success: function(data) {
+                     $('#subject-specific-questions').empty().append(data.subject_specific_questions_html); 
+                    
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+
+        $('#myform').submit(function(event) {
+            event.preventDefault(); // Prevent the default form submission
+    
+            var formData = $(this).serialize(); // Serialize the form data
+       
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'), // Get the form's action URL
+                data: formData,
+                success: function(response) {
+                    // Handle success response if needed
+                    $('#subject-specific-questions').empty().append(response.data); 
+                },
+                error: function(xhr, errmsg, err) {
+                    // Handle error case
+                    console.log(xhr.status + ": " + xhr.responseText);
+                }
+            });
+        });
+
+
+
+
+
+    });
+</script>
+
+{% endblock content%}
+
+

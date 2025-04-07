@@ -1,0 +1,13 @@
+{% load crispy_forms_filters %}
+
+{% comment %} {{ Genform|crispy }} {% endcomment %}
+{% comment %} 
+{% for question in form %}
+    {% comment %} <li name='{{question.id}}'>{{ question.text }}</li>
+    <li>
+        <label><input type="radio" name="answer1_{{ question.id }}" value="1"> Yes</label>
+        <label><input type="radio" name="answer1_{{ question.id }}" value="2"> No</label>
+    </li> 
+    
+
+{% endfor %} {% endcomment %}

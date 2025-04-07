@@ -1,0 +1,187 @@
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Your Title</title>
+
+<style type="text/css">
+
+
+  @page {
+      margin-left: 20mm; /* Adjust the left margin value as needed */
+  }
+
+
+  table {
+    
+    border-collapse: collapse;
+}
+#sortableTable33 td,
+#sortableTable33 th {
+  padding-bottom: 20px; /* Add bottom padding to increase row height */
+}
+
+th, td {
+    border: 1px solid black; /* Add borders to cells */
+    padding: 3px; /* Adjust padding as needed */
+}
+
+
+  .center-heading {
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+</style>
+</head>
+<body>
+
+
+   
+        {{current_time}}
+        <div class="center-heading">
+            <h5>Asset Allocation Details</h5>
+        </div>  
+        <div >
+            <img src="./static/sats ksa.png" class="center-heading" width="200px" height="auto" >
+        </div>
+       
+  <p style="margin-left:600px;">Form No : {{itassetdetail_obj.id }}</p>
+  
+        <h5 >Asset Details</h5>
+
+
+        <table id="sortableTable12" width="90%"  >
+            
+            <tbody>
+               
+                <tr>
+                    <td><strong> Serial Number</strong></td><td>{{itassetdetail_obj.serial_number}}</td>
+                      
+                </tr>
+                <tr>
+                    <td><strong>Brand</strong></td> <td>{{itassetdetail_obj.brand}}</td>
+                </tr>
+                <tr>
+                    <td><strong>Category</strong></td> <td>{{itassetdetail_obj.category}}</td>
+                </tr>
+                <tr>
+                    <td><strong>Model</strong></td><td>{{itassetdetail_obj.model}}</td> 
+                </tr>
+               
+                <tr>
+                    <td><strong>Asset Tag</strong></td><td>{{itassetdetail_obj.Asset_tag}}</td>
+                      
+                </tr>
+            
+             
+            </tbody>
+        </table>
+     
+        
+        <br>
+        <h5>Configuration Details</h5>
+        <table id="sortableTable31" width="90%" >
+            
+            <tbody>
+               
+                <tr>
+                    <td> <strong>Processor</strong></td><td>{{itassetdetail_obj.processor}}</td>
+                </tr>
+                <tr>
+                    <td><strong>Memmory</strong></td><td>{{itassetdetail_obj.ram}}</td>
+                </tr>
+                <tr>
+                    <td><strong>Hard Disk</strong></td> <td>{{itassetdetail_obj.harddisk}}</td>
+                </tr>
+                <tr>
+                    <td><strong>Operating System</strong></td><td>{{itassetdetail_obj.operating_system}}</td> 
+                </tr>
+                <tr>
+                  <td><strong>Product Status</strong></td><td>{{itassetdetail_obj.status}}</td> 
+              </tr>
+              
+                  
+            </tbody>
+        </table>
+   
+<br>
+   
+        <h5>Allocation Details</h5>
+
+       
+        <table id="sortableTable32" width="90%" >
+            
+          <tbody>
+             
+            <tr>
+                <td> <strong>Employee ID</strong></td><td>{{allocationdetails.user}}</td>
+            </tr>
+            <tr>
+              <td><strong>Employee Name</strong></td> <td>{% if allocationdetails.user.first_name or allocationdetails.user.last_name %}
+                {{ allocationdetails.user.first_name }} {{ allocationdetails.user.last_name }}
+              {% else %}
+                N/A
+              {% endif %}</td>
+          </tr>
+           
+            <tr>
+              <td><strong>Mobile No</strong></td> <td>{% if allocationdetails.user.phone_number %}{{ allocationdetails.user.phone_number }}{% else %}N/A{% endif %}</td>
+          </tr>
+          <tr>
+            <td><strong>Station</strong></td><td>{% if allocationdetails.user.station_name %}{{ allocationdetails.user.station_name }}{% else %}N/A{% endif %}</td> 
+        </tr>
+        <tr>
+          <td><strong>Email ID</strong></td><td>{% if allocationdetails.user.email %}{{ allocationdetails.user.email }}{% else %}N/A{% endif %}</td> 
+      </tr>
+      <tr>
+        <td><strong>Date </strong></td><td>.</td> 
+    </tr>
+      <tr style="padding-bottom: 20px;">
+        <td><strong>Employee Signature </strong></td><td style="padding-bottom: 20px;">.</td> 
+    </tr>
+    
+        
+          
+          </tbody>
+      </table>
+
+      <br>
+      <h5>For IT Dept : Allocated By</h5>
+
+      <table id="sortableTable33" width="90%"  >
+          
+          <tbody>
+             
+              <tr>
+                  <th> <strong>Name : </strong></th><td>.</td>
+              </tr>
+              <tr>
+                  <th><strong>Designtion </strong></th> <td>.</td>
+              </tr>
+              <tr>
+                  <th><strong>Date of Allocation("Y-M-D")</strong></th><td>{{allocationdetails.allocation_date|date:"Y-m-d"}}  </td>
+              </tr>
+              <tr>
+                <th><strong>Sign </strong></th><td>.</td> 
+            </tr>
+            
+                
+          </tbody>
+      </table>
+   
+    </body>
+    </html>
+
+
+
+ 
+  
+
+

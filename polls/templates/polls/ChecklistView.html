@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+
+
+<div class="container mt-4">
+    <h1>Your Data Table</h1>
+    <table id="sortableTable" data-toggle="table" data-sortable="true" data-pagination="true" class="table table-striped">
+        <thead>
+            <tr>
+                <th data-field="ChecklistID" data-sortable="true">CheckList ID</th>
+                <th data-field="Equipment" data-sortable="true">Equipment</th>
+                <th data-field="User" data-sortable="true">User</th>
+                <th data-field="Date" data-sortable="true">Date</th>
+                <th data-field="Time" data-sortable="true">Time</th>
+                <th data-field="View_Checklist" data-sortable="true">View Checklist</th>
+                
+               
+                <!-- Add more table headers for each field in your model -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in checklist %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.equipment }}</td> <!-- Access fields of your model -->
+                <td>{{ item.user }}</td> <!-- Replace field_name_1 with actual field name -->
+                <td>{{ item.date }}</td>
+                <td>{{ item.time }}</td>
+                <td><a href="{% url 'polls:generate_invoice' item.id %}" class="btn btn-primary">View Checklist</a></td>
+                <!-- Add more table cells for each field in your model -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+	
+<script>
+    $(document).ready(function() {
+      
+        $('#sortableTable').bootstrapTable();
+    });
+</script>
+
+{% endblock content%}

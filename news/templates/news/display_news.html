@@ -1,0 +1,68 @@
+{% load static %}
+<html lang="en">
+  {% include 'header.html' %}
+  <head>
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+        }
+        .content {
+            flex: 1;
+        }
+    </style>
+  </head>
+<body>
+    <header>
+       
+            {% include 'indexmenu.html' %}
+       
+    </header>
+    <section>
+
+        <div class="content">
+
+            <div class="container">
+
+                <div id="satsmedia-news" class="row row-cols-1 row-cols-md-3">
+                            
+                    {%if news_obj %}
+                    {% for obj in news_obj %}
+                    <div class="col">
+                        <div class="card media">
+                            {%if obj.image.url  %}
+                            <img src="{{ obj.image.url  }}" style="max-height:40vh;" class="card-img-top" alt="..." >
+                            {% endif %}
+                            <div class="card-body">
+                              <h5 class="card-title">
+                                
+                                {{obj.title}}
+                               
+                              </h5>
+                             
+                              <a href="{% url 'news:get_post_id' obj.id%}" class="btn btn-primary">Read More</a>
+                              <p> Published Date :  {{obj.published_date | date:"d-m-Y" }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+
+
+            </div>
+
+        </div>
+    </section>
+    <footer class="footer mt-auto">
+        <div class="card-header">
+            {% include 'footer.html' %}
+        </div>
+    </footer>
+
+    
+   
+  </body>
+</html>

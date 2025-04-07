@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<div class="row">
+{% include 'financesidemenu.html' %}
+
+<div class="col-md-9">
+  <form method="post" enctype="multipart/form-data">
+    <div class="card">
+      <div class="card-header text-center">
+        <h5>Pending for approval</h5>
+      </div>
+      <div class="card-body">
+            
+            <table class="table"  border="1">
+                <thead>
+                <tr>
+                    <th scope="col">Request No</th>
+                    <th scope="col">Employee ID</th>
+                    <th scope="col">Employee Name</th>
+                    <th scope="col">Total Amount</th>
+                    <th scope="col">Submitted Date</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Approval Link</th>
+                
+                </tr>
+                </thead>
+                <tbody>
+                {% for instance in pending_claims %}
+
+                <tr>
+                    <th scope="row">{{ instance.id}}</th>
+                    <td>{{ instance.user.employee_id}}</td>
+                    <td>{{ instance.user.first_name }} {{ instance.user.last_name }}</td>
+                    <td>{{ instance.Total_Amount}}</td>
+                    <td>{{ instance.created_date }}</td>
+                    <td>{% if instance.status == True %}
+                        {{instance.approved_date}}
+                    {% else %}
+                        pending
+                    {% endif %}</td>
+                    <td>
+                        <a href="{% url 'pettycash:ApproveTcClaim' instance.id 'Approve' %}" class="">Approve</a>
+                    </td>
+                    
+                </tr>     
+        
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+<!------>
+<div class="dropdown-divider"></div>
+<br>
+<br>
+<br>
+<div class="card">
+    <div class="card-header text-center">
+      <h5>Approved Claims</h5>
+    </div>
+    <div class="card-body">
+          
+          <table class="table"  border="1">
+              <thead>
+              <tr>
+                  <th scope="col">Request No</th>
+                  <th scope="col">Employee ID</th>
+                  <th scope="col">Employee Name</th>
+                  <th scope="col">Total Amount</th>
+                  <th scope="col">Approved Date</th>
+                  
+              
+              </tr>
+              </thead>
+              <tbody>
+              {% for instance in approved_claims %}
+
+              <tr>
+                  <th scope="row">{{ instance.id}}</th>
+                  <td>{{ instance.user.employee_id}}</td>
+                  <td>{{ instance.user.first_name }} {{ instance.user.last_name }}</td>
+                  <td>{{ instance.Total_Amount}}</td>
+                  <td>{% if instance.status == True %}
+                      {{instance.approved_date}}
+                  {% else %}
+                      pending
+                  {% endif %}</td>
+                  
+                  
+              </tr>     
+      
+              {% endfor %}
+              </tbody>
+          </table>
+      </div>
+  </div>
+<!---->
+
+</form>
+</div>
+</div>
+{% endblock content%}

@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row">
+    {% include 'financesidemenu.html' %}
+
+    <div class="col-md-9">
+
+        <div class="card">
+            <div class="card-header text-center">
+                <h5>FINANCE</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="row justify-content-center">
+                        <div class="card-deck">
+                            <div class="card border-light mb-3"
+                                style="max-width: 18rem;box-shadow: 0 0 6px rgba(0,0,0,0.05),0 0 6px rgba(0,0,0,0.05);">
+                                <div class="card-header text-center">PETTY CASH</div>
+                                <div class="card-body ">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item"> <a class="nav-link linktxtclr"
+                                                href="{% url 'pettycash:create_product' %}">Petty Cash Reimbursment</a>
+                                        </li>
+                                        <li class="list-group-item"> <a class="nav-link linktxtclr"
+                                                href="{% url 'pettycash:ViewUserPettyCash' %}">my Pettycash</a>
+                                        </li>
+                                        {% if request.user %}
+                                        {% for group in request.user.groups.all %}
+                                        {% if group.name == "Manager" %}
+                                        <li class="list-group-item"> <a class="nav-link linktxtclr"
+                                                href="{% url 'pettycash:Pc_Manager_View' %}">Approve PettyCash</a>
+                                        </li>
+                                        {% endif %}
+                                        {% endfor %}
+                                        {% endif %}
+                                        <li class="list-group-item"> <a class="nav-link linktxtclr"
+                                                    href="{% url 'pettycash:ViewAllUserPettyCash' %}">List all </a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card border-light mb-3"
+                                style="max-width: 18rem;box-shadow: 0 0 6px rgba(0,0,0,0.05),0 0 6px rgba(0,0,0,0.05);">
+                                <div class="card-header text-center">TRAVEL CLAIM</div>
+                                <div class="card-body ">
+                                    <ul class="list-group list-group-flush ">
+                                        <li class="list-group-item"> <a class="nav-link linktxtclr"  href="{% url 'pettycash:travelclaimrequest' %}">Apply Travel claim</a></li>
+                                        <li class="list-group-item"> <a class="nav-link linktxtclr"
+                                                href="{% url 'pettycash:ViewUserTravelClaims' %}">My Claims</a>
+                                        </li>
+                                        {% if request.user %}
+                                        {% for group in request.user.groups.all %}
+                                        {% if group.name == "Manager" %}
+                                        <li class="list-group-item"> <a class="nav-link linktxtclr"
+                                                href="{% url 'pettycash:Tc_Manager_View' %}">Approve TravelClaim</a>
+                                        </li>
+                                        {% endif %}
+                                        {% endfor %}
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            `
+        </div>
+    </div>
+</div>
+
+{% endblock content%}

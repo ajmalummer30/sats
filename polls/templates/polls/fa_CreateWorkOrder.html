@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row">
+    {% include 'facilitysidemenu.html' %}
+
+    <div class="col-lg-9">
+<div class="card">
+    <div class="card-header text-center">Issue Work Order</div>
+    <div class="card-body">
+        <form action="" method="post"  enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            {{form|crispy}}
+            <input type="submit" class="btn btn-primary btn-block mx-auto d-block" value="SUBMIT" />
+            </form>
+    </div>
+</div>
+
+
+
+</div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#id_contract').select2({ 
+            placeholder: 'Select an option',
+            multiple: false,
+            closeOnSelect: true, 
+            width: '100%'
+        });
+
+    });
+</script>
+
+{% endblock content%}

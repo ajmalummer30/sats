@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+
+
+        
+    <div class="card">
+
+        <div class="card-header"> <h1>GATEPASS No : {{id}}</h1>
+
+        </div>
+        <div class="card-body">
+            <form action="" method="post" enctype="multipart/form-data" novalidate >
+                {% csrf_token %}
+                {{form|crispy}}
+                <input type="submit" class="btn btn-primary btn-block" value="ADD ITEMS" />
+            
+            </form>
+
+        </div>
+       
+    </div>
+        <div class="card">
+            <div class="card-header"> <h2>Gatepass Item details</h2>
+            </div>
+            <div class="card-body">
+                {% if gatepass_items %}
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Quantity</th>
+                                    <th>Remarks</th>
+                                    <!-- Add other headers as needed -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in gatepass_items %}
+                                    <tr>
+                                        <td>{{ item.id }}</td>
+                                        <td>{{ item.Description }}</td>
+                                        <td>{{ item.qty }}</td>
+                                        <td>{{ item.Remarks }}</td>
+                                        <!-- Add other fields as needed -->
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <p>No items added</p>
+                {% endif %}
+            </div>
+           
+        </div>
+        <br>
+        <br>
+        {% if gatepass_items %}
+            <div class="text-right">
+                <a href="{% url 'polls:DetailViewGatepass' item.id %}" class="btn btn-primary">Issue Gatepass</a>
+            </div>
+        {% endif %}
+        
+        
+   
+
+<!--Verically centered bootstrap modal form for updating return date-->
+
+
+  
+    {% endblock content%}

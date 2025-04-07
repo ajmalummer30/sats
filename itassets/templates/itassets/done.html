@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Form Submission Successful</h1>
+    <p>Below is the collected data:</p>
+
+    <h2>Step One</h2>
+    <ul>
+        <li>Name: {{ form_data.0.name }}</li>
+        <li>Last Name: {{ form_data.0.last_name }}</li>
+        <li>Phone: {{ form_data.0.phone }}</li>
+        <li>Email: {{ form_data.0.email }}</li>
+    </ul>
+
+    <h2>Step Two</h2>
+    <ul>
+        <li>Job: {{ form_data.1.job }}</li>
+        <li>Salary: {{ form_data.1.salary }}</li>
+        <li>Job Description: {{ form_data.1.job_description }}</li>
+    </ul>
+
+    <h3>Step One Data:</h3>
+  <p>Name: {{ form_step_one_data.name }}</p>
+  <p>Last Name: {{ form_step_one_data.last_name }}</p>
+  <p>Phone: {{ form_step_one_data.phone }}</p>
+  <p>Email: {{ form_step_one_data.email }}</p>
+
+  <h3>Step Two Data:</h3>
+  <p>Job: {{ form_step_two_data.job }}</p>
+  <p>Salary: {{ form_step_two_data.salary }}</p>
+  <p>Job Description: {{ form_step_two_data.job_description }}</p>
+    {% endblock %}

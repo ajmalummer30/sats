@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+
+<div class="row">
+        
+    {% include 'financesidemenu.html' %}
+        <!-- Card Body -->
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-header text-center">
+                   <p>Travel Claim Requests</p>     
+                </div>
+                <div class="card-body" >
+                    
+                    <div class="row">
+                        <form action="" method="get" class="col-12">
+                            <div class="card-header card-header-secondary">
+                                <h4 class="card-title">Filter Claim Requests</h4>
+                                <div class="form-group row">
+                                    <div class="col-3">
+                                        <label for="startDate" class="col-form-label">Start Date:</label>
+                                        <input type="date" name="Start_date" id="startDate" class="form-control" >
+                                    </div>
+                                    <div class="col-3">
+                                        <label for="endDate" class="col-form-label">End Date:</label>
+                                        <input type="date" name="End_date" id="endDate" class="form-control" >
+                                    </div>
+                                    
+                                    <div class="col-3 d-flex flex-column justify-content-end align-items-end">
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-primary">Filter</button>
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                   
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                
+                    <div class="container mt-4">
+                        <div class="table-responsive">
+                            <table id="sortableTable" data-toggle="table" data-sortable="true" data-pagination="true" class="table">
+                                <thead>
+                                    <tr>
+                                        <th data-field="SL_No" data-sortable="true">Sl No</th>
+                                        <th data-field="Date" data-sortable="true">Total Amount</th>
+                                        <th data-field="station_name" data-sortable="true">Created Date</th>
+                                        <th data-field="Claimant" data-sortable="true">Approved Date</th>
+                                        <th data-field="total_amount" data-sortable="true">Attachment</th>
+                                        <th data-field="total_amount" data-sortable="true">Claim Form</th>
+                                        
+                                        
+                                        <!-- Add more table headers for each field in your model -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in claims %}
+                                    <tr>
+                                        <td>{{ item.id }}</td>
+                                        <td>{{ item.Total_Amount }}SAR</td>
+                                        <td>{{ item.created_date }}</td> <!-- Access fields of your model -->
+                                        <td>{% if item.approved_date  %}
+                                            {{ item.approved_date }}
+                                                {% else %}
+                                                Pending
+                                                {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if item.upload_bill %}
+                                            <p><a href="{{ item.upload_bill.url }}" target="_blank">View Attachments</a></p>
+                                    
+                                        {% else %}
+                                            <p>No Attachment</p>
+                                        {% endif %}
+                                        </td>
+                                        <td><a href="{% url 'pettycash:travelclaimpdf' item.id %}" class="">Download</a></td>
+                                    </tr>
+                                        <!-- <td><a href="{% url 'pettycash:update_product' item.id %}" class="btn btn-primary">EDIT</a></td> -->
+                                        <!-- Add more table cells for each field in your model -->
+                                
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                
+                    </div>
+                        
+                </div>
+
+
+
+
+
+            </div>
+        </div>
+
+        
+
+
+</div>
+
+
+{% endblock content%}
